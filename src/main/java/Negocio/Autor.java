@@ -18,6 +18,6 @@ public class Autor extends Persona {
 
     @Override
     public String toString() {
-        return super.toString()+"\nidAutor = " + idAutor+"HOLAMUNDO";
+        return super.toString()+"\nidAutor = " + idAutor;
     }
 }
