@@ -1,11 +1,19 @@
 package Vista;
 
+import java.io.File;
+import javax.swing.ImageIcon;
+
 public class JFMenuPrincipal extends javax.swing.JFrame {
     Vista.JFAutor autorVentana = new JFAutor();
     Vista.JFEstudiante estudianteVentana = new JFEstudiante();
 
     public JFMenuPrincipal() {
         initComponents();
+        //icono
+        File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/MenuPrincipal.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
+        //
         this.setLocationRelativeTo(this);
         this.setVisible(false);
     }

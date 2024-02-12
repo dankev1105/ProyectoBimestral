@@ -2,11 +2,16 @@ package com.mycompany.biblioteca;
 
 import Vista.JFEstudiante;
 import Vista.JFMenuPrincipal;
+import java.io.File;
+import javax.swing.ImageIcon;
 
 public class JFBiblioteca extends javax.swing.JFrame {
 
     public JFBiblioteca() {
         initComponents();
+        File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/Login.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
         this.setLocationRelativeTo(this);
     }
 
