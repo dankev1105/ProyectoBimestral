@@ -1,5 +1,4 @@
 package Vista;
-
 import Negocio.Autor;
 import Negocio.Fecha;
 import PConexion.Conexion;
@@ -26,7 +25,7 @@ public class JFAutor extends javax.swing.JFrame {
     Autor autor;
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
-    
+
     public JFAutor() {
         initComponents();
         //icono
@@ -38,21 +37,24 @@ public class JFAutor extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         mostrarTabla();
         this.setResizable(false);
+        this.jTFautorEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
             filtrarTablaId(text);
             filtrarTablaNombre(text);    
         }}); 
-        this.jTFautorBorrar.addKeyListener(new KeyAdapter() {
+        this.jTFautorEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
             filtrarTablaId(text);
             filtrarTablaNombre(text);    
         }});
-}
+    }
     
+ 
+       
     public void filtrarTablaNombre(String query) {
     DefaultTableModel model = (DefaultTableModel) jTdatosAutor.getModel();
     TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
