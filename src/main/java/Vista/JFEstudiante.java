@@ -7,6 +7,7 @@ import Vista.JFMenuPrincipal;
 import java.util.List;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -29,6 +31,11 @@ public class JFEstudiante extends javax.swing.JFrame {
        
     public JFEstudiante() {
         initComponents();
+        //icono
+        File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/Estudiante.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
+        //
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         mostrarTabla();

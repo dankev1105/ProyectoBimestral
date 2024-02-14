@@ -6,6 +6,7 @@ import PConexion.Conexion;
 import Vista.JFMenuPrincipal;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,12 +29,15 @@ public class JFAutor extends javax.swing.JFrame {
     
     public JFAutor() {
         initComponents();
+        //icono
+        File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/Autor.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
+        //
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         mostrarTabla();
         this.setResizable(false);
-         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("Imagenes/bibliotecaImagen.png"));
-        this.jTFIDAutorEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
