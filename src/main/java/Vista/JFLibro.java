@@ -390,9 +390,9 @@ public class JFLibro extends javax.swing.JFrame {
         }
         return false;
         }
+    
     private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
         try {
-           
             PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero ,"
             + " IdLibro, UnidadesDisponibles, IdAutor) VALUES (?,?,?,?,?)");
             pps.setString(1, jTFtituloLibro.getText());
