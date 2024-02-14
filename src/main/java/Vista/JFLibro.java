@@ -71,9 +71,9 @@ public class JFLibro extends javax.swing.JFrame {
             while(rs.next()){
                 datos[0]=rs.getString(1);
                 datos[1]=rs.getString(2);
-                datos[2]=String.valueOf(rs.getInt(3));
+                datos[2]=String.valueOf(rs.getLong(3));
                 datos[3]=String.valueOf(rs.getInt(4));
-                datos[4]=String.valueOf(rs.getInt(5));
+                datos[4]=String.valueOf(rs.getLong(5));
                 model.addRow(datos);
             }
         }
@@ -173,7 +173,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(239, 239, 239)
+                .addGap(238, 238, 238)
                 .addComponent(jBinsertarLibro)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -201,9 +201,9 @@ public class JFLibro extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                 .addComponent(jBinsertarLibro)
-                .addContainerGap())
+                .addGap(42, 42, 42))
         );
 
         jTabbedPane1.addTab("Insertar", jPanel2);
@@ -372,7 +372,24 @@ public class JFLibro extends javax.swing.JFrame {
         JFMenuPrincipal menu = new JFMenuPrincipal();
         menu.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private boolean existeLibro(long idLibro) {
+        String query = "SELECT * FROM Libro WHERE IdLibro = ?";
 
+        try (PreparedStatement st = cn.prepareStatement(query)) {
+            st.setLong(1, idLibro);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                return true; 
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del libro: " + ex.toString());
+        }
+        return false;
+        }
     private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
         try {
            
@@ -384,7 +401,7 @@ public class JFLibro extends javax.swing.JFrame {
             pps.setInt(4, Integer.parseInt(jTFunidadesLibro.getText()));
             pps.setLong(5,autor.getIdAutor());
             pps.executeUpdate();
-            
+             
             JOptionPane.showMessageDialog(null, "Datos guardados");
       
             libro = new Libro( Integer.parseInt(jTFidLibro.getText()),
@@ -401,36 +418,17 @@ public class JFLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jBinsertarLibroActionPerformed
 
     private void jTFunidadesLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFunidadesLibroActionPerformed
-        // TODO add your handling code here:
+ 
     }//GEN-LAST:event_jTFunidadesLibroActionPerformed
     private void eliminarLibroEnBaseDeDatos(long idLibro) {
         String query = "DELETE FROM Libro WHERE IdLibro = ?";
 
         try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(3, idLibro);
+            st.setLong(1, idLibro);
             st.executeUpdate();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar el libro de la base de datos: " + ex.toString());
         }
-    }
-    
-    private boolean existeLibro(long idLibro) {
-        String query = "SELECT * FROM Libro WHERE IdLibro = ?";
-
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(3, idLibro);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                return true; 
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del libro: " + ex.toString());
-        }
-        return false;
     }
     private void jBborrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarLibroActionPerformed
         try {
@@ -451,7 +449,32 @@ public class JFLibro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
         }
     }//GEN-LAST:event_jBborrarLibroActionPerformed
+    private void actualizarLibroEnBaseDeDatos(long idLibro, int nuevaCantidad, String nuevoTitulo, String nuevoGenero, Autor autor){
+        String queryCantidad = "UPDATE Libro SET UnidadesDisponibles = ? WHERE IdLibro = ?";
+        String queryNombre = "UPDATE Libro SET NombreLibro = ? WHERE IdLibro = ?";
+        String queryGenero = "UPDATE Libro SET Genero = ? WHERE IdLibro = ?";
 
+        try (PreparedStatement stCantidad = cn.prepareStatement(queryCantidad);
+            PreparedStatement stNombre = cn.prepareStatement(queryNombre);
+            PreparedStatement stGenero = cn.prepareStatement(queryGenero)) {
+
+            stCantidad.setInt(1, nuevaCantidad);
+            stCantidad.setLong(2, idLibro);
+            stCantidad.executeUpdate();
+
+            stNombre.setString(1, nuevoTitulo);
+            stNombre.setLong(2, idLibro);
+            stNombre.executeUpdate();
+
+            stGenero.setString(1, nuevoGenero);
+            stGenero.setLong(2, idLibro);
+            stGenero.executeUpdate();
+            mostrarTabla();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar estudiante en la base de datos: " + ex.toString());
+        }
+    }
     private void jBeditarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeditarLibroActionPerformed
         try {
             long idLibro = Long.parseLong(this.jTFlibroEditar.getText());
@@ -475,32 +498,7 @@ public class JFLibro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
         }
     }//GEN-LAST:event_jBeditarLibroActionPerformed
-    private void actualizarLibroEnBaseDeDatos(long idLibro, int nuevaCantidad, String nuevoTitulo, String nuevoGenero, Autor autor){
-        String queryCantidad = "UPDATE Libro SET UnidadesDisponibles = ? WHERE idLibro = ?";
-        String queryNombre = "UPDATE Libro SET NombreLibro = ? WHERE idLibro = ?";
-        String queryGenero = "UPDATE Libro SET Genero = ? WHERE idLibro = ?";
-
-        try (PreparedStatement stCantidad = cn.prepareStatement(queryCantidad);
-            PreparedStatement stNombre = cn.prepareStatement(queryNombre);
-            PreparedStatement stGenero = cn.prepareStatement(queryGenero)) {
-
-            stCantidad.setInt(1, nuevaCantidad);
-            stCantidad.setLong(2, idLibro);
-            stCantidad.executeUpdate();
-
-            stNombre.setString(1, nuevoTitulo);
-            stNombre.setLong(2, idLibro);
-            stNombre.executeUpdate();
-
-            stGenero.setString(1, nuevoGenero);
-            stGenero.setLong(2, idLibro);
-            stGenero.executeUpdate();
-            mostrarTabla();
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar estudiante en la base de datos: " + ex.toString());
-        }
-    }
+   
     private void jTFunidadesLibroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFunidadesLibroKeyTyped
     }//GEN-LAST:event_jTFunidadesLibroKeyTyped
 
