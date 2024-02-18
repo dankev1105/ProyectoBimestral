@@ -29,7 +29,7 @@ public class JFAutor extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         mostrarTabla();
         this.setResizable(false);
-         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("Imagenes/bibliotecaImagen.png"));
+        //ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("Imagenes/bibliotecaImagen.png"));
         this.jTFautorEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
