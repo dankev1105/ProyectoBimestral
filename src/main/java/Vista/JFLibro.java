@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 public class JFLibro extends javax.swing.JFrame {
@@ -144,9 +145,7 @@ public class JFLibro extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jTFnombreAutor = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jCBañoAutor = new javax.swing.JComboBox<>();
-        jCBmesAutor = new javax.swing.JComboBox<>();
-        jCBdiaAutor = new javax.swing.JComboBox<>();
+        jTFfechaNacimientoAutor = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTAautorActual = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
@@ -268,53 +267,45 @@ public class JFLibro extends javax.swing.JFrame {
 
         jLabel8.setText("Nombre:");
 
+        jTFnombreAutor.setEditable(false);
+
         jLabel11.setText("Fecha de Nacimiento:");
 
-        jCBañoAutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982", "1981", "1980", "1979", "1978", "1977", "1976", "1975", "1974", "1973", "1972", "1971", "1970" }));
-
-        jCBmesAutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
-
-        jCBdiaAutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+        jTFfechaNacimientoAutor.setEditable(false);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(9, 9, 9)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTFnombreAutor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTFidAutor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel7Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jCBañoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCBmesAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCBdiaAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addComponent(jTFidAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTFfechaNacimientoAutor, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(jTFnombreAutor))
+                        .addGap(27, 27, 27))))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTFnombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(31, 31, 31)
+                .addGap(25, 25, 25)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(jTFnombreAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jCBañoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBmesAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBdiaAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                    .addComponent(jTFfechaNacimientoAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFidAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
@@ -336,7 +327,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jBinsertarLibro)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -357,7 +348,7 @@ public class JFLibro extends javax.swing.JFrame {
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBinsertarLibro)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Insertar", jPanel2);
@@ -563,6 +554,8 @@ public class JFLibro extends javax.swing.JFrame {
         }
    
     private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
+        TableModel model1 = jTdatosAutor.getModel();
+        TableModel model2 = jTdatosLibro.getModel();
         try {
             
             PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero , IdLibro, "
@@ -581,8 +574,33 @@ public class JFLibro extends javax.swing.JFrame {
             jTFgeneroLibro.getText());
             
             jTAlibroActual.setText(libro.toString());
+            
             mostrarTabla();
+            
+            int filaEncontrada = -1;
+            
+            if(this.jTFidAutor.getText().length()==0)
+             JOptionPane.showMessageDialog(null, "El id esta vacio","Error",JOptionPane.WARNING_MESSAGE);    
+             else{
+               for (int fila = 0; fila < model1.getRowCount(); fila++) {
+            String idEnFila = model1.getValueAt(fila, 3).toString(); 
+             if (idEnFila.equals(jTFidAutor.getText())) {
+            filaEncontrada = fila;
+            break;
         }
+        }
+        }
+         if(filaEncontrada==-1){
+             JOptionPane.showMessageDialog(null, "El id no existe");
+         }  
+         else{
+        jTFnombreAutor.setText(model1.getValueAt(filaEncontrada, 0).toString());
+        jTFfechaNacimientoAutor.setText(model1.getValueAt(filaEncontrada, 1).toString());
+          
+    }
+        }
+  
+        
         catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "Libro ya registrado");
         }
@@ -679,48 +697,48 @@ public class JFLibro extends javax.swing.JFrame {
     private void jTFunidadesLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFunidadesLibroKeyReleased
     }//GEN-LAST:event_jTFunidadesLibroKeyReleased
  
-    private boolean existeAutor(long idAutor) {
-        String query = "SELECT * FROM Autor WHERE IdAutor = ?";
-
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(1, idAutor);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                return true; 
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del libro: " + ex.toString());
-        }
-        return false;
-        }
+//    private boolean existeAutor(long idAutor) {
+//        String query = "SELECT * FROM Autor WHERE IdAutor = ?";
+//
+//        try (PreparedStatement st = cn.prepareStatement(query)) {
+//            st.setLong(1, idAutor);
+//            ResultSet rs = st.executeQuery();
+//
+//            if (rs.next()) {
+//                return true; 
+//            } else {
+//                return false;
+//            }
+//
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del libro: " + ex.toString());
+//        }
+//        return false;
+//        }
     private void jTFidAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidAutorActionPerformed
-   try {
-            PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");
-            pps.setString(1,jTFnombreAutor.getText());
-            String diaSeleccionado = (String) jCBdiaAutor.getSelectedItem();
-            String mesSeleccionado = (String) jCBmesAutor.getSelectedItem();
-            String anioSeleccionado = (String) jCBañoAutor.getSelectedItem();
-
-            // Combina los elementos seleccionados en el formato de fecha deseado (asumo que es 'YYYY-MM-DD')
-            String fechaNacimiento = anioSeleccionado + "/" + mesSeleccionado + "/" + diaSeleccionado;
-
-            pps.setString(2, fechaNacimiento);
-            pps.setInt(3,Integer.parseInt(jTFidAutor.getText()));
-            pps.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Datos guardados");
-            Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);
-            autor = new Autor(Long.parseLong(jTFidAutor.getText()),jTFnombreAutor.getText(),fechaNacimientoAutor);
-            jTAautorActual.setText(autor.toString());
-            mostrarTabla();
-            //jTAlistaAutor.setText(listaAutor.toString());
-        }
-        catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Autor ya registrado");
-        }
+//   try {
+//            PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");
+//            pps.setString(1,jTFnombreAutor.getText());
+//            String diaSeleccionado = (String) jCBdiaAutor.getSelectedItem();
+//            String mesSeleccionado = (String) jCBmesAutor.getSelectedItem();
+//            String anioSeleccionado = (String) jCBañoAutor.getSelectedItem();
+//
+//            // Combina los elementos seleccionados en el formato de fecha deseado (asumo que es 'YYYY-MM-DD')
+//            String fechaNacimiento = anioSeleccionado + "/" + mesSeleccionado + "/" + diaSeleccionado;
+//
+//            pps.setString(2, fechaNacimiento);
+//            pps.setInt(3,Integer.parseInt(jTFidAutor.getText()));
+//            pps.executeUpdate();
+//            JOptionPane.showMessageDialog(null,"Datos guardados");
+//            Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);
+//            autor = new Autor(Long.parseLong(jTFidAutor.getText()),jTFnombreAutor.getText(),fechaNacimientoAutor);
+//            jTAautorActual.setText(autor.toString());
+//            mostrarTabla();
+//            //jTAlistaAutor.setText(listaAutor.toString());
+//        }
+//        catch (SQLException ex){
+//            JOptionPane.showMessageDialog(null, "Autor ya registrado");
+//        }
     }//GEN-LAST:event_jTFidAutorActionPerformed
      
     public static void main(String args[]) {
@@ -760,9 +778,6 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JButton jBborrarLibro;
     private javax.swing.JButton jBeditarLibro;
     private javax.swing.JButton jBinsertarLibro;
-    private javax.swing.JComboBox<String> jCBañoAutor;
-    private javax.swing.JComboBox<String> jCBdiaAutor;
-    private javax.swing.JComboBox<String> jCBmesAutor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -788,6 +803,7 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTAautorActual;
     private javax.swing.JTextArea jTAlibroActual;
+    private javax.swing.JTextField jTFfechaNacimientoAutor;
     private javax.swing.JTextField jTFgeneroLibro;
     private javax.swing.JTextField jTFidAutor;
     private javax.swing.JTextField jTFidLibro;
