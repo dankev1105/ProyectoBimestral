@@ -29,7 +29,7 @@ public class JFAutor extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         mostrarTabla();
         this.setResizable(false);
-         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("Imagenes/bibliotecaImagen.png"));
+//         ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("Imagenes/bibliotecaImagen.png"));
         this.jTFautorEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
@@ -54,7 +54,7 @@ public class JFAutor extends javax.swing.JFrame {
     }
 
     public void mostrarTabla(){
-        String sql = "SELECT*FROM Autor";
+        String sql = "SELECT * FROM Autor";
         Statement st;
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
@@ -391,7 +391,25 @@ public class JFAutor extends javax.swing.JFrame {
         JFMenuPrincipal menu = new JFMenuPrincipal();
         menu.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+     private boolean existeAutor(int idAutor) {
+        String query = "SELECT * FROM Autor WHERE IdAutor = ?";
 
+        try (PreparedStatement st = cn.prepareStatement(query)) {
+            st.setInt(1, idAutor);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                return true; // El autor existe
+            } else {
+                return false; // El autor no existe
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del autor: " + ex.toString());
+        }
+    return false;
+    }
+    
     private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
         try {
             int idAutor = Integer.parseInt(this.jTFautorBorrar.getText());
@@ -453,25 +471,7 @@ public class JFAutor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBeditarAutorActionPerformed
 
-    private boolean existeAutor(int idAutor) {
-        String query = "SELECT * FROM Autor WHERE IdAutor = ?";
-
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setInt(1, idAutor);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                return true; // El autor existe
-            } else {
-                return false; // El autor no existe
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del autor: " + ex.toString());
-        }
-    return false;
-    }
-    
+   
     private void jBinsertarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarAutorActionPerformed
         try {
             PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");
@@ -487,6 +487,7 @@ public class JFAutor extends javax.swing.JFrame {
             pps.setInt(3,Integer.parseInt(jTfIdAutor.getText()));
             pps.executeUpdate();
             JOptionPane.showMessageDialog(null,"Datos guardados");
+            
             Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);
             autor = new Autor(Long.parseLong(jTfIdAutor.getText()),jTFnombreAutor.getText(),fechaNacimientoAutor);
             jTAautorActual.setText(autor.toString());
