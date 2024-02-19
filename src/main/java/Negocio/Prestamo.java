@@ -215,8 +215,8 @@ public class Prestamo {
             pstmt.setInt(1, this.idPrestamo);
             pstmt.setInt(2, this.idEstudiante);
             pstmt.setInt(3, this.idLibro);
-            pstmt.setDate(4, java.sql.Date.valueOf(this.fechaPrestamo.toString())); // Asume que tu clase Fecha tiene un método toString() que devuelve la fecha en formato "yyyy-MM-dd"
-            pstmt.setDate(5, java.sql.Date.valueOf(this.fechaDevolucion.toString())); // Asume que tu clase Fecha tiene un método toString() que devuelve la fecha en formato "yyyy-MM-dd"
+            pstmt.setDate(4, java.sql.Date.valueOf(this.fechaPrestamo.toString())); 
+            pstmt.setDate(5, java.sql.Date.valueOf(this.fechaDevolucion.toString()));
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
