@@ -1,14 +1,18 @@
 package Vista;
 
-import Negocio.Estudiante;
+import Negocio.Fecha;
 import Negocio.Prestamo;
 import PConexion.Conexion;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -18,12 +22,30 @@ import javax.swing.table.TableRowSorter;
 public class JFPrestamo extends javax.swing.JFrame {
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
-    
+    private int idEstudianteSeleccionado;
+    private int idLibroSeleccionado;
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+    Date date = new Date();
+    Fecha fechaPrestamo = new Fecha(formatter.format(date));
+    Fecha fechaDevolucion;
+
     public JFPrestamo() {
         initComponents();
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         this.setResizable(false);
+
+        // Inicializa fechaPrestamo con la fecha actual
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        Date date = new Date();
+        this.fechaPrestamo = new Fecha(formatter.format(date));
+
+        // Añade 30 días a la fecha actual para la fecha de devolución
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        c.add(Calendar.DATE, 30);
+        date = c.getTime();
+        this.fechaDevolucion = new Fecha(formatter.format(date));    
         
     this.jTFnombreEstudiante.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
@@ -62,6 +84,7 @@ public class JFPrestamo extends javax.swing.JFrame {
             filtrarTablaLibroPorAutor(text);
         }
     });
+    
 
     this.jTFcodigoLibroEliminar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
@@ -110,7 +133,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         model.addColumn("ID");
         jTestudiante.setModel(model);
         String [] datos = new String [4];
-        try{
+        try{ 
             st = conexion.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
@@ -127,7 +150,6 @@ public class JFPrestamo extends javax.swing.JFrame {
     }
     
     //LIBRO
-    
     public void filtrarTablaLibroPorNombre(String query) {
         DefaultTableModel model = (DefaultTableModel) jTlibro.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -147,11 +169,11 @@ public class JFPrestamo extends javax.swing.JFrame {
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 3)); // Assuming 'ID' is at column 3
+            tr.setRowFilter(RowFilter.regexFilter(query, 2)); // Assuming 'ID' is at column 3
         }
     }
     public void mostrarTablaLibro(){
-        String sql = "SELECT*FROM Libro";
+        String sql = "SELECT * FROM Libro WHERE UnidadesDisponibles > 0"; // Modifica la consulta SQL para que solo seleccione los libros con unidades mayores a cero
         Statement st;
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
@@ -179,6 +201,7 @@ public class JFPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error"+e.toString());
         }
     }
+
     public void filtrarTablaLibroPorAutor(String query) {
         DefaultTableModel model = (DefaultTableModel) jTlibro.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -187,7 +210,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 0)); // Assuming 'Nombre' is at column 0
+            tr.setRowFilter(RowFilter.regexFilter(query, 3));
         }
     }
 
@@ -229,7 +252,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 1)); 
+            tr.setRowFilter(RowFilter.regexFilter(query,1 )); 
         }
     }
 
@@ -597,56 +620,91 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFidEstudianteKeyTyped
 
     private void jBaceptarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBaceptarEstudianteActionPerformed
-    int rowCount = jTestudiante.getRowCount();
-        if (rowCount == 1) {
-            jTestudiante.setRowSelectionInterval(0, 0); // Select the only row
-            int id = Integer.parseInt(jTestudiante.getValueAt(0, 3).toString()); // Assuming 'ID' is at column 3
-            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + id);
-        } else{
-            JOptionPane.showMessageDialog(null, "Por favor, filtre hasta que solo quede un Estudiante.");
-        }     
+        if (jTestudiante.getRowCount() == 1) { 
+            int idEstudiante = Integer.parseInt(jTestudiante.getValueAt(0, 3).toString()); 
+            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + idEstudiante);
+            this.idEstudianteSeleccionado = idEstudiante;
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo estudiante."); 
+        }
     }//GEN-LAST:event_jBaceptarEstudianteActionPerformed
 
     private void jBseleccionarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBseleccionarLibroActionPerformed
-        int rowCount = jTlibro.getRowCount();
-        if (rowCount == 1) {
-            jTlibro.setRowSelectionInterval(0, 0); // Select the only row
-            int id = Integer.parseInt(jTlibro.getValueAt(0, 3).toString()); // Assuming 'ID' is at column 3
-            JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente. ID: " + id);
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, filtre hasta que solo quede un Libro.");
-        }    
-    }//GEN-LAST:event_jBseleccionarLibroActionPerformed
+        if (jTlibro.getRowCount() == 1) { 
+            int idLibro = Integer.parseInt(jTlibro.getValueAt(0, 2).toString());
+            JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente. ID: " + idLibro);
+            this.idLibroSeleccionado = idLibro;
 
-    private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
-        Prestamo prestamoSeleccionado = new Prestamo();
-        int seleccionDeLibro = jTlibro.getSelectedRow(); // Obtén la fila seleccionada
-        int idLibro = Integer.parseInt(jTlibro.getValueAt(seleccionDeLibro, 2).toString()); // Asume que el ID del libro está en la columna 2
-        prestamoSeleccionado.setIdLibro(idLibro);
-        prestamoSeleccionado.reducirUnidadesLibro();
+            if (this.idEstudianteSeleccionado != 0 && this.idLibroSeleccionado != 0) {
+                Prestamo nuevoPrestamo = new Prestamo();
+                nuevoPrestamo.setIdEstudiante(this.idEstudianteSeleccionado);
+                nuevoPrestamo.setIdLibro(this.idLibroSeleccionado);
 
-        if (prestamoSeleccionado.getFechaPrestamo().comprobarFecha()) {
-            JOptionPane.showMessageDialog(null, "Libros pedidos exitosamente.");
-            mostrarTablaLibro(); // Actualiza la tabla en el programa
+                // Calcula la fecha de devolución (30 días después de la fecha actual)
+                Calendar c = Calendar.getInstance();
+                c.setTime(new Date());
+                c.add(Calendar.DATE, 30);
+                Date date = c.getTime();
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+                nuevoPrestamo.setFechaDevolucion(new Fecha(formatter.format(date)));
+
+                int idPrestamo = generarIdPrestamoUnico();
+                nuevoPrestamo.setIdPrestamo(idPrestamo);
+                nuevoPrestamo.añadirRegistro();
+                mostrarTablaPrestamo(); 
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor, selecciona un estudiante."); 
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Error al pedir libros. Por favor, intente de nuevo.");
+            JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo libro."); 
         }
+    }//GEN-LAST:event_jBseleccionarLibroActionPerformed
+    private int generarIdPrestamoUnico() {
+        Random rand = new Random();
+        Prestamo prs = new Prestamo();
+        int idPrestamo = rand.nextInt(1000000);
+        while (prs.prestamoExiste(idPrestamo)) {
+            idPrestamo = rand.nextInt(1000000);
+        }
+        return idPrestamo;
+    }
+    private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
+        JOptionPane.showMessageDialog(null, "Préstamo añadido exitosamente.");
+        limpiarTablaPrestamo();
+        mostrarTablaPrestamo();
     }//GEN-LAST:event_jBsolicitarPrestamoActionPerformed
 
+    private void limpiarTablaPrestamo() {
+        DefaultTableModel modelo = (DefaultTableModel) jTprestamo.getModel();
+        int filas = modelo.getRowCount();
+        for (int i = filas - 1; i >= 0; i--) {
+            modelo.removeRow(i);
+        }
+    }
+    
     private void jBeliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeliminarRegistroActionPerformed
-        Prestamo prestamoSeleccionado = new Prestamo();
-        int seleccionDeLibro = jTlibro.getSelectedRow(); // Obtén la fila seleccionada
-        int idLibro = Integer.parseInt(jTlibro.getValueAt(seleccionDeLibro, 2).toString()); // Asume que el ID del libro está en la columna 2
-        prestamoSeleccionado.setIdLibro(idLibro);
-        prestamoSeleccionado.reducirUnidadesLibro();
+        String idLibroIngresado = jTFcodigoLibroEliminar.getText();
+        if (idLibroIngresado != null && !idLibroIngresado.isEmpty()) {
+            int idLibro = Integer.parseInt(idLibroIngresado); 
+            Prestamo prestamoSeleccionado = new Prestamo();
+            prestamoSeleccionado.setIdLibro(idLibro);
 
-        if (prestamoSeleccionado.getFechaPrestamo().comprobarFecha()) {
-            JOptionPane.showMessageDialog(null, "Préstamo eliminado exitosamente.");
-            mostrarTablaLibro(); // Actualiza la tabla en el programa
+            if (prestamoSeleccionado.comprobarDuplicados()) {
+                int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar todos los registros de préstamos para el libro con ID: " + idLibro + "?", "Confirmación", JOptionPane.YES_NO_OPTION); // Pregunta al usuario si está seguro de eliminar
+                if (confirmacion == JOptionPane.YES_OPTION) {
+                    prestamoSeleccionado.eliminarRegistroDuplicado();
+
+                    JOptionPane.showMessageDialog(null, "Registros de préstamos eliminados exitosamente.");
+                    mostrarTablaPrestamo(); 
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay registros duplicados para el libro con ID: " + idLibro);
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Error al eliminar el préstamo. Por favor, intente de nuevo.");
+            JOptionPane.showMessageDialog(null, "Por favor, ingresa un ID de libro válido.");
         }
     }//GEN-LAST:event_jBeliminarRegistroActionPerformed
+
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
