@@ -10,6 +10,11 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
 
     public JFMenuPrincipal() {
         initComponents();
+        //icono
+        File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/MenuPrincipal.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
+        //
         this.setLocationRelativeTo(this);
         this.setVisible(false);
         File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
@@ -57,6 +62,14 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jBestudiante)
+                .addGap(18, 18, 18)
+                .addComponent(jBlibro)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBautor)
+                .addGap(64, 64, 64))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jLabel1)
@@ -116,7 +129,6 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         autorVentana.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jBautorActionPerformed
-
     private void jBprestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBprestamoActionPerformed
         prestamoVentana.setVisible(true);
         this.setVisible(false);
