@@ -49,7 +49,9 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="jBestudiante" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jBLibro" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jBautor" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
               </Group>
@@ -69,6 +71,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jBestudiante" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jBautor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jBLibro" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
               </Group>
@@ -99,6 +102,14 @@
             </Property>
             <Property name="text" type="java.lang.String" value="MEN&#xda; PRINCIPAL"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jBLibro">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Libro"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBLibroActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
