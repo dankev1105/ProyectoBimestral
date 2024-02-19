@@ -32,11 +32,6 @@ public class JFEstudiante extends javax.swing.JFrame {
        
     public JFEstudiante() {
         initComponents();
-        //icono
-        File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/Estudiante.png");
-        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
-        setIconImage(icon.getImage());
-        //
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         mostrarTabla();
@@ -44,6 +39,7 @@ public class JFEstudiante extends javax.swing.JFrame {
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
         setIconImage(icon.getImage());
         this.setResizable(false);
+        
         this.jTFestudianteEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
@@ -75,8 +71,6 @@ public class JFEstudiante extends javax.swing.JFrame {
         tr.setRowFilter(RowFilter.orFilter(filters));
         }
     }
-
-
     public void filtrarTablaId(String query) {
         DefaultTableModel model = (DefaultTableModel) jTdatosEstudiantes.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -642,19 +636,23 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
 
     private void jBeditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeditarEstudianteActionPerformed
-    TableModel model = jTdatosEstudiantes.getModel();
-    if(jTdatosEstudiantes.getSelectedRow()==-1){
-    JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun registro","Error",JOptionPane.WARNING_MESSAGE);
-    }
-    else{
-    jTFnombreEstudianteEditar.setText(model.getValueAt(jTdatosEstudiantes.getSelectedRow(), 0).toString());
-    jTFfechaEstudianteEditar.setText(model.getValueAt(jTdatosEstudiantes.getSelectedRow(), 1).toString());
-    jTFcorreoEstudianteEditar.setText(model.getValueAt(jTdatosEstudiantes.getSelectedRow(), 2).toString());
-    jTFIDEstudianteEditar.setText(model.getValueAt(jTdatosEstudiantes.getSelectedRow(), 3).toString());    
-    }
+        TableModel model = jTdatosEstudiantes.getModel();
+        int selectedRow = -1;
+
+        // Si solo hay una fila en la tabla después de haberla filtrado, seleccionar esa fila
+        if(jTdatosEstudiantes.getRowCount() == 1){
+            selectedRow = 0;
+            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + model.getValueAt(selectedRow, 3).toString());
+            jTFnombreEstudianteEditar.setText(model.getValueAt(selectedRow, 0).toString());
+            jTFfechaEstudianteEditar.setText(model.getValueAt(selectedRow, 1).toString());
+            jTFcorreoEstudianteEditar.setText(model.getValueAt(selectedRow, 2).toString());
+            jTFIDEstudianteEditar.setText(model.getValueAt(selectedRow, 3).toString());   
+            mostrarTabla();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo estudiante.","Error",JOptionPane.WARNING_MESSAGE);
+        }
     }//GEN-LAST:event_jBeditarEstudianteActionPerformed
-    
-    
     
     private void actualizarEstudianteEnBaseDeDatos(int idEstudiante, String nuevoNombre, String nuevaFechaNacimiento, String nuevoCorreoInstitucional) {
         String queryNombre = "UPDATE Estudiante SET NombreEstudiante = ? WHERE IdEstudiante = ?";
@@ -720,13 +718,13 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFestudianteEditarActionPerformed
 
     private void jBactualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarEstudianteActionPerformed
-                int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
-                String nuevoNombre = jTFnombreEstudianteEditar.getText();
-                String nuevaFechaNacimiento = jTFfechaEstudianteEditar.getText();
-                String nuevoCorreoInstitucional = jTFcorreoEstudianteEditar.getText();
-                // Aquí es donde actualizamos el autor en la base de datos
-                actualizarEstudianteEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento, nuevoCorreoInstitucional);
-                mostrarTabla();
+        int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
+        String nuevoNombre = jTFnombreEstudianteEditar.getText();
+        String nuevaFechaNacimiento = jTFfechaEstudianteEditar.getText();
+        String nuevoCorreoInstitucional = jTFcorreoEstudianteEditar.getText();
+        // Aquí es donde actualizamos el autor en la base de datos
+        actualizarEstudianteEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento, nuevoCorreoInstitucional);
+        mostrarTabla();
     }//GEN-LAST:event_jBactualizarEstudianteActionPerformed
 
     private void jTFestudianteEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFestudianteEditarKeyTyped
