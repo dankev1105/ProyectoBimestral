@@ -698,6 +698,8 @@ public class JFPrestamo extends javax.swing.JFrame {
         if (isTablaPrestamoEmpty()) {
             JOptionPane.showMessageDialog(null, "La tabla está vacía.");
         } else {
+            Prestamo realizarPrestamo = new Prestamo();
+            realizarPrestamo.reducirUnidadesLibro();
             JOptionPane.showMessageDialog(null, "Préstamo añadido exitosamente.");
         }
         limpiarTablaPrestamo();
