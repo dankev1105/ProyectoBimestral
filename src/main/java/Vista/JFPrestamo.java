@@ -5,6 +5,7 @@ import Negocio.Prestamo;
 import PConexion.Conexion;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.util.Date;
 import java.sql.ResultSet;
@@ -13,6 +14,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -34,6 +36,9 @@ public class JFPrestamo extends javax.swing.JFrame {
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         this.setResizable(false);
+        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
 
         // Inicializa fechaPrestamo con la fecha actual
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -669,18 +674,30 @@ public class JFPrestamo extends javax.swing.JFrame {
         return idPrestamo;
     }
     private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
-        JOptionPane.showMessageDialog(null, "Préstamo añadido exitosamente.");
-        limpiarTablaPrestamo();
-        mostrarTablaPrestamo();
+      if (isTablaPrestamoEmpty()) {
+            JOptionPane.showMessageDialog(null, "La tabla está vacía.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Préstamo añadido exitosamente.");
+            limpiarTablaPrestamo();
+            mostrarTablaPrestamo();
+        }
     }//GEN-LAST:event_jBsolicitarPrestamoActionPerformed
+
+    private boolean isTablaPrestamoEmpty() {
+        DefaultTableModel model = (DefaultTableModel) jTprestamo.getModel();
+        return model.getRowCount() == 0;
+    }
 
     private void limpiarTablaPrestamo() {
         DefaultTableModel modelo = (DefaultTableModel) jTprestamo.getModel();
         int filas = modelo.getRowCount();
-        for (int i = filas - 1; i >= 0; i--) {
-            modelo.removeRow(i);
+        if (filas > 0) {
+            for (int i = filas - 1; i >= 0; i--) {
+                modelo.removeRow(i);
+            }
         }
     }
+
     
     private void jBeliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeliminarRegistroActionPerformed
         String idLibroIngresado = jTFcodigoLibroEliminar.getText();
@@ -688,18 +705,15 @@ public class JFPrestamo extends javax.swing.JFrame {
             int idLibro = Integer.parseInt(idLibroIngresado); 
             Prestamo prestamoSeleccionado = new Prestamo();
             prestamoSeleccionado.setIdLibro(idLibro);
-
-            if (prestamoSeleccionado.comprobarDuplicados()) {
+            if(!isTablaPrestamoEmpty()){
                 int confirmacion = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que deseas eliminar todos los registros de préstamos para el libro con ID: " + idLibro + "?", "Confirmación", JOptionPane.YES_NO_OPTION); // Pregunta al usuario si está seguro de eliminar
                 if (confirmacion == JOptionPane.YES_OPTION) {
                     prestamoSeleccionado.eliminarRegistroDuplicado();
 
                     JOptionPane.showMessageDialog(null, "Registros de préstamos eliminados exitosamente.");
                     mostrarTablaPrestamo(); 
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No hay registros duplicados para el libro con ID: " + idLibro);
-            }
+                }    
+            }           
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, ingresa un ID de libro válido.");
         }
