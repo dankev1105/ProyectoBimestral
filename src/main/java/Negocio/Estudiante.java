@@ -28,6 +28,6 @@ public class Estudiante extends Persona{
 
     @Override
     public String toString() {
-        return super.toString()+"\nidEstudiante = " + idEstudiante + "\nCorreo Institucional:" + correoInstitucionalEstudiante;
+        return super.toString()+"\nidEstudiante = " + idEstudiante;
     }  
 }
