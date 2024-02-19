@@ -30,20 +30,24 @@ public class JFAutor extends javax.swing.JFrame {
     public JFAutor() {
         initComponents();
         //icono
-        File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/Autor.png");
-        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
-        setIconImage(icon.getImage());
+        //File file = new File("C:/Users/Francis Bravo/Videos/ProyectoBimestral/src/main/java/Imagenes/Autor.png");
+        //ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        //setIconImage(icon.getImage());
         //
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         mostrarTabla();
+        
         this.setResizable(false);
+        
+        this.jTFautorEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
             filtrarTablaId(text);
             filtrarTablaNombre(text);    
         }}); 
+
         this.jTFautorBorrar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
@@ -51,6 +55,7 @@ public class JFAutor extends javax.swing.JFrame {
             filtrarTablaId(text);
             filtrarTablaNombre(text);    
         }});
+
 }
     
     public void filtrarTablaNombre(String query) {
