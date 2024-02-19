@@ -29,7 +29,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jBestudiante = new javax.swing.JButton();
         jBautor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jBlibro = new javax.swing.JButton();
+        jBLibro = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,10 +51,10 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 2, 24)); // NOI18N
         jLabel1.setText("MENÚ PRINCIPAL");
 
-        jBlibro.setText("Libro");
-        jBlibro.addActionListener(new java.awt.event.ActionListener() {
+        jBLibro.setText("Libro");
+        jBLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBlibroActionPerformed(evt);
+                jBLibroActionPerformed(evt);
             }
         });
 
@@ -69,6 +69,14 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jBestudiante)
+                .addGap(18, 18, 18)
+                .addComponent(jBLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jBautor)
+                .addGap(64, 64, 64))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jLabel1)
@@ -173,6 +181,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBLibro;
     private javax.swing.JButton jBautor;
     private javax.swing.JButton jBestudiante;
     private javax.swing.JButton jBlibro;
