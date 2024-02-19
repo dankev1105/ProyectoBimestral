@@ -40,14 +40,13 @@ public class JFEstudiante extends javax.swing.JFrame {
         setIconImage(icon.getImage());
         this.setResizable(false);
         
-        this.jTFestudianteEditar.addKeyListener(new KeyAdapter() {
+        this.jTFestudianteEditarID.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
             filtrarTablaId(text);
-            filtrarTablaNombre(text);    
         }}); 
-        this.jTFestudianteBorrar.addKeyListener(new KeyAdapter() {
+        this.jTFestudianteBorrarNombre.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
@@ -57,18 +56,14 @@ public class JFEstudiante extends javax.swing.JFrame {
         }
       
     public void filtrarTablaNombre(String query) {
-    DefaultTableModel model = (DefaultTableModel) jTdatosEstudiantes.getModel();
-    TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-    jTdatosEstudiantes.setRowSorter(tr);
+        DefaultTableModel model = (DefaultTableModel) jTdatosEstudiantes.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        jTdatosEstudiantes.setRowSorter(tr);
 
-    if (query.trim().length() == 0) {
-        tr.setRowFilter(null);
-    } else {
-        List<RowFilter<Object, Object>> filters = new ArrayList<>();
-        for (int columnIndex = 0; columnIndex < model.getColumnCount(); columnIndex++) {
-            filters.add(RowFilter.regexFilter("(?i)" + query, columnIndex)); // Ignore case
-        }
-        tr.setRowFilter(RowFilter.orFilter(filters));
+        if (query.trim().length() == 0) {
+            tr.setRowFilter(null);
+        } else {
+            tr.setRowFilter(RowFilter.regexFilter(query, 0)); // Cambia el índice a la columna del nombre
         }
     }
     public void filtrarTablaId(String query) {
@@ -128,9 +123,9 @@ public class JFEstudiante extends javax.swing.JFrame {
         jBinsertarEstudiante = new javax.swing.JButton();
         jDateChooser = new com.toedter.calendar.JDateChooser();
         jPanel1 = new javax.swing.JPanel();
-        jBeditarEstudiante = new javax.swing.JButton();
+        jBmostrarEstudianteEditar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        jTFestudianteEditar = new javax.swing.JTextField();
+        jTFestudianteEditarID = new javax.swing.JTextField();
         jBactualizarEstudiante = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jTFnombreEstudianteEditar = new javax.swing.JTextField();
@@ -143,8 +138,8 @@ public class JFEstudiante extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jBborrarEstudiante = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jTFestudianteBorrar = new javax.swing.JTextField();
-        jBMostrar = new javax.swing.JButton();
+        jTFestudianteBorrarNombre = new javax.swing.JTextField();
+        jBMostrarEstudianteBorrar = new javax.swing.JButton();
         jTFnombreEstudianteBorrar = new javax.swing.JTextField();
         jTFfechaEstudianteBorrar = new javax.swing.JTextField();
         jTFIDEstudianteBorrar = new javax.swing.JTextField();
@@ -153,6 +148,8 @@ public class JFEstudiante extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jTFestudianteBorrarID = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTdatosEstudiantes = new javax.swing.JTable();
@@ -216,7 +213,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTFidEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                    .addComponent(jTFidEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
                     .addComponent(jTFcorreoInstitucionalEstudiante)
                     .addComponent(jTFnombreEstudiante))
                 .addGap(18, 18, 18)
@@ -251,31 +248,31 @@ public class JFEstudiante extends javax.swing.JFrame {
                             .addComponent(jLabel4))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBinsertarEstudiante)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Insertar", jPanel2);
 
-        jBeditarEstudiante.setText("Editar");
-        jBeditarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        jBmostrarEstudianteEditar.setText("Mostrar");
+        jBmostrarEstudianteEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBeditarEstudianteActionPerformed(evt);
+                jBmostrarEstudianteEditarActionPerformed(evt);
             }
         });
 
         jLabel5.setText("Ingrese el Código del Estudiante a Editar:");
 
-        jTFestudianteEditar.addActionListener(new java.awt.event.ActionListener() {
+        jTFestudianteEditarID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFestudianteEditarActionPerformed(evt);
+                jTFestudianteEditarIDActionPerformed(evt);
             }
         });
-        jTFestudianteEditar.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTFestudianteEditarID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFestudianteEditarKeyReleased(evt);
+                jTFestudianteEditarIDKeyReleased(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTFestudianteEditarKeyTyped(evt);
+                jTFestudianteEditarIDKeyTyped(evt);
             }
         });
 
@@ -312,9 +309,9 @@ public class JFEstudiante extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTFestudianteEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
-                        .addComponent(jBeditarEstudiante)
+                        .addComponent(jTFestudianteEditarID, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jBmostrarEstudianteEditar)
                         .addGap(18, 18, 18)
                         .addComponent(jBactualizarEstudiante))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -322,7 +319,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                         .addComponent(jTFnombreEstudianteEditar, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jTFIDEstudianteEditar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
                         .addComponent(jTFcorreoEstudianteEditar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,11 +340,11 @@ public class JFEstudiante extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
                     .addComponent(jTFcorreoEstudianteEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTFestudianteEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBeditarEstudiante)
+                    .addComponent(jTFestudianteEditarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBmostrarEstudianteEditar)
                     .addComponent(jBactualizarEstudiante))
                 .addContainerGap())
         );
@@ -361,12 +358,12 @@ public class JFEstudiante extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Filtrar");
+        jLabel6.setText("Filtrar por ID:");
 
-        jBMostrar.setText("Mostrar Estudiante");
-        jBMostrar.addActionListener(new java.awt.event.ActionListener() {
+        jBMostrarEstudianteBorrar.setText("Mostrar Estudiante");
+        jBMostrarEstudianteBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBMostrarActionPerformed(evt);
+                jBMostrarEstudianteBorrarActionPerformed(evt);
             }
         });
 
@@ -386,24 +383,21 @@ public class JFEstudiante extends javax.swing.JFrame {
 
         jLabel18.setText("Correo Institucional:");
 
+        jLabel7.setText("Filtrar por Nombre:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFIDEstudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
+                            .addComponent(jLabel17)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTFestudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                            .addGap(41, 41, 41)
+                            .addComponent(jTFIDEstudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addGap(47, 47, 47)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel15)
@@ -412,34 +406,51 @@ public class JFEstudiante extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                     .addComponent(jLabel18)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jTFcorreoEstudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFfechaEstudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                                    .addComponent(jTFcorreoEstudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanel3Layout.createSequentialGroup()
+                            .addComponent(jLabel16)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jTFfechaEstudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTFestudianteBorrarID, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jBMostrarEstudianteBorrar)
+                                .addGap(70, 70, 70))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                .addComponent(jBborrarEstudiante)
+                                .addGap(101, 101, 101))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jBMostrar)
-                        .addGap(70, 70, 70))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jBborrarEstudiante)
-                        .addGap(101, 101, 101))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTFestudianteBorrarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTFestudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(jTFestudianteBorrarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTFestudianteBorrarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFnombreEstudianteBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBMostrar)
+                    .addComponent(jBMostrarEstudianteBorrar)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(13, 13, 13)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -518,7 +529,7 @@ public class JFEstudiante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -612,47 +623,43 @@ public class JFEstudiante extends javax.swing.JFrame {
         
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
         if(jTFnombreEstudianteBorrar.getText().length()==0){
-        JOptionPane.showMessageDialog(null, "Primero seleccione al estudiante a eliminar","Error",JOptionPane.WARNING_MESSAGE);
-        }
-        else{
-        try {
-            int idEstudiante = Integer.parseInt(this.jTFIDEstudianteBorrar.getText());
+            JOptionPane.showMessageDialog(null, "Primero seleccione al estudiante a eliminar","Error",JOptionPane.WARNING_MESSAGE);
+        }else{
+            try {
+                int idEstudiante = Integer.parseInt(this.jTFIDEstudianteBorrar.getText());
 
-            if (existeEstudiante(idEstudiante)) {
-                int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar?", "Confirmación", JOptionPane.YES_NO_OPTION);
-                if (confirm == JOptionPane.YES_OPTION) {
-                    eliminarEstudianteEnBaseDeDatos(idEstudiante);
-                    mostrarTabla();
+                if (existeEstudiante(idEstudiante)) {
+                    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar?", "Confirmación", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        eliminarEstudianteEnBaseDeDatos(idEstudiante);
+                        mostrarTabla();
 
-                    JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente");
+                        JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El estudiante con el id ingresado no existe");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "El estudiante con el id ingresado no existe");
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
             }
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
         }
-    }
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
 
-    private void jBeditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeditarEstudianteActionPerformed
+    private void jBmostrarEstudianteEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarEstudianteEditarActionPerformed
         TableModel model = jTdatosEstudiantes.getModel();
-        int selectedRow = -1;
-
+            mostrarTabla();
         // Si solo hay una fila en la tabla después de haberla filtrado, seleccionar esa fila
         if(jTdatosEstudiantes.getRowCount() == 1){
-            selectedRow = 0;
-            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + model.getValueAt(selectedRow, 3).toString());
-            jTFnombreEstudianteEditar.setText(model.getValueAt(selectedRow, 0).toString());
-            jTFfechaEstudianteEditar.setText(model.getValueAt(selectedRow, 1).toString());
-            jTFcorreoEstudianteEditar.setText(model.getValueAt(selectedRow, 2).toString());
-            jTFIDEstudianteEditar.setText(model.getValueAt(selectedRow, 3).toString());   
-            mostrarTabla();
+            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + model.getValueAt(0, 3).toString());
+            jTFnombreEstudianteEditar.setText(model.getValueAt(0, 0).toString());
+            jTFfechaEstudianteEditar.setText(model.getValueAt(0, 1).toString());
+            jTFcorreoEstudianteEditar.setText(model.getValueAt(0, 2).toString());
+            jTFIDEstudianteEditar.setText(model.getValueAt(0, 3).toString());   
         }
         else{
             JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo estudiante.","Error",JOptionPane.WARNING_MESSAGE);
         }
-    }//GEN-LAST:event_jBeditarEstudianteActionPerformed
+    }//GEN-LAST:event_jBmostrarEstudianteEditarActionPerformed
     
     private void actualizarEstudianteEnBaseDeDatos(int idEstudiante, String nuevoNombre, String nuevaFechaNacimiento, String nuevoCorreoInstitucional) {
         String queryNombre = "UPDATE Estudiante SET NombreEstudiante = ? WHERE IdEstudiante = ?";
@@ -713,9 +720,9 @@ public class JFEstudiante extends javax.swing.JFrame {
     private void jTFidEstudianteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFidEstudianteKeyReleased
     }//GEN-LAST:event_jTFidEstudianteKeyReleased
 
-    private void jTFestudianteEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFestudianteEditarActionPerformed
+    private void jTFestudianteEditarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFestudianteEditarIDActionPerformed
 
-    }//GEN-LAST:event_jTFestudianteEditarActionPerformed
+    }//GEN-LAST:event_jTFestudianteEditarIDActionPerformed
 
     private void jBactualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarEstudianteActionPerformed
         int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
@@ -727,15 +734,15 @@ public class JFEstudiante extends javax.swing.JFrame {
         mostrarTabla();
     }//GEN-LAST:event_jBactualizarEstudianteActionPerformed
 
-    private void jTFestudianteEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFestudianteEditarKeyTyped
+    private void jTFestudianteEditarIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFestudianteEditarIDKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTFestudianteEditarKeyTyped
+    }//GEN-LAST:event_jTFestudianteEditarIDKeyTyped
 
-    private void jTFestudianteEditarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFestudianteEditarKeyReleased
+    private void jTFestudianteEditarIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFestudianteEditarIDKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTFestudianteEditarKeyReleased
+    }//GEN-LAST:event_jTFestudianteEditarIDKeyReleased
 
-    private void jBMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarActionPerformed
+    private void jBMostrarEstudianteBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarEstudianteBorrarActionPerformed
     TableModel model = jTdatosEstudiantes.getModel();
     if(jTdatosEstudiantes.getSelectedRow()==-1){
     JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun registro","Error",JOptionPane.WARNING_MESSAGE);
@@ -746,7 +753,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     jTFcorreoEstudianteBorrar.setText(model.getValueAt(jTdatosEstudiantes.getSelectedRow(), 2).toString());
     jTFIDEstudianteBorrar.setText(model.getValueAt(jTdatosEstudiantes.getSelectedRow(), 3).toString());
     }
-    }//GEN-LAST:event_jBMostrarActionPerformed
+    }//GEN-LAST:event_jBMostrarEstudianteBorrarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -782,11 +789,11 @@ public class JFEstudiante extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBMostrar;
+    private javax.swing.JButton jBMostrarEstudianteBorrar;
     private javax.swing.JButton jBactualizarEstudiante;
     private javax.swing.JButton jBborrarEstudiante;
-    private javax.swing.JButton jBeditarEstudiante;
     private javax.swing.JButton jBinsertarEstudiante;
+    private javax.swing.JButton jBmostrarEstudianteEditar;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -803,6 +810,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -818,8 +826,9 @@ public class JFEstudiante extends javax.swing.JFrame {
     private javax.swing.JTextField jTFcorreoEstudianteBorrar;
     private javax.swing.JTextField jTFcorreoEstudianteEditar;
     private javax.swing.JTextField jTFcorreoInstitucionalEstudiante;
-    private javax.swing.JTextField jTFestudianteBorrar;
-    private javax.swing.JTextField jTFestudianteEditar;
+    private javax.swing.JTextField jTFestudianteBorrarID;
+    private javax.swing.JTextField jTFestudianteBorrarNombre;
+    private javax.swing.JTextField jTFestudianteEditarID;
     private javax.swing.JTextField jTFfechaEstudianteBorrar;
     private javax.swing.JTextField jTFfechaEstudianteEditar;
     private javax.swing.JTextField jTFidEstudiante;

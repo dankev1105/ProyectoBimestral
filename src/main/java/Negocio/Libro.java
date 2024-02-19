@@ -1,24 +1,32 @@
 package Negocio;
 
 public class Libro {
-    private long idLibro;
+    private int idLibro;
+    Autor idAutor;
     private int unidadesLibro;
     private String tituloLibro,genero;
-    
 
-        public Libro(long idLibro, int unidadesLibro, String tituloLibro, String genero) {
+    public Libro(int idLibro, Autor idAutor, int unidadesLibro, String tituloLibro, String genero) {
         this.idLibro = idLibro;
+        this.idAutor = idAutor;
         this.unidadesLibro = unidadesLibro;
         this.tituloLibro = tituloLibro;
         this.genero = genero;
-      
+    }
+
+    public Autor getIdAutor() {
+        return idAutor;
+    }
+
+    public void setIdAutor(Autor idAutor) {
+        this.idAutor = idAutor;
     }
 
     public long getIdLibro() {
         return idLibro;
     }
 
-    public void setIdLibro(long idLibro) {
+    public void setIdLibro(int idLibro) {
         this.idLibro = idLibro;
     }
 
@@ -45,7 +53,6 @@ public class Libro {
     public void setGenero(String genero) {
         this.genero = genero;
     }
-
 
    @Override
     public String toString() {

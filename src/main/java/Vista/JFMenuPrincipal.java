@@ -1,24 +1,21 @@
 package Vista;
 
-import Vista.JFAutor;
-import Vista.JFEstudiante;
-import Vista.JFLibro;
 import java.io.File;
 import javax.swing.ImageIcon;
 
 public class JFMenuPrincipal extends javax.swing.JFrame {
     Vista.JFAutor autorVentana = new JFAutor();
     Vista.JFEstudiante estudianteVentana = new JFEstudiante();
-    Vista.JFLibro libroVentana = new JFLibro();
     Vista.JFPrestamo prestamoVentana = new JFPrestamo();
+    Vista.JFLibro libroVentana = new JFLibro();
 
     public JFMenuPrincipal() {
         initComponents();
+        this.setLocationRelativeTo(this);
+        this.setVisible(false);
         File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
         setIconImage(icon.getImage());
-        this.setLocationRelativeTo(this);
-        this.setVisible(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,8 +26,8 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jBestudiante = new javax.swing.JButton();
         jBautor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jBLibro = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        jBprestamo = new javax.swing.JButton();
+        jBlibro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,17 +48,17 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Showcard Gothic", 2, 24)); // NOI18N
         jLabel1.setText("MENÚ PRINCIPAL");
 
-        jBLibro.setText("Libro");
-        jBLibro.addActionListener(new java.awt.event.ActionListener() {
+        jBprestamo.setText("Préstamo");
+        jBprestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBLibroActionPerformed(evt);
+                jBprestamoActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Préstamo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jBlibro.setText("Libro");
+        jBlibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jBlibroActionPerformed(evt);
             }
         });
 
@@ -70,42 +67,34 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jBestudiante)
-                .addGap(18, 18, 18)
-                .addComponent(jBLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jBautor)
-                .addGap(64, 64, 64))
-            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(105, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addGap(27, 80, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jBestudiante)
-                        .addGap(56, 56, 56)
-                        .addComponent(jBlibro)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
-                .addComponent(jBautor)
-                .addGap(22, 22, 22))
+                    .addComponent(jBprestamo)
+                    .addComponent(jBestudiante))
+                .addGap(67, 67, 67)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBautor)
+                    .addComponent(jBlibro))
+                .addGap(84, 84, 84))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBestudiante)
-                    .addComponent(jBlibro)
                     .addComponent(jBautor))
-                .addGap(48, 48, 48)
-                .addComponent(jButton1)
-                .addGap(31, 31, 31))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBprestamo)
+                    .addComponent(jBlibro))
+                .addGap(46, 46, 46))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -138,15 +127,15 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jBautorActionPerformed
 
+    private void jBprestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBprestamoActionPerformed
+        prestamoVentana.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jBprestamoActionPerformed
+
     private void jBlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlibroActionPerformed
         libroVentana.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jBlibroActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        prestamoVentana.setVisible(true);
-        this.setVisible(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -171,6 +160,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(JFMenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -181,11 +171,10 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBLibro;
     private javax.swing.JButton jBautor;
     private javax.swing.JButton jBestudiante;
     private javax.swing.JButton jBlibro;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBprestamo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

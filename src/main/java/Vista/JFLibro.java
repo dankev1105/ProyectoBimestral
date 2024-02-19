@@ -35,6 +35,9 @@ public class JFLibro extends javax.swing.JFrame {
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         this.setResizable(false);    
+        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
     this.jTFlibroEditarFiltrarNombre.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
@@ -54,10 +57,6 @@ public class JFLibro extends javax.swing.JFrame {
             filtrarTablaNombreBorrar(text);
         }});
         this.jTFlibroBorrarFiltrarID.addKeyListener(new KeyAdapter() {
-        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
-        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
-        setIconImage(icon.getImage());
-        this.jTFlibroEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
@@ -185,10 +184,8 @@ public class JFLibro extends javax.swing.JFrame {
         catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error"+e.toString());
         }
-
 }
-
-    
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -197,16 +194,15 @@ public class JFLibro extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTAlibroActual = new javax.swing.JTextArea();
-        jBinsertarLibro = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jTFtituloLibro = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTFgeneroLibro = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTFunidadesLibro = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTFidLibro = new javax.swing.JTextField();
+        jTFunidadesLibro = new javax.swing.JTextField();
         jPanel7 = new javax.swing.JPanel();
         jTFidAutor = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -214,6 +210,7 @@ public class JFLibro extends javax.swing.JFrame {
         jTFnombreAutor = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTFfechaNacimientoAutor = new javax.swing.JTextField();
+        jBinsertarLib = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jBeditarLibro = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
@@ -251,6 +248,8 @@ public class JFLibro extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTdatosAutor = new javax.swing.JTable();
         jLabel10 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -265,13 +264,6 @@ public class JFLibro extends javax.swing.JFrame {
         jTAlibroActual.setBorder(javax.swing.BorderFactory.createTitledBorder("Libro Actual"));
         jScrollPane2.setViewportView(jTAlibroActual);
 
-        jBinsertarLibro.setText("Insertar");
-        jBinsertarLibro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBinsertarLibroActionPerformed(evt);
-            }
-        });
-
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion Libro:"));
 
         jLabel1.setText("Titulo del Libro:");
@@ -279,20 +271,6 @@ public class JFLibro extends javax.swing.JFrame {
         jLabel2.setText("Genero:");
 
         jLabel3.setText("Unidades del Libro:");
-
-        jTFunidadesLibro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTFunidadesLibroActionPerformed(evt);
-            }
-        });
-        jTFunidadesLibro.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFunidadesLibroKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTFunidadesLibroKeyTyped(evt);
-            }
-        });
 
         jLabel4.setText("Id Libro:");
 
@@ -314,9 +292,9 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTFidLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                    .addComponent(jTFunidadesLibro)
                     .addComponent(jTFgeneroLibro)
-                    .addComponent(jTFtituloLibro, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jTFtituloLibro, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTFunidadesLibro))
                 .addGap(22, 22, 22))
         );
         jPanel5Layout.setVerticalGroup(
@@ -332,13 +310,13 @@ public class JFLibro extends javax.swing.JFrame {
                     .addComponent(jTFgeneroLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFunidadesLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jTFunidadesLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jTFidLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Informacion Autor:"));
@@ -398,6 +376,13 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
         );
 
+        jBinsertarLib.setText("Insertar");
+        jBinsertarLib.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBinsertarLibActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -412,8 +397,8 @@ public class JFLibro extends javax.swing.JFrame {
                         .addGap(61, 61, 61)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
-                        .addComponent(jBinsertarLibro)))
+                        .addGap(222, 222, 222)
+                        .addComponent(jBinsertarLib)))
                 .addContainerGap(147, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -427,9 +412,9 @@ public class JFLibro extends javax.swing.JFrame {
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(jBinsertarLibro)))
-                .addGap(0, 21, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jBinsertarLib)))
+                .addGap(0, 24, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Insertar", jPanel2);
@@ -523,8 +508,7 @@ public class JFLibro extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTFgeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                            .addComponent(jLabel12))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(9, 9, 9)
@@ -726,6 +710,12 @@ public class JFLibro extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tw Cen MT", 3, 36)); // NOI18N
         jLabel10.setText("LIBRO");
 
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel5.setText("Autores");
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel15.setText("Libros");
+
         jMenu1.setText("Archivo");
 
         jMenuItem1.setText("Menú Principal");
@@ -744,16 +734,22 @@ public class JFLibro extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTabbedPane1)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(351, 351, 351)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(262, 262, 262)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(168, 168, 168))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(442, 442, 442))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -761,7 +757,11 @@ public class JFLibro extends javax.swing.JFrame {
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(9, 9, 9)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -793,7 +793,7 @@ public class JFLibro extends javax.swing.JFrame {
         return false;
         }
     
-    private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
+    private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {                                                
         try {
             PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero ,"
             + " IdLibro, UnidadesDisponibles, IdAutor) VALUES (?,?,?,?,?)");
@@ -806,9 +806,9 @@ public class JFLibro extends javax.swing.JFrame {
              
             JOptionPane.showMessageDialog(null, "Datos guardados");
       
-            libro = new Libro( Integer.parseInt(jTFidLibro.getText()),
+            libro = new Libro( Integer.parseInt(this.jTFidLibro.getText()),autor,
              Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(), 
-            jTFtituloLibro.getText(),autor);
+            jTFtituloLibro.getText());
             
             jTAlibroActual.setText(libro.toString());
             mostrarTabla();
@@ -816,12 +816,11 @@ public class JFLibro extends javax.swing.JFrame {
         catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "Libro ya registrado");
         }
+    }                                               
 
-    }//GEN-LAST:event_jBinsertarLibroActionPerformed
-
-    private void jTFunidadesLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFunidadesLibroActionPerformed
+    private void jTFunidadesLibroActionPerformed(java.awt.event.ActionEvent evt) {                                                 
  
-    }//GEN-LAST:event_jTFunidadesLibroActionPerformed
+    }                                                
     private void eliminarLibroEnBaseDeDatos(long idLibro) {
         String query = "DELETE FROM Libro WHERE IdLibro = ?";
 
@@ -833,7 +832,7 @@ public class JFLibro extends javax.swing.JFrame {
         }
         
     }   
-       private void actualizarLibroEnBaseDeDatos(long idLibro, int nuevaCantidad, String nuevoTitulo, String nuevoGenero){
+    private void actualizarLibroEnBaseDeDatos(long idLibro, int nuevaCantidad, String nuevoTitulo, String nuevoGenero){
         
         String queryCantidad = "UPDATE Libro SET UnidadesDisponibles = ? WHERE IdLibro = ?";
         String queryNombre = "UPDATE Libro SET NombreLibro = ? WHERE IdLibro = ?";
@@ -862,113 +861,46 @@ public class JFLibro extends javax.swing.JFrame {
         }
     }
     private void jBeditarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeditarLibroActionPerformed
-    TableModel model = jTdatosLibro.getModel();
-    int filaEncontrada = -1;
-    if(this.jTFlibroEditarFiltrarNombre.getText().length()==0 && this.jTFlibroEditarFiltrarID.getText().length()==0)
-        JOptionPane.showMessageDialog(null, "Primero llene alguno de los campos","Error",JOptionPane.WARNING_MESSAGE);    
-    else{
-    if(this.jTFlibroEditarFiltrarNombre.getText().length()==0){
-    for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 2).toString(); 
-        if (idEnFila.equals(jTFlibroEditarFiltrarID.getText())) {
-            filaEncontrada = fila;
-            break;
-        }
-    }
-    if(filaEncontrada==-1){
-    JOptionPane.showMessageDialog(null, "No existe ese ID","Error",JOptionPane.WARNING_MESSAGE);
-    }
-    else{
-    jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
-    jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
-    jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
-    jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 3).toString());    
-    }    
-    }    
-    else{
-    for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 0).toString(); 
-        if (idEnFila.equals(jTFlibroEditarFiltrarNombre.getText())) {
-            filaEncontrada = fila;
-            break;
-        }
-    }    
-    if(filaEncontrada==-1){
-    JOptionPane.showMessageDialog(null, "No existe ese nombre","Error",JOptionPane.WARNING_MESSAGE);
-    }
-    else{
-    jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
-    jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
-    jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
-    jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 3).toString());    
-    }    
-    }
-    }             
-    }//GEN-LAST:event_jBeditarLibroActionPerformed
-
-    private void jTFunidadesLibroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFunidadesLibroKeyTyped
-
-    }//GEN-LAST:event_jTFunidadesLibroKeyTyped
-
-    private void jTFunidadesLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFunidadesLibroKeyReleased
-
-    }//GEN-LAST:event_jTFunidadesLibroKeyReleased
-
-    private void jTFunidadesLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFunidadesLibroActionPerformed
-
-    }//GEN-LAST:event_jTFunidadesLibroActionPerformed
-
-    private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
-        TableModel model1 = jTdatosAutor.getModel();
-
-        try {
-
-            PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero , IdLibro, UnidadesDisponibles,IdAutor) VALUES (?,?,?,?,?)");
-            pps.setString(1, jTFtituloLibro.getText());
-            pps.setString(2, jTFgeneroLibro.getText());
-            pps.setLong(3, Long.parseLong(jTFidLibro.getText()));
-            pps.setInt(4, Integer.parseInt(jTFunidadesLibro.getText()));
-            pps.setLong(5,Long.parseLong(jTFidAutor.getText()));
-
-            pps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Datos guardados");
-
-            libro = new Libro( Long.parseLong(jTFidLibro.getText()),
-                Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(),
-                jTFgeneroLibro.getText());
-
-            jTAlibroActual.setText(libro.toString());
-
-           mostrarTabla();
-
-            int filaEncontrada = -1;
-            TableModel model2 = jTdatosAutor.getModel();
-            if(this.jTFidAutor.getText().length()==0)
-            JOptionPane.showMessageDialog(null, "El id esta vacio","Error",JOptionPane.WARNING_MESSAGE);
-            else{
-                for (int fila = 0; fila < model2.getRowCount(); fila++) {
-                    String idEnFila = model2.getValueAt(fila, 2).toString();
-                    if (idEnFila.equals(jTFidAutor.getText())) {
-                        filaEncontrada = fila;
-                        break;
-                    }
+        TableModel model = jTdatosLibro.getModel();
+        int filaEncontrada = -1;
+        if(this.jTFlibroEditarFiltrarNombre.getText().length()==0 && this.jTFlibroEditarFiltrarID.getText().length()==0)
+            JOptionPane.showMessageDialog(null, "Primero llene alguno de los campos","Error",JOptionPane.WARNING_MESSAGE);    
+        else{
+        if(this.jTFlibroEditarFiltrarNombre.getText().length()==0){
+            for (int fila = 0; fila < model.getRowCount(); fila++) {
+                String idEnFila = model.getValueAt(fila, 2).toString(); 
+                if (idEnFila.equals(jTFlibroEditarFiltrarID.getText())) {
+                    filaEncontrada = fila;
+                    break;
                 }
             }
             if(filaEncontrada==-1){
-                JOptionPane.showMessageDialog(null, "El id no existe");
+            JOptionPane.showMessageDialog(null, "No existe ese ID","Error",JOptionPane.WARNING_MESSAGE);
+            }else{
+                jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
+                jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
+                jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
+                jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 3).toString());    
+            }    
+        }else{
+            for (int fila = 0; fila < model.getRowCount(); fila++) {
+                String idEnFila = model.getValueAt(fila, 0).toString(); 
+                if (idEnFila.equals(jTFlibroEditarFiltrarNombre.getText())) {
+                    filaEncontrada = fila;
+                    break;
+                }
+            }if(filaEncontrada==-1){
+                JOptionPane.showMessageDialog(null, "No existe ese nombre","Error",JOptionPane.WARNING_MESSAGE);
             }
             else{
-                jTFnombreAutor.setText(model1.getValueAt(filaEncontrada, 0).toString());
-                jTFfechaNacimientoAutor.setText(model1.getValueAt(filaEncontrada, 1).toString());
-
+                jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
+                jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
+                jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
+                jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 3).toString());    
+                }    
             }
-        }
-
-        catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Libro ya registrado");
-        }
-
-    }//GEN-LAST:event_jBinsertarLibroActionPerformed
+        }             
+    }//GEN-LAST:event_jBeditarLibroActionPerformed
 
     private void jTFidAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidAutorActionPerformed
         
@@ -1062,6 +994,58 @@ public class JFLibro extends javax.swing.JFrame {
         }
     }       
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
+
+    private void jBinsertarLibActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibActionPerformed
+        TableModel model1 = jTdatosAutor.getModel();
+
+        try {
+
+            PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero , IdLibro, UnidadesDisponibles,IdAutor) VALUES (?,?,?,?,?)");
+            pps.setString(1, jTFtituloLibro.getText());
+            pps.setString(2, jTFgeneroLibro.getText());
+            pps.setLong(3, Long.parseLong(jTFidLibro.getText()));
+            pps.setInt(4, Integer.parseInt(jTFunidadesLibro.getText()));
+            pps.setLong(5,Long.parseLong(jTFidAutor.getText()));
+
+            pps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Datos guardados");
+
+            libro = new Libro( Integer.parseInt(jTFidLibro.getText()),autor,
+                Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(),
+                jTFgeneroLibro.getText());
+
+            jTAlibroActual.setText(libro.toString());
+
+           mostrarTabla();
+
+            int filaEncontrada = -1;
+            TableModel model2 = jTdatosAutor.getModel();
+            if(this.jTFidAutor.getText().length()==0)
+            JOptionPane.showMessageDialog(null, "El id esta vacio","Error",JOptionPane.WARNING_MESSAGE);
+            else{
+                for (int fila = 0; fila < model2.getRowCount(); fila++) {
+                    String idEnFila = model2.getValueAt(fila, 2).toString();
+                    if (idEnFila.equals(jTFidAutor.getText())) {
+                        filaEncontrada = fila;
+                        break;
+                    }
+                }
+            }
+            if(filaEncontrada==-1){
+                JOptionPane.showMessageDialog(null, "El id no existe");
+            }
+            else{
+                jTFnombreAutor.setText(model1.getValueAt(filaEncontrada, 0).toString());
+                jTFfechaNacimientoAutor.setText(model1.getValueAt(filaEncontrada, 1).toString());
+
+            }
+        }
+
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Libro ya registrado");
+        }
+
+    }//GEN-LAST:event_jBinsertarLibActionPerformed
     
     
     public static void main(String args[]) {
@@ -1102,13 +1086,14 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JButton jBactualizarLibro;
     private javax.swing.JButton jBborrarEstudiante;
     private javax.swing.JButton jBeditarLibro;
-    private javax.swing.JButton jBinsertarLibro;
+    private javax.swing.JButton jBinsertarLib;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1118,6 +1103,7 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;

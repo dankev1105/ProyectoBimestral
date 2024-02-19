@@ -698,7 +698,6 @@ public class JFPrestamo extends javax.swing.JFrame {
         }
     }
 
-    
     private void jBeliminarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeliminarRegistroActionPerformed
         String idLibroIngresado = jTFcodigoLibroEliminar.getText();
         if (idLibroIngresado != null && !idLibroIngresado.isEmpty()) {
