@@ -6,12 +6,12 @@ public class Libro {
     private String tituloLibro,genero;
     Autor autor;
 
-        public Libro(long idLibro, int unidadesLibro, String tituloLibro, String genero, Autor autor) {
+        public Libro(long idLibro, int unidadesLibro, String tituloLibro, String genero) {
         this.idLibro = idLibro;
         this.unidadesLibro = unidadesLibro;
         this.tituloLibro = tituloLibro;
         this.genero = genero;
-        this.autor = autor;
+      
     }
 
     public long getIdLibro() {
@@ -46,13 +46,6 @@ public class Libro {
         this.genero = genero;
     }
 
-    public Autor getAutor() {
-        return autor;
-    }
-
-    public void setAutor(Autor autor) {
-        this.autor = autor;
-    }
 
    @Override
     public String toString() {
@@ -60,7 +53,7 @@ public class Libro {
                 "id del Libro:" + idLibro + 
                 "\nUnidades del Libro: " + unidadesLibro +
                 "\nTitulo del Libro: " + tituloLibro + 
-                "\nGenero:" + genero +
-                "\nAutor:" + autor ;
+                "\nGenero:" + genero 
+               ;
 }
 }
