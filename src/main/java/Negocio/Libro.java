@@ -4,7 +4,7 @@ public class Libro {
     private long idLibro;
     private int unidadesLibro;
     private String tituloLibro,genero;
-    Autor autor;
+    
 
         public Libro(long idLibro, int unidadesLibro, String tituloLibro, String genero) {
         this.idLibro = idLibro;
