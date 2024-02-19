@@ -789,10 +789,13 @@ public class JFEstudiante extends javax.swing.JFrame {
 
     private void jBeditarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeditarEstudianteActionPerformed
     TableModel model = jTdatosEstudiantes.getModel();
-    if(this.jTFestudianteEditarNombre.getText().length()==0){
     int filaEncontrada = -1;
+    if(this.jTFestudianteBorrarNombre.getText().length()==0 && this.jTFestudianteBorrarID.getText().length()==0)
+        JOptionPane.showMessageDialog(null, "Primero llene alguno de los campos","Error",JOptionPane.WARNING_MESSAGE);    
+    else{
+    if(this.jTFestudianteEditarNombre.getText().length()==0){
     for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 3).toString(); // Suponiendo que la ID está en la columna 3
+        String idEnFila = model.getValueAt(fila, 3).toString(); 
         if (idEnFila.equals(jTFestudianteEditarID.getText())) {
             filaEncontrada = fila;
             break;
@@ -809,9 +812,8 @@ public class JFEstudiante extends javax.swing.JFrame {
     }    
     }    
     else{
-    int filaEncontrada = -1;
     for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 0).toString(); // Suponiendo que la ID está en la columna 3
+        String idEnFila = model.getValueAt(fila, 0).toString(); 
         if (idEnFila.equals(jTFestudianteEditarNombre.getText())) {
             filaEncontrada = fila;
             break;
@@ -826,7 +828,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     jTFcorreoEstudianteEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
     jTFIDEstudianteEditar.setText(model.getValueAt(filaEncontrada, 3).toString());     
     }        
-    }
+    }}
     }//GEN-LAST:event_jBeditarEstudianteActionPerformed
     
     
@@ -915,6 +917,9 @@ public class JFEstudiante extends javax.swing.JFrame {
     private void jBMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarActionPerformed
     TableModel model = jTdatosEstudiantes.getModel();
     int filaEncontrada = -1;
+    if(this.jTFestudianteBorrarNombre.getText().length()==0 && this.jTFestudianteBorrarID.getText().length()==0)
+        JOptionPane.showMessageDialog(null, "Primero llene alguno de los campos","Error",JOptionPane.WARNING_MESSAGE);    
+    else{
     if(this.jTFestudianteBorrarNombre.getText().length()==0){
     for (int fila = 0; fila < model.getRowCount(); fila++) {
         String idEnFila = model.getValueAt(fila, 3).toString();
@@ -950,6 +955,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     jTFcorreoEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 2).toString());
     jTFIDEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 3).toString());     
     }            
+    }
     }    
     }//GEN-LAST:event_jBMostrarActionPerformed
 
