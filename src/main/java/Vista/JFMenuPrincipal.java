@@ -1,13 +1,22 @@
 package Vista;
 
+import Vista.JFAutor;
+import Vista.JFEstudiante;
+import Vista.JFLibro;
+import java.io.File;
+import javax.swing.ImageIcon;
+
 public class JFMenuPrincipal extends javax.swing.JFrame {
     Vista.JFAutor autorVentana = new JFAutor();
     Vista.JFEstudiante estudianteVentana = new JFEstudiante();
     Vista.JFLibro libroVentana = new JFLibro();
-
+    Vista.JFPrestamo prestamoVentana = new JFPrestamo();
 
     public JFMenuPrincipal() {
         initComponents();
+        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
         this.setLocationRelativeTo(this);
         this.setVisible(false);
     }
@@ -21,6 +30,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         jBautor = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jBLibro = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,6 +58,13 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Préstamo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -63,19 +80,32 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(91, 91, 91)
                 .addComponent(jLabel1)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButton1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jBestudiante)
+                        .addGap(56, 56, 56)
+                        .addComponent(jBlibro)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+                .addComponent(jBautor)
+                .addGap(22, 22, 22))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBestudiante)
-                    .addComponent(jBautor)
-                    .addComponent(jBLibro))
-                .addGap(67, 67, 67))
+                    .addComponent(jBlibro)
+                    .addComponent(jBautor))
+                .addGap(48, 48, 48)
+                .addComponent(jButton1)
+                .addGap(31, 31, 31))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -108,10 +138,15 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jBautorActionPerformed
 
-    private void jBLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBLibroActionPerformed
+    private void jBlibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlibroActionPerformed
         libroVentana.setVisible(true);
         this.setVisible(false);
-    }//GEN-LAST:event_jBLibroActionPerformed
+    }//GEN-LAST:event_jBlibroActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        prestamoVentana.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -149,6 +184,8 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jBLibro;
     private javax.swing.JButton jBautor;
     private javax.swing.JButton jBestudiante;
+    private javax.swing.JButton jBlibro;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables

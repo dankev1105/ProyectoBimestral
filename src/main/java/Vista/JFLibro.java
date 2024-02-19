@@ -6,6 +6,7 @@ import PConexion.Conexion;
 import Vista.JFMenuPrincipal;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
@@ -32,10 +34,7 @@ public class JFLibro extends javax.swing.JFrame {
         initComponents();
         this.setVisible(false);
         this.setLocationRelativeTo(this);
-        this.setResizable(false);
-         
-        
-        
+        this.setResizable(false);    
     this.jTFlibroEditarFiltrarNombre.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
@@ -55,6 +54,10 @@ public class JFLibro extends javax.swing.JFrame {
             filtrarTablaNombreBorrar(text);
         }});
         this.jTFlibroBorrarFiltrarID.addKeyListener(new KeyAdapter() {
+        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        ImageIcon icon = new ImageIcon(file.getAbsolutePath());
+        setIconImage(icon.getImage());
+        this.jTFlibroEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
             JTextField textField = (JTextField) e.getSource();
             String text = textField.getText();
@@ -790,7 +793,36 @@ public class JFLibro extends javax.swing.JFrame {
         return false;
         }
     
-       private void eliminarLibroEnBaseDeDatos(long idLibro) {
+    private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
+        try {
+            PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero ,"
+            + " IdLibro, UnidadesDisponibles, IdAutor) VALUES (?,?,?,?,?)");
+            pps.setString(1, jTFtituloLibro.getText());
+            pps.setString(2, jTFgeneroLibro.getText());
+            pps.setLong(3, Long.parseLong(jTFidLibro.getText()));
+            pps.setInt(4, Integer.parseInt(jTFunidadesLibro.getText()));
+            pps.setLong(5,autor.getIdAutor());
+            pps.executeUpdate();
+             
+            JOptionPane.showMessageDialog(null, "Datos guardados");
+      
+            libro = new Libro( Integer.parseInt(jTFidLibro.getText()),
+             Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(), 
+            jTFtituloLibro.getText(),autor);
+            
+            jTAlibroActual.setText(libro.toString());
+            mostrarTabla();
+        }
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Libro ya registrado");
+        }
+
+    }//GEN-LAST:event_jBinsertarLibroActionPerformed
+
+    private void jTFunidadesLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFunidadesLibroActionPerformed
+ 
+    }//GEN-LAST:event_jTFunidadesLibroActionPerformed
+    private void eliminarLibroEnBaseDeDatos(long idLibro) {
         String query = "DELETE FROM Libro WHERE IdLibro = ?";
 
         try (PreparedStatement st = cn.prepareStatement(query)) {
