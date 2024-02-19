@@ -8,8 +8,8 @@ import javax.swing.JOptionPane;
 public class Conexion {
     Connection conectar;
     String usuario = "root";
-    String contrasenia = "Alvarit@123";
-    String baseDatos ="biblioteca";
+    String contrasenia = "danielife2005";
+    String baseDatos = "biblioteca";
     String ipServidor = "127.0.0.1";
     String puerto = "3306";
     String cadena = "jdbc:mysql://"+ipServidor+":"+puerto+"/"+baseDatos;

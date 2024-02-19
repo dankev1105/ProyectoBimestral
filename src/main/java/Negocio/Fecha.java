@@ -81,7 +81,7 @@ public class Fecha {
     @Override
     public String toString() {
         if(comprobarFecha()){
-            return this.anio + " / " + this.mes+" / "+this.dia; 
+             return this.anio + "-" + String.format("%02d", this.mes) + "-" + String.format("%02d", this.dia);
         }else{
             return "";
         }
