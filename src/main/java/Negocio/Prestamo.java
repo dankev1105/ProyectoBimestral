@@ -80,20 +80,14 @@ public class Prestamo {
         }
     }
 
-    public void reducirUnidadesLibro() {//VERIFICAR EN LA BASE DE DATOS LAS UNIDADES
+    public void reducirUnidadesLibro() {
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
 
         try {
             java.lang.String sql = "UPDATE Libro SET UnidadesDisponibles = UnidadesDisponibles - 1 WHERE idLibro = ?";
-
-            // Prepara la sentencia
             PreparedStatement ps = cn.prepareStatement(sql);
-
-            // Establece el ID del libro en la sentencia
             ps.setInt(1, idLibro);
-
-            // Ejecuta la sentencia
             ps.executeUpdate();
 
             System.out.println("Las unidades del libro han sido reducidas.");
@@ -104,25 +98,14 @@ public class Prestamo {
     
     public boolean libroYaPrestado() {
         boolean yaPrestado = false;
-
-        // Conéctate a la base de datos
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
 
         try {
-            // Crea una sentencia SQL para comprobar si el libro ya ha sido prestado
             java.lang.String sql = "SELECT * FROM Prestamo WHERE IdLibro = ?";
-
-            // Prepara la sentencia
             PreparedStatement ps = cn.prepareStatement(sql);
-
-            // Establece el ID del libro en la sentencia
             ps.setInt(1, idLibro);
-
-            // Ejecuta la sentencia y obtén los resultados
             ResultSet rs = ps.executeQuery();
-
-            // Si hay al menos un resultado, entonces el libro ya ha sido prestado
             yaPrestado = rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -132,23 +115,14 @@ public class Prestamo {
     }
     
     public void eliminarRegistro() {
-        // Conéctate a la base de datos
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
 
         try {
-            // Crea una sentencia SQL para eliminar el registro
             java.lang.String sql = "DELETE FROM Prestamo WHERE IdLibro = ?";
-
-            // Prepara la sentencia
             PreparedStatement ps = cn.prepareStatement(sql);
-
-            // Establece el ID del libro en la sentencia
             ps.setInt(1, idLibro);
-
-            // Ejecuta la sentencia
             int rowsAffected = ps.executeUpdate();
-
             if (rowsAffected > 0) {
                 System.out.println("El registro ha sido eliminado exitosamente.");
             } else {
@@ -221,7 +195,6 @@ public class Prestamo {
             e.printStackTrace();
             return false;
         } finally {
-            // Cierra rs, pstmt y cn para liberar recursos
             if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
             if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
             if (cn != null) try { cn.close(); } catch (SQLException e) { e.printStackTrace(); }
