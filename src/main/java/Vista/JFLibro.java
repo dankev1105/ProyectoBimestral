@@ -26,65 +26,38 @@ public class JFLibro extends javax.swing.JFrame {
     Autor autor;
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
-       
+    
     public JFLibro() {
         initComponents();
         this.setVisible(false);
         this.setLocationRelativeTo(this);
-        mostrarTabla();
         this.setResizable(false);
         this.jTFlibroEditar.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
-            JTextField textField = (JTextField) e.getSource();
-            String text = textField.getText();
-
-            filtrarTabla(text);
+        JTextField textField = (JTextField) e.getSource();
+        String text = textField.getText();   
+        filtrarTabla(text);
+       
         }
     });
-     mostrarTabla();
+    mostrarTabla();
     }
+  
     public void filtrarTabla(String query) {
-        DefaultTableModel model = (DefaultTableModel) jTdatosLibro.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        DefaultTableModel model1 = (DefaultTableModel) jTdatosLibro.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model1);
         jTdatosLibro.setRowSorter(tr);
 
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 3));
+            tr.setRowFilter(RowFilter.regexFilter(query, 5));
         }
     }
-    public void mostrarTabla(){
-        String sql = "SELECT*FROM Libro";
-        Statement st;
-        Conexion cn = new Conexion();
-        Connection conexion = cn.establecerConexion();
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Nombre");
-        model.addColumn("Genero");
-        model.addColumn("IdLibro");
-        model.addColumn("Unidades");
-        jTdatosLibro.setModel(model);
-        String [] datos = new String [4];
-        try{
-            st = conexion.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            while(rs.next()){
-                datos[0]=rs.getString(1);
-                datos[1]=rs.getString(2);
-                datos[2]=String.valueOf(rs.getLong(3));
-                datos[3]=String.valueOf(rs.getInt(4));
-                model.addRow(datos);
-            }
-        }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error"+e.toString());
-        }
-    }
-    
+   
       public void filtrarTablaAutor(String query) {
-        DefaultTableModel model = (DefaultTableModel) jTdatosAutor.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        DefaultTableModel model2 = (DefaultTableModel) jTdatosAutor.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model2);
         jTdatosAutor.setRowSorter(tr);
 
         if (query.trim().length() == 0) {
@@ -93,33 +66,62 @@ public class JFLibro extends javax.swing.JFrame {
             tr.setRowFilter(RowFilter.regexFilter(query, 3));
         }
         }
-      
-        public void mostrarTablaAutor(){
-        String sql = "SELECT*FROM Autor";
+    
+    public void mostrarTabla(){
+    String sql = "SELECT*FROM Libro";
         Statement st;
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Nombre");
-        model.addColumn("Fecha de Nacimiento");
-        model.addColumn("IdAutor");
-        jTdatosLibro.setModel(model);
-        String [] datosAutor = new String [3];
+        DefaultTableModel model1 = new DefaultTableModel();
+        model1.addColumn("Nombre");
+        model1.addColumn("Genero");
+        model1.addColumn("IdLibro");
+        model1.addColumn("IdAutor");
+        model1.addColumn("Unidades");
+        
+        
+        jTdatosLibro.setModel(model1);
+        String [] datos = new String [5];
         try{
             st = conexion.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
-                datosAutor[0]=rs.getString(1);
-                datosAutor[1]=rs.getString(2);
-                datosAutor[2]=String.valueOf(rs.getLong(3));
-                model.addRow(datosAutor);
+                datos[0]=rs.getString(1);
+                datos[1]=rs.getString(2);
+                datos[2]=String.valueOf(rs.getLong(3));
+                datos[3]=String.valueOf(rs.getInt(4));
+                datos[4]=String.valueOf(rs.getInt(5));
+                model1.addRow(datos);
             }
         }
         catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error"+e.toString());
         }
-    }
-    
+	String sql2 = "SELECT * FROM Autor";
+        Statement st2;
+        DefaultTableModel model2 = new DefaultTableModel();
+        model2.addColumn("Nombre");
+        model2.addColumn("Fecha de Nacimiento");
+        model2.addColumn("IdAutor");
+        
+        jTdatosAutor.setModel(model2); 
+        String [] datosAutor = new String [3];
+        try{
+            st2 = conexion.createStatement();
+            ResultSet rs = st2.executeQuery(sql2);
+            while(rs.next()){
+                datosAutor[0]=rs.getString(1);
+                datosAutor[1]=rs.getString(2);
+                datosAutor[2]=String.valueOf(rs.getLong(3));
+                model2.addRow(datosAutor);
+            }
+        }
+        catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Error"+e.toString());
+        }
+
+}
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -146,8 +148,6 @@ public class JFLibro extends javax.swing.JFrame {
         jTFnombreAutor = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTFfechaNacimientoAutor = new javax.swing.JTextField();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTAautorActual = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
         jBeditarLibro = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -241,13 +241,10 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jTFgeneroLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jTFunidadesLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFunidadesLibro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -312,12 +309,6 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
         );
 
-        jTAautorActual.setEditable(false);
-        jTAautorActual.setColumns(20);
-        jTAautorActual.setRows(5);
-        jTAautorActual.setBorder(javax.swing.BorderFactory.createTitledBorder("Autor Actual:"));
-        jScrollPane4.setViewportView(jTAautorActual);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -325,30 +316,31 @@ public class JFLibro extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jBinsertarLibro)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jScrollPane4)))
+                        .addGap(61, 61, 61)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(224, 224, 224)
+                        .addComponent(jBinsertarLibro)))
+                .addContainerGap(147, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane4)
-                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBinsertarLibro)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jBinsertarLibro)))
+                .addGap(0, 46, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Insertar", jPanel2);
@@ -376,7 +368,7 @@ public class JFLibro extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(243, 243, 243)
                         .addComponent(jBeditarLibro)))
-                .addContainerGap(292, Short.MAX_VALUE))
+                .addContainerGap(596, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,7 +407,7 @@ public class JFLibro extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(240, 240, 240)
                         .addComponent(jBborrarLibro)))
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(597, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -467,20 +459,20 @@ public class JFLibro extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 416, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Tw Cen MT", 3, 36)); // NOI18N
@@ -511,7 +503,7 @@ public class JFLibro extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jTabbedPane1)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -552,67 +544,7 @@ public class JFLibro extends javax.swing.JFrame {
         }
         return false;
         }
-   
-    private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
-        TableModel model1 = jTdatosAutor.getModel();
-        TableModel model2 = jTdatosLibro.getModel();
-        try {
-            
-            PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero , IdLibro, "
-                    + "UnidadesDisponibles, IdAutor) VALUES (?,?,?,?)");
-            pps.setString(1, jTFtituloLibro.getText());
-            pps.setString(2, jTFgeneroLibro.getText());
-            pps.setInt(3, Integer.parseInt(jTFunidadesLibro.getText()));
-            pps.setLong(4, Long.parseLong(jTFidLibro.getText()));
-            
-            pps.executeUpdate();
-             
-            JOptionPane.showMessageDialog(null, "Datos guardados");
-       
-            libro = new Libro( Long.parseLong(jTFidLibro.getText()),
-            Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(), 
-            jTFgeneroLibro.getText());
-            
-            jTAlibroActual.setText(libro.toString());
-            
-            mostrarTabla();
-            
-            int filaEncontrada = -1;
-            
-            if(this.jTFidAutor.getText().length()==0)
-             JOptionPane.showMessageDialog(null, "El id esta vacio","Error",JOptionPane.WARNING_MESSAGE);    
-             else{
-               for (int fila = 0; fila < model1.getRowCount(); fila++) {
-            String idEnFila = model1.getValueAt(fila, 3).toString(); 
-             if (idEnFila.equals(jTFidAutor.getText())) {
-            filaEncontrada = fila;
-            break;
-        }
-        }
-        }
-         if(filaEncontrada==-1){
-             JOptionPane.showMessageDialog(null, "El id no existe");
-         }  
-         else{
-        jTFnombreAutor.setText(model1.getValueAt(filaEncontrada, 0).toString());
-        jTFfechaNacimientoAutor.setText(model1.getValueAt(filaEncontrada, 1).toString());
-          
-    }
-        }
-  
-        
-        catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Libro ya registrado");
-        }
-        
-        
-
-    }//GEN-LAST:event_jBinsertarLibroActionPerformed
-
-    private void jTFunidadesLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFunidadesLibroActionPerformed
- 
-    }//GEN-LAST:event_jTFunidadesLibroActionPerformed
-    private void eliminarLibroEnBaseDeDatos(long idLibro) {
+       private void eliminarLibroEnBaseDeDatos(long idLibro) {
         String query = "DELETE FROM Libro WHERE IdLibro = ?";
 
         try (PreparedStatement st = cn.prepareStatement(query)) {
@@ -642,6 +574,7 @@ public class JFLibro extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBborrarLibroActionPerformed
     private void actualizarLibroEnBaseDeDatos(long idLibro, int nuevaCantidad, String nuevoTitulo, String nuevoGenero){
+        
         String queryCantidad = "UPDATE Libro SET UnidadesDisponibles = ? WHERE IdLibro = ?";
         String queryNombre = "UPDATE Libro SET NombreLibro = ? WHERE IdLibro = ?";
         String queryGenero = "UPDATE Libro SET Genero = ? WHERE IdLibro = ?";
@@ -661,6 +594,7 @@ public class JFLibro extends javax.swing.JFrame {
             stGenero.setString(1, nuevoGenero);
             stGenero.setLong(2, idLibro);
             stGenero.executeUpdate();
+            
             mostrarTabla();
 
         } catch (SQLException ex) {
@@ -690,57 +624,76 @@ public class JFLibro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
         }
     }//GEN-LAST:event_jBeditarLibroActionPerformed
-   
+
     private void jTFunidadesLibroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFunidadesLibroKeyTyped
+
     }//GEN-LAST:event_jTFunidadesLibroKeyTyped
 
     private void jTFunidadesLibroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFunidadesLibroKeyReleased
+
     }//GEN-LAST:event_jTFunidadesLibroKeyReleased
- 
-//    private boolean existeAutor(long idAutor) {
-//        String query = "SELECT * FROM Autor WHERE IdAutor = ?";
-//
-//        try (PreparedStatement st = cn.prepareStatement(query)) {
-//            st.setLong(1, idAutor);
-//            ResultSet rs = st.executeQuery();
-//
-//            if (rs.next()) {
-//                return true; 
-//            } else {
-//                return false;
-//            }
-//
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del libro: " + ex.toString());
-//        }
-//        return false;
-//        }
+
+    private void jTFunidadesLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFunidadesLibroActionPerformed
+
+    }//GEN-LAST:event_jTFunidadesLibroActionPerformed
+
+    private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
+        TableModel model1 = jTdatosAutor.getModel();
+
+        try {
+
+            PreparedStatement pps = cn.prepareStatement("INSERT INTO Libro(NombreLibro, Genero , IdLibro, UnidadesDisponibles,IdAutor) VALUES (?,?,?,?,?)");
+            pps.setString(1, jTFtituloLibro.getText());
+            pps.setString(2, jTFgeneroLibro.getText());
+            pps.setLong(3, Long.parseLong(jTFidLibro.getText()));
+            pps.setInt(4, Integer.parseInt(jTFunidadesLibro.getText()));
+            pps.setLong(5,Long.parseLong(jTFidAutor.getText()));
+
+            pps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Datos guardados");
+
+            libro = new Libro( Long.parseLong(jTFidLibro.getText()),
+                Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(),
+                jTFgeneroLibro.getText());
+
+            jTAlibroActual.setText(libro.toString());
+
+           mostrarTabla();
+
+            int filaEncontrada = -1;
+            TableModel model2 = jTdatosAutor.getModel();
+            if(this.jTFidAutor.getText().length()==0)
+            JOptionPane.showMessageDialog(null, "El id esta vacio","Error",JOptionPane.WARNING_MESSAGE);
+            else{
+                for (int fila = 0; fila < model2.getRowCount(); fila++) {
+                    String idEnFila = model2.getValueAt(fila, 2).toString();
+                    if (idEnFila.equals(jTFidAutor.getText())) {
+                        filaEncontrada = fila;
+                        break;
+                    }
+                }
+            }
+            if(filaEncontrada==-1){
+                JOptionPane.showMessageDialog(null, "El id no existe");
+            }
+            else{
+                jTFnombreAutor.setText(model1.getValueAt(filaEncontrada, 0).toString());
+                jTFfechaNacimientoAutor.setText(model1.getValueAt(filaEncontrada, 1).toString());
+
+            }
+        }
+
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Libro ya registrado");
+        }
+
+    }//GEN-LAST:event_jBinsertarLibroActionPerformed
+
     private void jTFidAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidAutorActionPerformed
-//   try {
-//            PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");
-//            pps.setString(1,jTFnombreAutor.getText());
-//            String diaSeleccionado = (String) jCBdiaAutor.getSelectedItem();
-//            String mesSeleccionado = (String) jCBmesAutor.getSelectedItem();
-//            String anioSeleccionado = (String) jCBañoAutor.getSelectedItem();
-//
-//            // Combina los elementos seleccionados en el formato de fecha deseado (asumo que es 'YYYY-MM-DD')
-//            String fechaNacimiento = anioSeleccionado + "/" + mesSeleccionado + "/" + diaSeleccionado;
-//
-//            pps.setString(2, fechaNacimiento);
-//            pps.setInt(3,Integer.parseInt(jTFidAutor.getText()));
-//            pps.executeUpdate();
-//            JOptionPane.showMessageDialog(null,"Datos guardados");
-//            Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);
-//            autor = new Autor(Long.parseLong(jTFidAutor.getText()),jTFnombreAutor.getText(),fechaNacimientoAutor);
-//            jTAautorActual.setText(autor.toString());
-//            mostrarTabla();
-//            //jTAlistaAutor.setText(listaAutor.toString());
-//        }
-//        catch (SQLException ex){
-//            JOptionPane.showMessageDialog(null, "Autor ya registrado");
-//        }
+        
     }//GEN-LAST:event_jTFidAutorActionPerformed
-     
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -800,8 +753,6 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTAautorActual;
     private javax.swing.JTextArea jTAlibroActual;
     private javax.swing.JTextField jTFfechaNacimientoAutor;
     private javax.swing.JTextField jTFgeneroLibro;
