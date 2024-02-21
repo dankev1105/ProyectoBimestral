@@ -1,5 +1,4 @@
 package Negocio;
-
 import PConexion.Conexion;
 import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 import java.sql.Connection;
@@ -90,12 +89,26 @@ public class Prestamo {
             ps.setInt(1, idLibro);
             ps.executeUpdate();
 
-            System.out.println("Las unidades del libro han sido reducidas.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
     
+    public void aumentarUnidadesLibro() {
+        Conexion con = new Conexion();
+        Connection cn = con.establecerConexion();
+
+        try {
+            java.lang.String sql = "UPDATE Libro SET UnidadesDisponibles = UnidadesDisponibles + 1 WHERE idLibro = ?";
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setInt(1, idLibro); 
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean libroYaPrestado() {
         boolean yaPrestado = false;
         Conexion con = new Conexion();
@@ -112,6 +125,34 @@ public class Prestamo {
         }
 
         return yaPrestado;
+    }
+    public void añadirRegistro() {
+        int idPrestamo = generarIdPrestamoUnico();
+        setIdPrestamo(idPrestamo);
+
+        Conexion con = new Conexion();
+        Connection cn = con.establecerConexion();
+        PreparedStatement pstmt = null;
+
+        try {
+            java.lang.String sql = "INSERT INTO Prestamo (IdPrestamo, IdEstudiante, IdLibro, FechaPrestamo, FechaDevolucion) VALUES (?, ?, ?, ?, ?)";
+            pstmt = cn.prepareStatement(sql);
+            pstmt.setInt(1, this.idPrestamo);
+            pstmt.setInt(2, this.idEstudiante);
+            pstmt.setInt(3, this.idLibro);
+            pstmt.setDate(4, java.sql.Date.valueOf(this.fechaPrestamo.toString())); 
+            pstmt.setDate(5, java.sql.Date.valueOf(this.fechaDevolucion.toString()));
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (pstmt != null) {
+                try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+            if (cn != null) {
+                try { cn.close(); } catch (SQLException e) { e.printStackTrace(); }
+            }
+        }
     }
     
     public void eliminarRegistro() {
@@ -199,36 +240,7 @@ public class Prestamo {
             if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
             if (cn != null) try { cn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
-    }
-    
-    public void añadirRegistro() {
-        int idPrestamo = generarIdPrestamoUnico();
-        setIdPrestamo(idPrestamo);
-
-        Conexion con = new Conexion();
-        Connection cn = con.establecerConexion();
-        PreparedStatement pstmt = null;
-
-        try {
-            java.lang.String sql = "INSERT INTO Prestamo (IdPrestamo, IdEstudiante, IdLibro, FechaPrestamo, FechaDevolucion) VALUES (?, ?, ?, ?, ?)";
-            pstmt = cn.prepareStatement(sql);
-            pstmt.setInt(1, this.idPrestamo);
-            pstmt.setInt(2, this.idEstudiante);
-            pstmt.setInt(3, this.idLibro);
-            pstmt.setDate(4, java.sql.Date.valueOf(this.fechaPrestamo.toString())); 
-            pstmt.setDate(5, java.sql.Date.valueOf(this.fechaDevolucion.toString()));
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (pstmt != null) {
-                try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-            }
-            if (cn != null) {
-                try { cn.close(); } catch (SQLException e) { e.printStackTrace(); }
-            }
-        }
-    }
+    } 
 
      public int obtenerIdEstudiante() {
         Conexion con = new Conexion();
