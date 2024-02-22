@@ -79,7 +79,7 @@ public class Prestamo {
         }
     }
 
-    public void reducirUnidadesLibro() {
+    public void reducirUnidadesLibro(int idLibro) {
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
 
@@ -94,7 +94,7 @@ public class Prestamo {
         }
     }
     
-    public void aumentarUnidadesLibro() {
+    public void aumentarUnidadesLibro(int idLibro) {
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
 
@@ -108,6 +108,7 @@ public class Prestamo {
             e.printStackTrace();
         }
     }
+
 
     public boolean libroYaPrestado() {
         boolean yaPrestado = false;
@@ -155,24 +156,20 @@ public class Prestamo {
         }
     }
     
-    public void eliminarRegistro() {
+    public void eliminarRegistro(int idPrestamo) {
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
 
         try {
-            java.lang.String sql = "DELETE FROM Prestamo WHERE IdLibro = ?";
+            java.lang.String sql = "DELETE FROM Prestamo WHERE IdPrestamo = ?";
             PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setInt(1, idLibro);
+            ps.setInt(1, idPrestamo);
             int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("El registro ha sido eliminado exitosamente.");
-            } else {
-                System.out.println("No se encontró ningún registro con ese ID de libro.");
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     
     public boolean comprobarDuplicados() {
         boolean duplicado = false;
@@ -294,7 +291,7 @@ public class Prestamo {
         return 0;
     }
 
-    private int generarIdPrestamoUnico() {
+    public int generarIdPrestamoUnico() {
         Random rand = new Random();
         int idPrestamo = rand.nextInt(1000000);
         while (prestamoExiste(idPrestamo)) {
