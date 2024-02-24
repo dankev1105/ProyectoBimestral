@@ -93,7 +93,7 @@ public class Prestamo {
             e.printStackTrace();
         }
     }
-    
+
     public void aumentarUnidadesLibro(int idLibro) {
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
@@ -102,31 +102,13 @@ public class Prestamo {
             java.lang.String sql = "UPDATE Libro SET UnidadesDisponibles = UnidadesDisponibles + 1 WHERE idLibro = ?";
             PreparedStatement ps = cn.prepareStatement(sql);
             ps.setInt(1, idLibro); 
-            ps.executeUpdate();
-
+            int rowsAffected = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-
-    public boolean libroYaPrestado() {
-        boolean yaPrestado = false;
-        Conexion con = new Conexion();
-        Connection cn = con.establecerConexion();
-
-        try {
-            java.lang.String sql = "SELECT * FROM Prestamo WHERE IdLibro = ?";
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setInt(1, idLibro);
-            ResultSet rs = ps.executeQuery();
-            yaPrestado = rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return yaPrestado;
-    }
+    
     public void añadirRegistro() {
         int idPrestamo = generarIdPrestamoUnico();
         setIdPrestamo(idPrestamo);
@@ -169,63 +151,22 @@ public class Prestamo {
             e.printStackTrace();
         }
     }
-
     
-    public boolean comprobarDuplicados() {
-        boolean duplicado = false;
-        Conexion con = new Conexion();
-        Connection cn = con.establecerConexion();
-
-        try {
-            java.lang.String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdLibro = ? HAVING COUNT(*) > 1";
-
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setInt(1, idLibro);
-
-            ResultSet rs = ps.executeQuery();
-
-            duplicado = rs.next();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return duplicado;
-    }
-
-    public void eliminarRegistroDuplicado() {
-        Conexion con = new Conexion();
-        Connection cn = con.establecerConexion();
-
-        try {
-            java.lang.String sql = "DELETE FROM Prestamo WHERE IdPrestamo IN (SELECT IdPrestamo FROM (SELECT IdPrestamo FROM Prestamo WHERE IdLibro = ? ORDER BY IdPrestamo DESC LIMIT 1) tmp)";
-
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setInt(1, idLibro);
-
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public boolean prestamoExiste(int idPrestamo) {
-        return existe(idPrestamo);
-    }
-    
-    public boolean existe() {
+    public boolean obtenerUnidadesLibro() {
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         try {
-            java.lang.String sql = "SELECT * FROM Prestamo WHERE IdPrestamo = ?";
+            java.lang.String sql = "SELECT unidades FROM Libro WHERE IdLibro = ?";
             pstmt = cn.prepareStatement(sql);
-            pstmt.setInt(1, this.idPrestamo);
+            pstmt.setInt(1, this.idLibro);
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return true;
+                int unidades = rs.getInt("unidades");
+                return unidades > 0;
             } else {
                 return false;
             }
@@ -237,32 +178,6 @@ public class Prestamo {
             if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
             if (cn != null) try { cn.close(); } catch (SQLException e) { e.printStackTrace(); }
         }
-    } 
-
-     public int obtenerIdEstudiante() {
-        Conexion con = new Conexion();
-        Connection cn = con.establecerConexion();
-
-        try {
-            java.lang.String sql = "SELECT IdEstudiante FROM Estudiante LIMIT 1";
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return rs.getInt("IdEstudiante");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (cn != null) {
-                try {
-                    cn.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return 0;
     }
 
     public int obtenerIdLibro() {
@@ -290,7 +205,10 @@ public class Prestamo {
         }
         return 0;
     }
-
+    
+    public boolean prestamoExiste(int idPrestamo) {
+        return existe(idPrestamo);
+    }
     public int generarIdPrestamoUnico() {
         Random rand = new Random();
         int idPrestamo = rand.nextInt(1000000);

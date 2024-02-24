@@ -12,9 +12,12 @@ import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -81,6 +84,22 @@ public class JFPrestamo extends javax.swing.JFrame {
         }
     });
 
+    this.jTFnombreEstudianteDevolver.addKeyListener(new KeyAdapter() {
+    public void keyReleased(KeyEvent e) {
+        JTextField textField = (JTextField) e.getSource();
+        String text = textField.getText();
+        filtrarTablaPrestamoPorNombreEstudiante(text);
+    }
+    });   
+
+    this.jTFnombreLibroDevolver.addKeyListener(new KeyAdapter() {
+        public void keyReleased(KeyEvent e) {
+            JTextField textField = (JTextField) e.getSource();
+            String text = textField.getText();
+            filtrarTablaPrestamoPorNombreLibro(text);
+        }
+        });   
+
     mostrarTablaEstudiante();
     mostrarTablaLibro();
     mostrarTablaPrestamo();
@@ -106,7 +125,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 3)); // Assuming 'ID' is at column 3
+            tr.setRowFilter(RowFilter.regexFilter(query, 3));
         }
     }
     
@@ -147,7 +166,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 0)); // Assuming 'Nombre' is at column 0
+            tr.setRowFilter(RowFilter.regexFilter(query, 0));
         }
     }
     
@@ -159,7 +178,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 2)); // Assuming 'ID' is at column 3
+            tr.setRowFilter(RowFilter.regexFilter(query, 2));
         }
     }
     
@@ -235,7 +254,43 @@ public class JFPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error"+e.toString());
         }
     }
-    
+    public void filtrarTablaPrestamoPorNombreEstudiante(String query) {
+        DefaultTableModel model = (DefaultTableModel) jTprestamo.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        jTprestamo.setRowSorter(tr);
+
+        if (query.trim().length() == 0) {
+            tr.setRowFilter(null);
+        } else {
+            tr.setRowFilter(RowFilter.regexFilter(query, 2));
+        }
+    }
+
+    public void filtrarTablaPrestamoPorNombreLibro(String query) {
+        DefaultTableModel model = (DefaultTableModel) jTprestamo.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        jTprestamo.setRowSorter(tr);
+
+        if (query.trim().length() == 0) {
+            tr.setRowFilter(null);
+        } else {
+            tr.setRowFilter(RowFilter.regexFilter(query, 1));
+        }
+    }
+
+    public void filtrarTablaPrestamoPorIDPrestamo(String query) {
+        DefaultTableModel model = (DefaultTableModel) jTprestamo.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        jTprestamo.setRowSorter(tr);
+
+        if (query.trim().length() == 0) {
+            tr.setRowFilter(null);
+        } else {
+            tr.setRowFilter(RowFilter.regexFilter(query, 0));
+        }
+    }
+
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -272,17 +327,11 @@ public class JFPrestamo extends javax.swing.JFrame {
         jPanel18 = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
         jTFnombreEstudianteDevolver = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
         jTFnombreLibroDevolver = new javax.swing.JTextField();
         jBdevolverPrestamo = new javax.swing.JButton();
+        jLabel22 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTprestamo = new javax.swing.JTable();
-        jPanel20 = new javax.swing.JPanel();
-        jLabel25 = new javax.swing.JLabel();
-        jTFnombreLibroEliminar = new javax.swing.JTextField();
-        jLabel26 = new javax.swing.JLabel();
-        jTFcodigoLibroEliminar = new javax.swing.JTextField();
-        jBeliminarPrestamo = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -565,8 +614,6 @@ public class JFPrestamo extends javax.swing.JFrame {
 
         jLabel21.setText("Búsqueda por Nombre del Libro:");
 
-        jLabel22.setText("Búsqueda por Nombre del Estudiante:");
-
         jBdevolverPrestamo.setText("Devolver");
         jBdevolverPrestamo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -574,22 +621,24 @@ public class JFPrestamo extends javax.swing.JFrame {
             }
         });
 
+        jLabel22.setText("Búsqueda por Nombre del Estudiante:");
+
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel21)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTFnombreLibroDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel22)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jTFnombreEstudianteDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(94, 94, 94)
+                .addGap(78, 78, 78)
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTFnombreLibroDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(127, 127, 127)
                 .addComponent(jBdevolverPrestamo)
-                .addContainerGap(108, Short.MAX_VALUE))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -598,9 +647,9 @@ public class JFPrestamo extends javax.swing.JFrame {
                 .addGroup(jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFnombreLibroDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22)
                     .addComponent(jTFnombreEstudianteDevolver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBdevolverPrestamo))
+                    .addComponent(jBdevolverPrestamo)
+                    .addComponent(jLabel22))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -617,49 +666,6 @@ public class JFPrestamo extends javax.swing.JFrame {
         ));
         jScrollPane7.setViewportView(jTprestamo);
 
-        jPanel20.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Eliminar Préstamo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
-
-        jLabel25.setText("Búsqueda por Nombre del Libro:");
-
-        jLabel26.setText("Búsqueda por Código del Libro:");
-
-        jBeliminarPrestamo.setText("Eliminar");
-        jBeliminarPrestamo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBeliminarPrestamoActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel20Layout = new javax.swing.GroupLayout(jPanel20);
-        jPanel20.setLayout(jPanel20Layout);
-        jPanel20Layout.setHorizontalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel25)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTFnombreLibroEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
-                .addComponent(jLabel26)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTFcodigoLibroEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
-                .addComponent(jBeliminarPrestamo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel20Layout.setVerticalGroup(
-            jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel20Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel20Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel26)
-                    .addComponent(jTFnombreLibroEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFcodigoLibroEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBeliminarPrestamo))
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -670,9 +676,7 @@ public class JFPrestamo extends javax.swing.JFrame {
                     .addComponent(jPanel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -683,9 +687,8 @@ public class JFPrestamo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE))
+                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jTabbedPane1.addTab("Datos de Préstamo", jPanel2);
@@ -788,17 +791,8 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBnuevoPrestamoActionPerformed
 
     private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
-        if (this.idEstudianteSeleccionado == 0 || this.idLibroSeleccionado == 0) {
-            JOptionPane.showMessageDialog(null, "Por favor, selecciona un estudiante y un libro."); 
-            return;
-        } 
         Date fechaActual = new Date();
-        jDfechaDevolucion.setMinSelectableDate(fechaActual);
         Date fechaSeleccionada = jDfechaDevolucion.getDate();
-        if (fechaSeleccionada == null) {
-            JOptionPane.showMessageDialog(null, "Por favor, selecciona una fecha de devolución."); 
-            return;
-        }
         try {
             if (fechaSeleccionada.before(fechaActual)) {
                 throw new Exception("La fecha de devolución no puede ser anterior a la fecha actual.");
@@ -807,6 +801,12 @@ public class JFPrestamo extends javax.swing.JFrame {
             nuevoPrestamo.setIdEstudiante(this.idEstudianteSeleccionado);
             nuevoPrestamo.setIdLibro(this.idLibroSeleccionado);
             nuevoPrestamo.setFechaDevolucion(new Fecha(formatter.format(fechaSeleccionada)));
+
+            // Verifica si hay unidades disponibles del libro
+            if (!nuevoPrestamo.obtenerUnidadesLibro()) {
+                JOptionPane.showMessageDialog(null, "Lo sentimos, no hay unidades disponibles de este libro.");
+                return;
+            }
 
             int idPrestamo = nuevoPrestamo.generarIdPrestamoUnico();
             nuevoPrestamo.setIdPrestamo(idPrestamo);
@@ -820,12 +820,22 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBsolicitarPrestamoActionPerformed
 
     private void jBdevolverPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdevolverPrestamoActionPerformed
-        
+       int selectedRow = jTprestamo.getSelectedRow();
+        if (selectedRow != -1) {
+            int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
+            try {
+                Prestamo prestamo = new Prestamo();
+                prestamo.eliminarRegistro(idPrestamo);
+                prestamo.aumentarUnidadesLibro(this.idLibroSeleccionado);
+                mostrarTablaPrestamo(); 
+                JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }      
+        } else {
+            JOptionPane.showMessageDialog(null, "Por favor, selecciona un préstamo para devolver.");
+        }
     }//GEN-LAST:event_jBdevolverPrestamoActionPerformed
-
-    private void jBeliminarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBeliminarPrestamoActionPerformed
-        
-    }//GEN-LAST:event_jBeliminarPrestamoActionPerformed
 
     private void limpiarTablaPrestamo() {
         DefaultTableModel modelo = (DefaultTableModel) jTprestamo.getModel();
@@ -880,7 +890,6 @@ public class JFPrestamo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBaceptarEstudiante;
     private javax.swing.JButton jBdevolverPrestamo;
-    private javax.swing.JButton jBeliminarPrestamo;
     private javax.swing.JButton jBlimpiarEstudiante;
     private javax.swing.JButton jBlimpiarLibro;
     private javax.swing.JButton jBnuevoPrestamo;
@@ -895,8 +904,6 @@ public class JFPrestamo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -906,7 +913,6 @@ public class JFPrestamo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
@@ -914,12 +920,10 @@ public class JFPrestamo extends javax.swing.JFrame {
     private javax.swing.JTextField jTFcodigoAutor;
     private javax.swing.JTextField jTFcodigoEstudiante;
     private javax.swing.JTextField jTFcodigoLibro;
-    private javax.swing.JTextField jTFcodigoLibroEliminar;
     private javax.swing.JTextField jTFnombreEstudiante;
     private javax.swing.JTextField jTFnombreEstudianteDevolver;
     private javax.swing.JTextField jTFnombreLibro;
     private javax.swing.JTextField jTFnombreLibroDevolver;
-    private javax.swing.JTextField jTFnombreLibroEliminar;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTestudiante;
     private javax.swing.JTable jTlibro;
