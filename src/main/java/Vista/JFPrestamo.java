@@ -782,18 +782,22 @@ public class JFPrestamo extends javax.swing.JFrame {
         this.jTFnombreLibro.setText("");
         this.jTFcodigoLibro.setText("");
         this.jTFcodigoAutor.setText("");
-
+        if (this.jDfechaDevolucion.getDate() != null) {
+            this.jDfechaDevolucion.setDate(null);
+        }
         quitarFiltrado(jTlibro);
         quitarFiltrado(jTprestamo);
         quitarFiltrado(jTestudiante);
         this.jDfechaDevolucion.setDate(null);
-        limpiarTablaPrestamo();
     }//GEN-LAST:event_jBnuevoPrestamoActionPerformed
 
     private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
         Date fechaActual = new Date();
         Date fechaSeleccionada = jDfechaDevolucion.getDate();
         try {
+            if (fechaSeleccionada == null) {
+                throw new Exception("No se ha seleccionado una fecha.");
+            }
             if (fechaSeleccionada.before(fechaActual)) {
                 throw new Exception("La fecha de devolución no puede ser anterior a la fecha actual.");
             }
@@ -802,8 +806,7 @@ public class JFPrestamo extends javax.swing.JFrame {
             nuevoPrestamo.setIdLibro(this.idLibroSeleccionado);
             nuevoPrestamo.setFechaDevolucion(new Fecha(formatter.format(fechaSeleccionada)));
 
-            // Verifica si hay unidades disponibles del libro
-            if (!nuevoPrestamo.obtenerUnidadesLibro()) {
+            if (nuevoPrestamo.obtenerUnidadesLibro()) {
                 JOptionPane.showMessageDialog(null, "Lo sentimos, no hay unidades disponibles de este libro.");
                 return;
             }
@@ -836,16 +839,7 @@ public class JFPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, selecciona un préstamo para devolver.");
         }
     }//GEN-LAST:event_jBdevolverPrestamoActionPerformed
-
-    private void limpiarTablaPrestamo() {
-        DefaultTableModel modelo = (DefaultTableModel) jTprestamo.getModel();
-        int filas = modelo.getRowCount();
-        if (filas > 0) {
-            for (int i = filas - 1; i >= 0; i--) {
-                modelo.removeRow(i);
-            }
-        }
-    }
+   
     public void quitarFiltrado(JTable tabla) {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);

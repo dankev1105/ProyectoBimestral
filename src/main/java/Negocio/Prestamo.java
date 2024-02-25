@@ -159,7 +159,7 @@ public class Prestamo {
         ResultSet rs = null;
 
         try {
-            java.lang.String sql = "SELECT unidades FROM Libro WHERE IdLibro = ?";
+            java.lang.String sql = "SELECT UnidadesDisponibles FROM Libro WHERE IdLibro = ?";
             pstmt = cn.prepareStatement(sql);
             pstmt.setInt(1, this.idLibro);
             rs = pstmt.executeQuery();
