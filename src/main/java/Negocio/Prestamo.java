@@ -84,7 +84,7 @@ public class Prestamo {
         Connection cn = con.establecerConexion();
 
         try {
-            java.lang.String sql = "UPDATE Libro SET UnidadesDisponibles = UnidadesDisponibles - 1 WHERE idLibro = ?";
+            java.lang.String sql = "UPDATE Libro SET UnidadesDisponibles = UnidadesDisponibles - 1 WHERE IdLibro = ?";
             PreparedStatement ps = cn.prepareStatement(sql);
             ps.setInt(1, idLibro);
             ps.executeUpdate();
@@ -99,7 +99,7 @@ public class Prestamo {
         Connection cn = con.establecerConexion();
 
         try {
-            java.lang.String sql = "UPDATE Libro SET UnidadesDisponibles = UnidadesDisponibles + 1 WHERE idLibro = ?";
+            java.lang.String sql = "UPDATE Libro SET UnidadesDisponibles = UnidadesDisponibles + 1 WHERE IdLibro = ?";
             PreparedStatement ps = cn.prepareStatement(sql);
             ps.setInt(1, idLibro); 
             int rowsAffected = ps.executeUpdate();
@@ -165,14 +165,14 @@ public class Prestamo {
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                int unidades = rs.getInt("unidades");
-                return unidades > 0;
+                int unidades = rs.getInt("UnidadesDisponibles");
+                return unidades <= 0;
             } else {
-                return false;
+                return true; 
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return true;
         } finally {
             if (rs != null) try { rs.close(); } catch (SQLException e) { e.printStackTrace(); }
             if (pstmt != null) try { pstmt.close(); } catch (SQLException e) { e.printStackTrace(); }
@@ -180,17 +180,20 @@ public class Prestamo {
         }
     }
 
-    public int obtenerIdLibro() {
+
+    public int obtenerIdLibro(int idPrestamo) {
         Conexion con = new Conexion();
         Connection cn = con.establecerConexion();
+        int idLibro = 0;
 
         try {
-            java.lang.String sql = "SELECT IdLibro FROM Libro LIMIT 1";
+            java.lang.String sql = "SELECT IdLibro FROM Prestamo WHERE IdPrestamo = ?";
             PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setInt(1, idPrestamo);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                return rs.getInt("IdLibro");
+                idLibro = rs.getInt("IdLibro");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -203,8 +206,9 @@ public class Prestamo {
                 }
             }
         }
-        return 0;
+        return idLibro;
     }
+
     
     public boolean prestamoExiste(int idPrestamo) {
         return existe(idPrestamo);

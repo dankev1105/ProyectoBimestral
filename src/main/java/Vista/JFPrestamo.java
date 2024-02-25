@@ -789,12 +789,21 @@ public class JFPrestamo extends javax.swing.JFrame {
         quitarFiltrado(jTprestamo);
         quitarFiltrado(jTestudiante);
         this.jDfechaDevolucion.setDate(null);
+        this.idEstudianteSeleccionado = 0;
+        this.idLibroSeleccionado = 0;
+        
     }//GEN-LAST:event_jBnuevoPrestamoActionPerformed
 
     private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
         Date fechaActual = new Date();
         Date fechaSeleccionada = jDfechaDevolucion.getDate();
         try {
+            if (this.idEstudianteSeleccionado == 0) {
+                throw new Exception("No se ha seleccionado un estudiante.");
+            }
+            if (this.idLibroSeleccionado == 0) {
+                throw new Exception("No se ha seleccionado un libro.");
+            }
             if (fechaSeleccionada == null) {
                 throw new Exception("No se ha seleccionado una fecha.");
             }
@@ -823,13 +832,14 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBsolicitarPrestamoActionPerformed
 
     private void jBdevolverPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdevolverPrestamoActionPerformed
-       int selectedRow = jTprestamo.getSelectedRow();
+        int selectedRow = jTprestamo.getSelectedRow();
         if (selectedRow != -1) {
             int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
             try {
                 Prestamo prestamo = new Prestamo();
+                int idLibro = prestamo.obtenerIdLibro(idPrestamo);
+                prestamo.aumentarUnidadesLibro(idLibro);
                 prestamo.eliminarRegistro(idPrestamo);
-                prestamo.aumentarUnidadesLibro(this.idLibroSeleccionado);
                 mostrarTablaPrestamo(); 
                 JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
             } catch (Exception e) {
