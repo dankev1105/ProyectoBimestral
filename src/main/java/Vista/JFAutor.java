@@ -111,7 +111,7 @@ public class JFAutor extends javax.swing.JFrame {
             while(rs.next()){
                 datos[0]=rs.getString(1);
                 datos[1]=rs.getString(2);
-                datos[2]=String.valueOf(rs.getInt(3)); // Aquí cambiamos a getInt()
+                datos[2]=String.valueOf(rs.getInt(3));
                 model.addRow(datos);
             }
         }
@@ -141,7 +141,7 @@ public class JFAutor extends javax.swing.JFrame {
         jBmostrarAutorEditar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jTFnombreAutorFiltrarEditar = new javax.swing.JTextField();
-        jBactualizarEstudiante = new javax.swing.JButton();
+        jBactualizarAutor = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -274,10 +274,10 @@ public class JFAutor extends javax.swing.JFrame {
 
         jLabel5.setText("Buscar el Código del Autor a Editar:");
 
-        jBactualizarEstudiante.setText("Actualizar");
-        jBactualizarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        jBactualizarAutor.setText("Actualizar");
+        jBactualizarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBactualizarEstudianteActionPerformed(evt);
+                jBactualizarAutorActionPerformed(evt);
             }
         });
 
@@ -320,7 +320,7 @@ public class JFAutor extends javax.swing.JFrame {
                         .addComponent(jBmostrarAutorEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBactualizarEstudiante)
+                    .addComponent(jBactualizarAutor)
                     .addComponent(jTFcodigoAutorFiltrarEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -348,7 +348,7 @@ public class JFAutor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBmostrarAutorEditar)
-                            .addComponent(jBactualizarEstudiante))
+                            .addComponent(jBactualizarAutor))
                         .addGap(32, 32, 32)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -545,30 +545,11 @@ public class JFAutor extends javax.swing.JFrame {
         JFMenuPrincipal menu = new JFMenuPrincipal();
         menu.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-     private boolean existeAutor(int idAutor) {
-        String query = "SELECT * FROM Autor WHERE IdAutor = ?";
-
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setInt(1, idAutor);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del autor: " + ex.toString());
-        }
-    return false;
-    }
     
     private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
         if(jTFnombreAutorBorrar.getText().length()==0){
             JOptionPane.showMessageDialog(null, "Primero seleccione al autor a eliminar","Error",JOptionPane.WARNING_MESSAGE);
-        }
-        else{
+        }else{
             try {
                 int idAutor = Integer.parseInt(this.jTFcodigoAutorBorrar.getText());
 
@@ -577,6 +558,8 @@ public class JFAutor extends javax.swing.JFrame {
                     if (confirm == JOptionPane.YES_OPTION) {
                         eliminarAutorEnBaseDeDatos(idAutor);
                         mostrarTabla();
+                        this.jTFautorBorrarPorNombre.setText("");
+                        this.jTFautorBorrarPorID.setText("");
 
                         JOptionPane.showMessageDialog(null, "Autor y sus libros asociados eliminados correctamente");
 
@@ -591,48 +574,10 @@ public class JFAutor extends javax.swing.JFrame {
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
             } catch (ArrayIndexOutOfBoundsException ex) {
-                JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
             }
         }
     }//GEN-LAST:event_jBborrarAutorActionPerformed
-    
-    private boolean tieneLibrosAsociados(int idAutor) {
-        String sql = "SELECT COUNT(*) FROM Libro WHERE IdAutor = ?";
-        Conexion cn = new Conexion();
-        Connection conexion = cn.establecerConexion();
-        try {
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, idAutor);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error" + e.toString());
-        }
-        return false;
-    }
-    
-    private void actualizarAutorEnBaseDeDatos(int idAutor, String nuevoNombre, String nuevaFechaNacimiento) {
-        String queryNombre = "UPDATE Autor SET NombreAutor = ? WHERE IdAutor = ?";
-        String queryFecha = "UPDATE Autor SET FechaNacimiento = ? WHERE IdAutor = ?";
 
-        try (PreparedStatement stNombre = cn.prepareStatement(queryNombre);
-             PreparedStatement stFecha = cn.prepareStatement(queryFecha)) {
-
-            stNombre.setString(1, nuevoNombre);
-            stNombre.setInt(2, idAutor);
-            stNombre.executeUpdate();
-
-            stFecha.setString(1, nuevaFechaNacimiento);
-            stFecha.setInt(2, idAutor);
-            stFecha.executeUpdate();
-            mostrarTabla();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar autor en la base de datos: " + ex.toString());
-        }
-    }
     private void jBmostrarAutorEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarAutorEditarActionPerformed
         TableModel model = jTdatosAutor.getModel();
         int filaEncontrada = -1;
@@ -667,12 +612,13 @@ public class JFAutor extends javax.swing.JFrame {
             jTFfechaAutorEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
             jTFIDAutorEditar.setText(model.getValueAt(filaEncontrada, 2).toString());     
             autorSeleccionado = Integer.parseInt(jTFIDAutorEditar.getText());
+            jTFnombreAutorFiltrarEditar.setText("");
+            jTFcodigoAutorFiltrarEditar.setText("");
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo registro","Error",JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jBmostrarAutorEditarActionPerformed
 
-   
     private void jBinsertarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarAutorActionPerformed
         try {
             PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");
@@ -696,22 +642,59 @@ public class JFAutor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBinsertarAutorActionPerformed
 
-    private void jBactualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarEstudianteActionPerformed
+    private void jBactualizarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarAutorActionPerformed
         try {
-            int idEstudiante = Integer.parseInt(this.jTFIDAutorEditar.getText());
+            int idAutor = Integer.parseInt(this.jTFIDAutorEditar.getText());
             String nuevoNombre = jTFnombreAutorEditar.getText();
             String nuevaFechaNacimiento = jTFfechaAutorEditar.getText();
-            // Aquí es donde actualizamos el autor en la base de datos
-            actualizarAutorEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento);
-            mostrarTabla();
-            jTFnombreAutorEditar.setText("");
-            jTFfechaAutorEditar.setText("");
-            jTFIDAutorEditar.setText("");
-        } catch (ArrayIndexOutOfBoundsException ex) {
+
+            // Verificar si el autor todavía existe en la tabla
+            if (existeAutor(idAutor)) {
+                // Aquí es donde actualizamos el autor en la base de datos
+                actualizarAutorEnBaseDeDatos(idAutor, nuevoNombre, nuevaFechaNacimiento);
+                mostrarTabla();
+                jTFnombreAutorEditar.setText("");
+                jTFfechaAutorEditar.setText("");
+                jTFIDAutorEditar.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null, "El autor con el id ingresado no existe");
+            }
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Error: el ID del estudiante no es un número válido");
+            JOptionPane.showMessageDialog(null, "Error: el ID del autor no es un número válido");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
         }
-    }//GEN-LAST:event_jBactualizarEstudianteActionPerformed
+    }//GEN-LAST:event_jBactualizarAutorActionPerformed
+    private boolean existeAutor(int idAutor) {
+        String query = "SELECT*FROM Autor WHERE IdAutor = ?";
+
+        try (PreparedStatement st = cn.prepareStatement(query)) {
+            st.setInt(1, idAutor);
+            ResultSet rs = st.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del autor: " + ex.toString());
+        }
+    return false;
+    }
+    private void actualizarAutorEnBaseDeDatos(int idAutor, String nuevoNombre, String nuevaFechaNacimiento) {
+        String query = "UPDATE Autor SET NombreAutor = ?, FechaNacimiento = ? WHERE IdAutor = ?";
+
+        try (PreparedStatement st = cn.prepareStatement(query)) {
+            st.setString(1, nuevoNombre);
+            st.setString(2, nuevaFechaNacimiento);
+            st.setInt(3, idAutor);
+            st.executeUpdate();
+            mostrarTabla();
+        } catch (SQLException ex) {
+        }
+    }
 
     private void jBMostrarAutorBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarAutorBorrarActionPerformed
         TableModel model = jTdatosAutor.getModel();
@@ -759,15 +742,25 @@ public class JFAutor extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFautorBorrarPorNombreActionPerformed
     
     private void eliminarAutorEnBaseDeDatos(long idAutor) {
-        String query = "DELETE FROM Autor WHERE IdAutor = ?";
-
-        try (PreparedStatement st = cn.prepareStatement(query)) {
+    try {
+        // Primero, eliminar los libros asociados al autor
+        String queryLibros = "DELETE FROM Libro WHERE IdAutor = ?";
+        try (PreparedStatement st = cn.prepareStatement(queryLibros)) {
             st.setLong(1, idAutor);
             st.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar autor de la base de datos: " + ex.toString());
         }
+
+        // Luego, eliminar al autor
+        String queryAutor = "DELETE FROM Autor WHERE IdAutor = ?";
+        try (PreparedStatement st = cn.prepareStatement(queryAutor)) {
+            st.setLong(1, idAutor);
+            st.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Autor y Libros eliminados correctamente.");
+        }
+    } catch (SQLException ex) {
     }
+}
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -805,7 +798,7 @@ public class JFAutor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBMostrarAutorBorrar;
-    private javax.swing.JButton jBactualizarEstudiante;
+    private javax.swing.JButton jBactualizarAutor;
     private javax.swing.JButton jBborrarAutor;
     private javax.swing.JButton jBinsertarAutor;
     private javax.swing.JButton jBmostrarAutorEditar;
