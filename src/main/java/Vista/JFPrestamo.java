@@ -27,8 +27,8 @@ public class JFPrestamo extends javax.swing.JFrame {
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
     Date date = new Date();
     Fecha fechaPrestamo;
-    private int idEstudianteSeleccionado;
-    private int idLibroSeleccionado;
+    private int idEstudianteSeleccionado = 0;
+    private int idLibroSeleccionado = 0;
     
     public JFPrestamo() {
         initComponents();
@@ -309,7 +309,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jBsolicitarPrestamo = new javax.swing.JButton();
-        jBnuevoPrestamo = new javax.swing.JButton();
+        jBlimpiarFecha = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jDfechaDevolucion = new com.toedter.calendar.JDateChooser();
         jPanel18 = new javax.swing.JPanel();
@@ -547,10 +547,10 @@ public class JFPrestamo extends javax.swing.JFrame {
             }
         });
 
-        jBnuevoPrestamo.setText("Nuevo Préstamo");
-        jBnuevoPrestamo.addActionListener(new java.awt.event.ActionListener() {
+        jBlimpiarFecha.setText("Limpiar Fecha");
+        jBlimpiarFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBnuevoPrestamoActionPerformed(evt);
+                jBlimpiarFechaActionPerformed(evt);
             }
         });
 
@@ -579,10 +579,10 @@ public class JFPrestamo extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(89, 89, 89)
+                .addComponent(jBlimpiarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
                 .addComponent(jBsolicitarPrestamo)
-                .addGap(80, 80, 80)
-                .addComponent(jBnuevoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
@@ -594,7 +594,7 @@ public class JFPrestamo extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBsolicitarPrestamo)
-                            .addComponent(jBnuevoPrestamo))))
+                            .addComponent(jBlimpiarFecha))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -725,6 +725,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         this.jTFnombreLibro.setText("");
         this.jTFcodigoLibro.setText("");
         this.jTFcodigoAutor.setText("");
+        quitarFiltrado(jTlibro);
     }//GEN-LAST:event_jBlimpiarLibroActionPerformed
 
     private void jBseleccionarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBseleccionarLibroActionPerformed
@@ -738,8 +739,9 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBseleccionarLibroActionPerformed
 
     private void jBlimpiarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlimpiarEstudianteActionPerformed
-        this.jTFnombreEstudiante.setText("");
-        this.jTFcodigoEstudiante.setText("");
+        this.jTFnombreEstudiante.setText(null);
+        this.jTFcodigoEstudiante.setText(null);
+        quitarFiltrado(jTestudiante);
     }//GEN-LAST:event_jBlimpiarEstudianteActionPerformed
 
     private void jBaceptarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBaceptarEstudianteActionPerformed
@@ -764,23 +766,9 @@ public class JFPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFcodigoEstudianteActionPerformed
 
-    private void jBnuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnuevoPrestamoActionPerformed
-        this.jTFnombreEstudiante.setText("");
-        this.jTFcodigoEstudiante.setText("");
-        this.jTFnombreLibro.setText("");
-        this.jTFcodigoLibro.setText("");
-        this.jTFcodigoAutor.setText("");
-        if (this.jDfechaDevolucion.getDate() != null) {
-            this.jDfechaDevolucion.setDate(null);
-        }
-        quitarFiltrado(jTlibro);
-        quitarFiltrado(jTprestamo);
-        quitarFiltrado(jTestudiante);
+    private void jBlimpiarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlimpiarFechaActionPerformed
         this.jDfechaDevolucion.setDate(null);
-        this.idEstudianteSeleccionado = 0;
-        this.idLibroSeleccionado = 0;
-        
-    }//GEN-LAST:event_jBnuevoPrestamoActionPerformed
+    }//GEN-LAST:event_jBlimpiarFechaActionPerformed
 
     private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
         Date fechaActual = new Date();
@@ -821,6 +809,7 @@ public class JFPrestamo extends javax.swing.JFrame {
 
     private void jBdevolverPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdevolverPrestamoActionPerformed
         int selectedRow = jTprestamo.getSelectedRow();
+        System.out.println("NUMERO: "+selectedRow);
         if (selectedRow != -1) {
             int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
             try {
@@ -883,8 +872,8 @@ public class JFPrestamo extends javax.swing.JFrame {
     private javax.swing.JButton jBaceptarEstudiante;
     private javax.swing.JButton jBdevolverPrestamo;
     private javax.swing.JButton jBlimpiarEstudiante;
+    private javax.swing.JButton jBlimpiarFecha;
     private javax.swing.JButton jBlimpiarLibro;
-    private javax.swing.JButton jBnuevoPrestamo;
     private javax.swing.JButton jBseleccionarLibro;
     private javax.swing.JButton jBsolicitarPrestamo;
     private com.toedter.calendar.JDateChooser jDfechaDevolucion;
