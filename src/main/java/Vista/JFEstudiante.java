@@ -31,7 +31,6 @@ public class JFEstudiante extends javax.swing.JFrame {
     Estudiante estudiante;
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
-    private boolean filtradoActivo = true;
     private int estudianteSeleccionado;
     
     public JFEstudiante() {
@@ -322,9 +321,9 @@ public class JFEstudiante extends javax.swing.JFrame {
                             .addComponent(jTFcorreoInstitucionalEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBinsertarEstudiante)
-                    .addComponent(jTbVaciar))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTbVaciar)
+                    .addComponent(jBinsertarEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -707,7 +706,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -724,34 +723,34 @@ public class JFEstudiante extends javax.swing.JFrame {
 
     private void jBinsertarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarEstudianteActionPerformed
         try {
-        String correo = jTFcorreoInstitucionalEstudiante.getText();
-        if (!correo.endsWith("@epn.edu.ec")) {
-            JOptionPane.showMessageDialog(null, "El correo debe terminar en @epn.edu.ec");
-            return;
+            String correo = jTFcorreoInstitucionalEstudiante.getText();
+            if (!correo.endsWith("@epn.edu.ec")) {
+                JOptionPane.showMessageDialog(null, "El correo debe terminar en @epn.edu.ec");
+                return;
+            }
+
+            PreparedStatement pps = cn.prepareStatement("INSERT INTO Estudiante(NombreEstudiante, FechaNacimiento, CorreoInstitucional, IdEstudiante) VALUES (?,?,?,?)");
+            pps.setString(1, jTFnombreEstudiante.getText());
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            java.util.Date date = jDateChooser.getDate();
+            String fechaNacimiento = dateFormat.format(date);
+
+            pps.setDate(2, new java.sql.Date(date.getTime()));
+            pps.setString(3, correo);
+            pps.setInt(4, Integer.parseInt(jTFidEstudiante.getText()));
+
+            pps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Datos guardados");
+
+            Fecha fechaNacimientoEstudiante = new Fecha(fechaNacimiento);
+            estudiante = new Estudiante(Integer.parseInt(jTFidEstudiante.getText()),correo, jTFnombreEstudiante.getText(), fechaNacimientoEstudiante);
+            jTAestudianteActual.setText(estudiante.toString());
+            mostrarTabla();
         }
-
-        PreparedStatement pps = cn.prepareStatement("INSERT INTO Estudiante(NombreEstudiante, FechaNacimiento, CorreoInstitucional, IdEstudiante) VALUES (?,?,?,?)");
-        pps.setString(1, jTFnombreEstudiante.getText());
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        java.util.Date date = jDateChooser.getDate();
-        String fechaNacimiento = dateFormat.format(date);
-
-        pps.setDate(2, new java.sql.Date(date.getTime()));
-        pps.setString(3, correo);
-        pps.setInt(4, Integer.parseInt(jTFidEstudiante.getText()));
-
-        pps.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Datos guardados");
-
-        Fecha fechaNacimientoEstudiante = new Fecha(fechaNacimiento);
-        estudiante = new Estudiante(Integer.parseInt(jTFidEstudiante.getText()),correo, jTFnombreEstudiante.getText(), fechaNacimientoEstudiante);
-        jTAestudianteActual.setText(estudiante.toString());
-        mostrarTabla();
-    }
-    catch (SQLException ex){
-        JOptionPane.showMessageDialog(null, "Estudiante ya registrado");
-    }
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Estudiante ya registrado");
+        }
     }//GEN-LAST:event_jBinsertarEstudianteActionPerformed
 
     private void jTFidEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidEstudianteActionPerformed
@@ -768,44 +767,6 @@ public class JFEstudiante extends javax.swing.JFrame {
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
         }
-    }
-
-    
-    private boolean existeEstudiante(int idEstudiante) {
-        String query = "SELECT * FROM Estudiante WHERE IdEstudiante = ?";
-
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(1, idEstudiante);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                return true; 
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del estudiante: " + ex.toString());
-        }
-        return false;
-    }
-    
-    private boolean existePrestamos(int idEstudiante){
-        String query = "SELECT COUNT(*) AS numPrestamos FROM Prestamo WHERE idEstudiante = ?";
-
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(1, idEstudiante);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                int numPrestamos = rs.getInt("numPrestamos");
-                return numPrestamos>0;
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la existencia de prestamos relacionados a estudiantes: " + ex.toString());
-        }
-        return false;
     }
         
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed

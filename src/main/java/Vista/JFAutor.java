@@ -10,7 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -146,10 +151,10 @@ public class JFAutor extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jTFnombreAutorEditar = new javax.swing.JTextField();
-        jTFfechaAutorEditar = new javax.swing.JTextField();
         jTFIDAutorEditar = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jTFcodigoAutorFiltrarEditar = new javax.swing.JTextField();
+        jDfechaNacimientoEditar = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         jBborrarAutor = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -314,9 +319,9 @@ public class JFAutor extends javax.swing.JFrame {
                         .addGap(33, 33, 33)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jTFnombreAutorEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                            .addComponent(jTFfechaAutorEditar)
-                            .addComponent(jTFIDAutorEditar))
-                        .addGap(64, 64, 64)
+                            .addComponent(jTFIDAutorEditar)
+                            .addComponent(jDfechaNacimientoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBmostrarAutorEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,18 +343,18 @@ public class JFAutor extends javax.swing.JFrame {
                     .addComponent(jLabel10)
                     .addComponent(jTFnombreAutorEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11)
-                            .addComponent(jTFfechaAutorEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(25, 25, 25))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBmostrarAutorEditar)
                             .addComponent(jBactualizarAutor))
-                        .addGap(32, 32, 32)))
+                        .addGap(32, 32, 32))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jDfechaNacimientoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addGap(28, 28, 28)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jTFIDAutorEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -606,16 +611,27 @@ public class JFAutor extends javax.swing.JFrame {
                 }
             }
         }
-
+        
         if(filaEncontrada != -1){
-            jTFnombreAutorEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
-            jTFfechaAutorEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
-            jTFIDAutorEditar.setText(model.getValueAt(filaEncontrada, 2).toString());     
-            autorSeleccionado = Integer.parseInt(jTFIDAutorEditar.getText());
-            jTFnombreAutorFiltrarEditar.setText("");
-            jTFcodigoAutorFiltrarEditar.setText("");
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo registro","Error",JOptionPane.WARNING_MESSAGE);
+            jTFnombreAutorEditar.setText(model.getValueAt(filaEncontrada, 0).toString());    
+
+            String fechaNacimientoStr = model.getValueAt(filaEncontrada, 1).toString();
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = null;
+            try {
+                date = df.parse(fechaNacimientoStr);
+            } catch (ParseException ex) {
+                Logger.getLogger(JFAutor.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            jDfechaNacimientoEditar.setDate(date);
+
+            jTFIDAutorEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
+            try {
+                autorSeleccionado = Integer.parseInt(jTFIDAutorEditar.getText());
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "El ID del autor no es válido");
+                autorSeleccionado = -1;
+            }
         }
     }//GEN-LAST:event_jBmostrarAutorEditarActionPerformed
 
@@ -644,26 +660,27 @@ public class JFAutor extends javax.swing.JFrame {
 
     private void jBactualizarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarAutorActionPerformed
         try {
-            int idAutor = Integer.parseInt(this.jTFIDAutorEditar.getText());
             String nuevoNombre = jTFnombreAutorEditar.getText();
-            String nuevaFechaNacimiento = jTFfechaAutorEditar.getText();
-
-            // Verificar si el autor todavía existe en la tabla
-            if (existeAutor(idAutor)) {
-                // Aquí es donde actualizamos el autor en la base de datos
-                actualizarAutorEnBaseDeDatos(idAutor, nuevoNombre, nuevaFechaNacimiento);
-                mostrarTabla();
-                jTFnombreAutorEditar.setText("");
-                jTFfechaAutorEditar.setText("");
-                jTFIDAutorEditar.setText("");
-            } else {
-                JOptionPane.showMessageDialog(null, "El autor con el id ingresado no existe");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            java.util.Date date = jDfechaNacimientoEditar.getDate();
+            String nuevaFechaNacimiento = null;
+            if (date != null) {
+                nuevaFechaNacimiento = dateFormat.format(date);
             }
+
+            // Aquí es donde actualizamos el autor en la base de datos
+            actualizarAutorEnBaseDeDatos(autorSeleccionado, nuevoNombre, nuevaFechaNacimiento);
+            mostrarTabla();
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Error: el ID del autor no es un número válido");
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
         }
+        jTFnombreAutorEditar.setText(null);
+        jTFIDAutorEditar.setText(null);
+        jTFcodigoAutorFiltrarEditar.setText(null);
+        jTFnombreAutorFiltrarEditar.setText(null);
+        jDfechaNacimientoEditar.setDate(null);
     }//GEN-LAST:event_jBactualizarAutorActionPerformed
     private boolean existeAutor(int idAutor) {
         String query = "SELECT*FROM Autor WHERE IdAutor = ?";
@@ -684,15 +701,25 @@ public class JFAutor extends javax.swing.JFrame {
     return false;
     }
     private void actualizarAutorEnBaseDeDatos(int idAutor, String nuevoNombre, String nuevaFechaNacimiento) {
-        String query = "UPDATE Autor SET NombreAutor = ?, FechaNacimiento = ? WHERE IdAutor = ?";
+        String queryNombre = "UPDATE Autor SET NombreAutor = ? WHERE IdAutor = ?";
+        String queryFecha = "UPDATE Autor SET FechaNacimiento = ? WHERE IdAutor = ?";
 
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setString(1, nuevoNombre);
-            st.setString(2, nuevaFechaNacimiento);
-            st.setInt(3, idAutor);
-            st.executeUpdate();
+        try (PreparedStatement stNombre = cn.prepareStatement(queryNombre);
+             PreparedStatement stFecha = cn.prepareStatement(queryFecha)) {
+
+            stNombre.setString(1, nuevoNombre);
+            stNombre.setInt(2, idAutor);
+            stNombre.executeUpdate();
+
+            stFecha.setString(1, nuevaFechaNacimiento);
+            stFecha.setInt(2, idAutor);
+            stFecha.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Autor actualizado con éxito");
             mostrarTabla();
+
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar autor en la base de datos: " + ex.toString());
         }
     }
 
@@ -803,6 +830,7 @@ public class JFAutor extends javax.swing.JFrame {
     private javax.swing.JButton jBinsertarAutor;
     private javax.swing.JButton jBmostrarAutorEditar;
     private com.toedter.calendar.JDateChooser jDateChooser;
+    private com.toedter.calendar.JDateChooser jDfechaNacimientoEditar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -833,7 +861,6 @@ public class JFAutor extends javax.swing.JFrame {
     private javax.swing.JTextField jTFcodigoAutorBorrar;
     private javax.swing.JTextField jTFcodigoAutorFiltrarEditar;
     private javax.swing.JTextField jTFfechaAutorBorrar;
-    private javax.swing.JTextField jTFfechaAutorEditar;
     private javax.swing.JTextField jTFnombreAutor;
     private javax.swing.JTextField jTFnombreAutorBorrar;
     private javax.swing.JTextField jTFnombreAutorEditar;
