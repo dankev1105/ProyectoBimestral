@@ -3,9 +3,6 @@ package Vista;
 import Negocio.Autor;
 import Negocio.Libro;
 import PConexion.Conexion;
-import Vista.JFEstudiante;
-import Vista.JFMenuPrincipal;
-import Vista.JFMenuPrincipal;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -17,8 +14,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -1020,49 +1015,48 @@ public class JFLibro extends javax.swing.JFrame {
 
     private void jBMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarActionPerformed
         TableModel model = jTdatosLibro.getModel();
-    int filaEncontrada = -1;
-    if(this.jTFlibroBorrarFiltrarNombre.getText().length()==0 && this.jTFlibroBorrarFiltrarID.getText().length()==0)
-        JOptionPane.showMessageDialog(null, "Primero llene alguno de los campos","Error",JOptionPane.WARNING_MESSAGE);    
-    else{
-    if(this.jTFlibroBorrarFiltrarNombre.getText().length()==0){
-    for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 2).toString();
-        if (idEnFila.equals(jTFlibroBorrarFiltrarID.getText())) {
-            filaEncontrada = fila;
-            break;
+        int filaEncontrada = -1;
+        if(this.jTFlibroBorrarFiltrarNombre.getText().length()==0 && this.jTFlibroBorrarFiltrarID.getText().length()==0)
+            JOptionPane.showMessageDialog(null, "Primero llene alguno de los campos","Error",JOptionPane.WARNING_MESSAGE);    
+        else{
+        if(this.jTFlibroBorrarFiltrarNombre.getText().length()==0){
+        for (int fila = 0; fila < model.getRowCount(); fila++) {
+            String idEnFila = model.getValueAt(fila, 2).toString();
+            if (idEnFila.equals(jTFlibroBorrarFiltrarID.getText())) {
+                filaEncontrada = fila;
+                break;
+            }
         }
-    }
-    if(filaEncontrada==-1){
-    JOptionPane.showMessageDialog(null, "No existe ese ID","Error",JOptionPane.WARNING_MESSAGE);
-    }
-     else{
-    jTFtituloBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
-    jTFgeneroBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
-    jTFidLibroBorrar.setText(model.getValueAt(filaEncontrada, 2).toString()); 
-    jTFunidadesBorrar.setText(model.getValueAt(filaEncontrada, 4).toString());
-    }    
-    }    
-    else{
-    for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 0).toString(); 
-        if (idEnFila.equals(jTFlibroBorrarFiltrarNombre.getText())) {
-            filaEncontrada = fila;
-            break;
+        if(filaEncontrada==-1){
+        JOptionPane.showMessageDialog(null, "No existe ese ID","Error",JOptionPane.WARNING_MESSAGE);
         }
-    }    
-    if(filaEncontrada==-1){
-    JOptionPane.showMessageDialog(null, "No existe ese nombre","Error",JOptionPane.WARNING_MESSAGE);
-    }
-     else{
-    jTFtituloBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
-    jTFgeneroBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
-    jTFidLibroBorrar.setText(model.getValueAt(filaEncontrada, 2).toString()); 
-    jTFunidadesBorrar.setText(model.getValueAt(filaEncontrada, 4).toString());    
-    }    
-    }
-    }  
-    mostrarTabla();
-    
+         else{
+        jTFtituloBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
+        jTFgeneroBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
+        jTFidLibroBorrar.setText(model.getValueAt(filaEncontrada, 2).toString()); 
+        jTFunidadesBorrar.setText(model.getValueAt(filaEncontrada, 4).toString());
+        }    
+        }    
+        else{
+        for (int fila = 0; fila < model.getRowCount(); fila++) {
+            String idEnFila = model.getValueAt(fila, 0).toString(); 
+            if (idEnFila.equals(jTFlibroBorrarFiltrarNombre.getText())) {
+                filaEncontrada = fila;
+                break;
+            }
+        }    
+        if(filaEncontrada==-1){
+        JOptionPane.showMessageDialog(null, "No existe ese nombre","Error",JOptionPane.WARNING_MESSAGE);
+        }
+         else{
+        jTFtituloBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
+        jTFgeneroBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
+        jTFidLibroBorrar.setText(model.getValueAt(filaEncontrada, 2).toString()); 
+        jTFunidadesBorrar.setText(model.getValueAt(filaEncontrada, 4).toString());    
+        }    
+        }
+        }  
+        mostrarTabla();
     }//GEN-LAST:event_jBMostrarActionPerformed
 
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed

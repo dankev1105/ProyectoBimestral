@@ -1,8 +1,5 @@
 package PConexion;
 
-import Vista.JFEstudiante;
-import com.mycompany.biblioteca.JFBiblioteca;
-import com.mysql.cj.protocol.Resultset;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
@@ -17,7 +14,7 @@ public class CBiblioteca {
             PreparedStatement ps = null;
             PConexion.Conexion conexion = new PConexion.Conexion();
             ps = conexion.establecerConexion().prepareStatement(consulta);
-            String cadenaContrasenia = String.valueOf(contrasenia.getPassword());//porque getpassword es char?
+            String cadenaContrasenia = String.valueOf(contrasenia.getPassword());
             
             ps.setString(1, usuario.getText());
             ps.setString(2, cadenaContrasenia);

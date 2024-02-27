@@ -1,6 +1,5 @@
 package Negocio;
 import PConexion.Conexion;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Scalar.String;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

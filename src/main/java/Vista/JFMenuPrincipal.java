@@ -2,7 +2,6 @@ package Vista;
 
 import java.io.File;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 public class JFMenuPrincipal extends javax.swing.JFrame {
     Vista.JFAutor autorVentana = new JFAutor();

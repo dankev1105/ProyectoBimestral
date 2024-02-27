@@ -26,9 +26,10 @@ public class JFPrestamo extends javax.swing.JFrame {
     Connection cn = con.establecerConexion();
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
     Date date = new Date();
-    Fecha fechaPrestamo = new Fecha(formatter.format(date));
+    Fecha fechaPrestamo;
     private int idEstudianteSeleccionado;
     private int idLibroSeleccionado;
+    
     public JFPrestamo() {
         initComponents();
         this.setVisible(false);
@@ -98,30 +99,6 @@ public class JFPrestamo extends javax.swing.JFrame {
     mostrarTablaLibro();
     mostrarTablaPrestamo();
     }
-   
-    public void filtrarTablaEstudiantePorNombre(String query) {
-        DefaultTableModel model = (DefaultTableModel) jTestudiante.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        jTestudiante.setRowSorter(tr);
-
-        if (query.trim().length() == 0) {
-            tr.setRowFilter(null);
-        } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 0)); // Assuming 'Nombre' is at column 0
-        }
-    }
-    
-    public void filtrarTablaEstudiantePorID(String query) {
-        DefaultTableModel model = (DefaultTableModel) jTestudiante.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        jTestudiante.setRowSorter(tr);
-
-        if (query.trim().length() == 0) {
-            tr.setRowFilter(null);
-        } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 3));
-        }
-    }
     
     public void mostrarTablaEstudiante(){
         String sql = "SELECT*FROM Estudiante";
@@ -150,34 +127,32 @@ public class JFPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error"+e.toString());
         }
     }
-    
-    //LIBRO
-    public void filtrarTablaLibroPorNombre(String query) {
-        DefaultTableModel model = (DefaultTableModel) jTlibro.getModel();
+    public void filtrarTablaEstudiantePorNombre(String query) {
+        DefaultTableModel model = (DefaultTableModel) jTestudiante.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        jTlibro.setRowSorter(tr);
+        jTestudiante.setRowSorter(tr);
 
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
             tr.setRowFilter(RowFilter.regexFilter(query, 0));
         }
-    }
-    
-    public void filtrarTablaLibroPorID(String query) {
-        DefaultTableModel model = (DefaultTableModel) jTlibro.getModel();
+    }   
+    public void filtrarTablaEstudiantePorID(String query) {
+        DefaultTableModel model = (DefaultTableModel) jTestudiante.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        jTlibro.setRowSorter(tr);
+        jTestudiante.setRowSorter(tr);
 
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 2));
+            tr.setRowFilter(RowFilter.regexFilter(query, 3));
         }
     }
-    
+ 
+    //LIBRO
     public void mostrarTablaLibro(){
-        String sql = "SELECT * FROM Libro WHERE UnidadesDisponibles > 0"; // Modifica la consulta SQL para que solo seleccione los libros con unidades mayores a cero
+        String sql = "SELECT * FROM Libro WHERE UnidadesDisponibles > 0";
         Statement st;
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
@@ -205,7 +180,28 @@ public class JFPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error"+e.toString());
         }
     }
+    public void filtrarTablaLibroPorNombre(String query) {
+        DefaultTableModel model = (DefaultTableModel) jTlibro.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        jTlibro.setRowSorter(tr);
 
+        if (query.trim().length() == 0) {
+            tr.setRowFilter(null);
+        } else {
+            tr.setRowFilter(RowFilter.regexFilter(query, 0));
+        }
+    }
+    public void filtrarTablaLibroPorID(String query) {
+        DefaultTableModel model = (DefaultTableModel) jTlibro.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        jTlibro.setRowSorter(tr);
+
+        if (query.trim().length() == 0) {
+            tr.setRowFilter(null);
+        } else {
+            tr.setRowFilter(RowFilter.regexFilter(query, 2));
+        }
+    }
     public void filtrarTablaLibroPorAutor(String query) {
         DefaultTableModel model = (DefaultTableModel) jTlibro.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -259,7 +255,6 @@ public class JFPrestamo extends javax.swing.JFrame {
             tr.setRowFilter(RowFilter.regexFilter(query, 2));
         }
     }
-
     public void filtrarTablaPrestamoPorNombreLibro(String query) {
         DefaultTableModel model = (DefaultTableModel) jTprestamo.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
@@ -271,7 +266,6 @@ public class JFPrestamo extends javax.swing.JFrame {
             tr.setRowFilter(RowFilter.regexFilter(query, 1));
         }
     }
-
     public void filtrarTablaPrestamoPorIDPrestamo(String query) {
         DefaultTableModel model = (DefaultTableModel) jTprestamo.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
