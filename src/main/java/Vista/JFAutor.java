@@ -633,6 +633,8 @@ public class JFAutor extends javax.swing.JFrame {
                 autorSeleccionado = -1;
             }
         }
+        jTFnombreAutorFiltrarEditar.setText("");
+        jTFcodigoAutorFiltrarEditar.setText("");
     }//GEN-LAST:event_jBmostrarAutorEditarActionPerformed
 
     private void jBinsertarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarAutorActionPerformed
@@ -676,10 +678,10 @@ public class JFAutor extends javax.swing.JFrame {
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
         }
-        jTFnombreAutorEditar.setText(null);
-        jTFIDAutorEditar.setText(null);
-        jTFcodigoAutorFiltrarEditar.setText(null);
-        jTFnombreAutorFiltrarEditar.setText(null);
+        jTFnombreAutorEditar.setText("");
+        jTFIDAutorEditar.setText("");
+        jTFcodigoAutorFiltrarEditar.setText("");
+        jTFnombreAutorFiltrarEditar.setText("");
         jDfechaNacimientoEditar.setDate(null);
     }//GEN-LAST:event_jBactualizarAutorActionPerformed
     private boolean existeAutor(int idAutor) {
