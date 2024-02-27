@@ -811,6 +811,12 @@ public class JFEstudiante extends javax.swing.JFrame {
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
         try {
             if(estudianteSeleccionado != -1){
+                // Verifica si el estudiante tiene préstamos pendientes
+                if (tienePrestamosPendientes(estudianteSeleccionado)) {
+                    JOptionPane.showMessageDialog(null, "El estudiante tiene préstamos pendientes y no puede ser eliminado");
+                    return;
+                }
+
                 // Pregunta al usuario si está seguro de borrar
                 int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres borrar este estudiante?", "Confirmar borrado", JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
@@ -828,6 +834,24 @@ public class JFEstudiante extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
         }
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
+
+    private boolean tienePrestamosPendientes(int idEstudiante) {
+        String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdEstudiante = ?";
+        Conexion cn = new Conexion();
+        Connection conexion = cn.establecerConexion();
+        try {
+            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
+            preparedStatement.setInt(1, idEstudiante);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error" + e.toString());
+        }
+        return false;
+    }
 
     private void jBmostrarEstudianteEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarEstudianteEditarActionPerformed
         TableModel model = jTdatosEstudiantes.getModel();
