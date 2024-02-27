@@ -914,6 +914,9 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFidEstudianteKeyReleased
 
     private void jBactualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarEstudianteActionPerformed
+        if(jTFIDEstudianteEditar.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Primero seleccione un estudiante a modificar");
+        }else{
         jTFestudianteEditarNombre.setText(null);
         jTFestudianteEditarID.setText(null);
         int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
@@ -924,7 +927,8 @@ public class JFEstudiante extends javax.swing.JFrame {
         String nuevaFechaNacimiento = dateFormat.format(date);
         // Aquí es donde actualizamos el autor en la base de datos
         actualizarEstudianteEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento, nuevoCorreoInstitucional);
-        mostrarTabla();
+        mostrarTabla();    
+        }
     }//GEN-LAST:event_jBactualizarEstudianteActionPerformed
 
     private void jBMostrarEstudianteBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarEstudianteBorrarActionPerformed
