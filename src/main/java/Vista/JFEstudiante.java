@@ -760,8 +760,11 @@ public class JFEstudiante extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente");
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar estudiante de la base de datos: " + ex.toString());
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
         }
     }
+
     
     private boolean existeEstudiante(int idEstudiante) {
         String query = "SELECT * FROM Estudiante WHERE IdEstudiante = ?";
@@ -801,28 +804,48 @@ public class JFEstudiante extends javax.swing.JFrame {
     }
         
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
-        if(jTFnombreEstudianteBorrar.getText().length()==0){
-            JOptionPane.showMessageDialog(null, "Primero seleccione al estudiante a eliminar","Error",JOptionPane.WARNING_MESSAGE);
-        }else{
-            try {
-                
-                int idEstudiante= Integer.parseInt(jTFIDEstudianteBorrar.getText());
-                if(existePrestamos(idEstudiante)){
-                }else{
-                if (existeEstudiante(idEstudiante)) {
-                    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar?", "Confirmación", JOptionPane.YES_NO_OPTION);
-                    if (confirm == JOptionPane.YES_OPTION) {
-                        eliminarEstudianteEnBaseDeDatos(idEstudiante);
-                        mostrarTabla();
+        try {
+            TableModel model = jTdatosEstudiantes.getModel();
+            int filaEncontrada = -1;
+            if(jTdatosEstudiantes.getSelectedRow() != -1) {
+                // Si se ha seleccionado una fila, usar esa fila
+                filaEncontrada = jTdatosEstudiantes.convertRowIndexToModel(jTdatosEstudiantes.getSelectedRow());
+            } else if(jTdatosEstudiantes.getRowCount() == 1) {
+                // Si solo hay una fila, seleccionar esa fila
+                filaEncontrada = jTdatosEstudiantes.convertRowIndexToModel(0);
+            } else if(this.jTFestudianteBorrarNombre.getText().length() == 0) {
+                // Buscar por ID
+                for (int fila = 0; fila < model.getRowCount(); fila++) {
+                    String idEnFila = model.getValueAt(fila, 3).toString();
+                    if (idEnFila.equals(jTFestudianteBorrarID.getText())) {
+                        filaEncontrada = fila;
+                        break;
                     }
-                } else {
-                    JOptionPane.showMessageDialog(null, "El estudiante con el id ingresado no existe");
-                }    
                 }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
+            } else {
+                // Buscar por nombre
+                for (int fila = 0; fila < model.getRowCount(); fila++) {
+                    String idEnFila = model.getValueAt(fila, 0).toString(); 
+                    if (idEnFila.equals(jTFestudianteBorrarNombre.getText())) {
+                        filaEncontrada = fila;
+                        break;
+                    }
+                }
             }
-        }       
+
+            if(filaEncontrada == -1){
+                JOptionPane.showMessageDialog(null, "No se encontró el estudiante","Error",JOptionPane.WARNING_MESSAGE);
+            } else {
+                jTFnombreEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
+                jTFfechaEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
+                jTFcorreoEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 2).toString());
+                jTFIDEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 3).toString());     
+            }
+
+            filtrarTablaId("");
+            filtrarTablaNombre("");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+        }
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
 
     private void jBmostrarEstudianteEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarEstudianteEditarActionPerformed
@@ -950,59 +973,54 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jBactualizarEstudianteActionPerformed
 
     private void jBMostrarEstudianteBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarEstudianteBorrarActionPerformed
-    TableModel model = jTdatosEstudiantes.getModel();
-    int filaEncontrada = -1;
-    if(this.jTFestudianteBorrarNombre.getText().length()==0 && this.jTFestudianteBorrarID.getText().length()==0)
-        JOptionPane.showMessageDialog(null, "Primero llene alguno de los campos","Error",JOptionPane.WARNING_MESSAGE);    
-    else{
-    if(this.jTFestudianteBorrarNombre.getText().length()==0){
-    for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 3).toString();
-        if (idEnFila.equals(jTFestudianteBorrarID.getText())) {
-            filaEncontrada = fila;
-            break;
+        TableModel model = jTdatosEstudiantes.getModel();
+        int filaEncontrada = -1;
+        if(jTdatosEstudiantes.getSelectedRow() != -1) {
+            // Si se ha seleccionado una fila, usar esa fila
+            filaEncontrada = jTdatosEstudiantes.getSelectedRow();
+        } else if(jTdatosEstudiantes.getRowCount() == 1) {
+            // Si solo hay una fila, seleccionar esa fila
+            filaEncontrada = 0;
+        } else if(this.jTFestudianteBorrarNombre.getText().length() == 0) {
+            // Buscar por ID
+            for (int fila = 0; fila < model.getRowCount(); fila++) {
+                String idEnFila = model.getValueAt(fila, 3).toString();
+                if (idEnFila.equals(jTFestudianteBorrarID.getText())) {
+                    filaEncontrada = fila;
+                    break;
+                }
+            }
+        } else {
+            // Buscar por nombre
+            for (int fila = 0; fila < model.getRowCount(); fila++) {
+                String idEnFila = model.getValueAt(fila, 0).toString(); 
+                if (idEnFila.equals(jTFestudianteBorrarNombre.getText())) {
+                    filaEncontrada = fila;
+                    break;
+                }
+            }
         }
-    }
-    if(filaEncontrada==-1){
-    JOptionPane.showMessageDialog(null, "No existe ese ID","Error",JOptionPane.WARNING_MESSAGE);
-    }
-    else{
-    jTFnombreEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
-    jTFfechaEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
-    jTFcorreoEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 2).toString());
-    jTFIDEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 3).toString());    
-    }    
-    }    
-    else{
-    for (int fila = 0; fila < model.getRowCount(); fila++) {
-        String idEnFila = model.getValueAt(fila, 0).toString(); 
-        if (idEnFila.equals(jTFestudianteBorrarNombre.getText())) {
-            filaEncontrada = fila;
-            break;
+
+        if(filaEncontrada == -1){
+            JOptionPane.showMessageDialog(null, "No se encontró el estudiante","Error",JOptionPane.WARNING_MESSAGE);
+        } else {
+            jTFnombreEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
+            jTFfechaEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
+            jTFcorreoEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 2).toString());
+            jTFIDEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 3).toString());     
         }
-    }    
-    if(filaEncontrada==-1){
-    JOptionPane.showMessageDialog(null, "No existe ese nombre","Error",JOptionPane.WARNING_MESSAGE);
-    }
-    else{
-    jTFnombreEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
-    jTFfechaEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
-    jTFcorreoEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 2).toString());
-    jTFIDEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 3).toString());     
-    }            
-    }
-    }
-    filtrarTablaId("");
-    filtrarTablaNombre("");
+
+        filtrarTablaId("");
+        filtrarTablaNombre("");
     }//GEN-LAST:event_jBMostrarEstudianteBorrarActionPerformed
 
     private void jBvaciarBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBvaciarBorrarActionPerformed
-    jTFnombreEstudianteBorrar.setText("");
-    jTFfechaEstudianteBorrar.setText("");
-    jTFcorreoEstudianteBorrar.setText("");
-    jTFIDEstudianteBorrar.setText("");
-    jTFestudianteBorrarNombre.setText("");
-    jTFestudianteBorrarID.setText("");
+        jTFnombreEstudianteBorrar.setText("");
+        jTFfechaEstudianteBorrar.setText("");
+        jTFcorreoEstudianteBorrar.setText("");
+        jTFIDEstudianteBorrar.setText("");
+        jTFestudianteBorrarNombre.setText("");
+        jTFestudianteBorrarID.setText("");
     }//GEN-LAST:event_jBvaciarBorrarActionPerformed
 
     private void jTFestudianteEditarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFestudianteEditarNombreActionPerformed
@@ -1023,12 +1041,12 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFestudianteEditarNombreKeyTyped
 
     private void jBvaciarBorrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBvaciarBorrar1ActionPerformed
-    jTFnombreEstudianteEditar.setText("");
-    jDateChooserEditar.setCalendar(null);
-    jTFcorreoEstudianteEditar.setText("");
-    jTFIDEstudianteEditar.setText("");
-    jTFestudianteEditarNombre.setText("");
-    jTFestudianteEditarID.setText("");
+        jTFnombreEstudianteEditar.setText("");
+        jDateChooserEditar.setCalendar(null);
+        jTFcorreoEstudianteEditar.setText("");
+        jTFIDEstudianteEditar.setText("");
+        jTFestudianteEditarNombre.setText("");
+        jTFestudianteEditarID.setText("");
     }//GEN-LAST:event_jBvaciarBorrar1ActionPerformed
 
     private void jTFestudianteEditarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFestudianteEditarIDActionPerformed
@@ -1079,12 +1097,19 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jTbVaciarActionPerformed
 
     private void jTFcorreoInstitucionalEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcorreoInstitucionalEstudianteKeyTyped
-//        char caracter = evt.getKeyChar();
-//        if (!Character.isLetter(caracter)&& caracter!='@'&& caracter!='\b' && caracter!='.') {
-//            getToolkit().beep();
-//            evt.consume();
-//            JOptionPane.showMessageDialog(null, "Por favor ingrese el correo de manera correcta");
-//        }
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter) && caracter != '@' && caracter != '\b' && caracter != '.') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el correo de manera correcta");
+        } else {
+            String correo = jTFcorreoEstudianteEditar.getText() + caracter;
+            if (!correo.endsWith("@epn.edu.ec")) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "El correo debe terminar en @epn.edu.ec");
+            }
+        }
     }//GEN-LAST:event_jTFcorreoInstitucionalEstudianteKeyTyped
 
     private void jTFestudianteBorrarNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFestudianteBorrarNombreKeyTyped
@@ -1106,12 +1131,19 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFnombreEstudianteEditarKeyTyped
 
     private void jTFcorreoEstudianteEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcorreoEstudianteEditarKeyTyped
-//        char caracter = evt.getKeyChar();
-//        if (!Character.isLetter(caracter)&& caracter!='@'&& caracter!='\b' && caracter!='.') {
-//            getToolkit().beep();
-//            evt.consume();
-//            JOptionPane.showMessageDialog(null, "Por favor ingresa el correo de manera correcta");
-//        }
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter) && caracter != '@' && caracter != '\b' && caracter != '.') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el correo de manera correcta");
+        } else {
+            String correo = jTFcorreoEstudianteEditar.getText() + caracter;
+            if (!correo.endsWith("@epn.edu.ec")) {
+                getToolkit().beep();
+                evt.consume();
+                JOptionPane.showMessageDialog(null, "El correo debe terminar en @epn.edu.ec");
+            }
+        }
     }//GEN-LAST:event_jTFcorreoEstudianteEditarKeyTyped
 
     public static void main(String args[]) {

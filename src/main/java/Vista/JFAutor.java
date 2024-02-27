@@ -67,15 +67,6 @@ public class JFAutor extends javax.swing.JFrame {
             tr.setRowFilter(RowFilter.regexFilter(query, 0)); // Cambia el índice a la columna del nombre
         }
     }
-/*
-    if (jTestudiante.getRowCount() == 1) { 
-            int idEstudiante = Integer.parseInt(jTestudiante.getValueAt(0, 3).toString()); 
-            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + idEstudiante);
-            this.idEstudianteSeleccionado = idEstudiante;
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo estudiante."); 
-        }
-    */
 
     public void filtrarTablaId(String query) {
         DefaultTableModel model = (DefaultTableModel) jTdatosAutor.getModel();
@@ -526,9 +517,9 @@ public class JFAutor extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
-                return true; // El autor existe
+                return true;
             } else {
-                return false; // El autor no existe
+                return false;
             }
 
         } catch (SQLException ex) {
@@ -538,7 +529,7 @@ public class JFAutor extends javax.swing.JFrame {
     }
     
     private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
-         if(jTFnombreAutorBorrar.getText().length()==0){
+        if(jTFnombreAutorBorrar.getText().length()==0){
             JOptionPane.showMessageDialog(null, "Primero seleccione al autor a eliminar","Error",JOptionPane.WARNING_MESSAGE);
         }
         else{
