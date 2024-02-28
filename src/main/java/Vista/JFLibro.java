@@ -1210,7 +1210,7 @@ public class JFLibro extends javax.swing.JFrame {
 
     private void jTFtituloEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFtituloEditarKeyTyped
         char caracter = evt.getKeyChar();
-        if (!Character.isLetter(caracter)&& caracter!='\b') {
+        if (!Character.isLetter(caracter)&& caracter!=' ' && caracter!='\b') {
             getToolkit().beep();
             evt.consume();
             JOptionPane.showMessageDialog(null, "Por favor ingrese un titulo de manera correcta.");
