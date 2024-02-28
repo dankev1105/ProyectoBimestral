@@ -13,7 +13,7 @@ public class Fecha {
             this.mes = Integer.parseInt(tokens.nextToken());
             this.dia = Integer.parseInt(tokens.nextToken());    
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Formato Incorrecto");
+            //JOptionPane.showMessageDialog(null, "Formato Incorrecto");
         }  
     }
 
