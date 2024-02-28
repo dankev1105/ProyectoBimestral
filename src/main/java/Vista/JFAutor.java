@@ -552,58 +552,32 @@ public class JFAutor extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     
     private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
-//        if(jTFnombreAutorBorrar.getText().length()==0){
-//            JOptionPane.showMessageDialog(null, "Primero seleccione al autor a eliminar","Error",JOptionPane.WARNING_MESSAGE);
-//        }else{
-//            try {
-//                int idAutor = Integer.parseInt(this.jTFcodigoAutorBorrar.getText());
-//
-//                if (existeAutor(idAutor)) {
-//                    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar? Se eliminarán los libros que el autor tenga asociados", "Confirmación", JOptionPane.YES_NO_OPTION);
-//                    if (confirm == JOptionPane.YES_OPTION) {
-//                        eliminarAutorEnBaseDeDatos(idAutor);
-//                        mostrarTabla();
-//                        this.jTFautorBorrarPorNombre.setText("");
-//                        this.jTFautorBorrarPorID.setText("");
-//
-//                        JOptionPane.showMessageDialog(null, "Autor y sus libros asociados eliminados correctamente");
-//
-//                         Limpia los campos de texto
-//                        jTFnombreAutorBorrar.setText("");
-//                        jTFfechaAutorBorrar.setText("");
-//                        jTFcodigoAutorBorrar.setText("");
-//                    }
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "El autor con el id ingresado no existe");
-//                }
-//            } catch (NumberFormatException ex) {
-//                JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
-//            } catch (ArrayIndexOutOfBoundsException ex) {
-//            }
-//        }
-try {
-            if(autorSeleccionado != -1){
-                // Verifica si el sutor tiene todos los libros
-                if (FaltaLibros(autorSeleccionado)) {
-                    JOptionPane.showMessageDialog(null, "La biblioteca no tiene todos los libros para poder eliminar este Autor");
-                    return;
-                }
+        if(jTFnombreAutorBorrar.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Primero seleccione al autor a eliminar","Error",JOptionPane.WARNING_MESSAGE);
+        }else{
+            try {
+                int idAutor = Integer.parseInt(this.jTFcodigoAutorBorrar.getText());
 
-                // Pregunta al usuario si está seguro de borrar
-                int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres borrar este Autor?", "Confirmar borrado", JOptionPane.YES_NO_OPTION);
-                if (respuesta == JOptionPane.YES_OPTION) {
-                    eliminarAutorEnBaseDeDatos(autorSeleccionado);
-                    autorSeleccionado = -1; // Restablece el ID después de la eliminación
-                    mostrarTabla();
+                if (existeAutor(idAutor)) {
+                    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar? Se eliminarán los libros que el autor tenga asociados", "Confirmación", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.YES_OPTION) {
+                        eliminarAutorEnBaseDeDatos(idAutor);
+                        mostrarTabla();
+                        this.jTFautorBorrarPorNombre.setText("");
+                        this.jTFautorBorrarPorID.setText("");
+
+                        JOptionPane.showMessageDialog(null, "Autor y sus libros asociados eliminados correctamente");
+
+                        jTFfechaAutorBorrar.setText("");
+                        jTFcodigoAutorBorrar.setText("");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "El autor con el id ingresado no existe");
                 }
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró el estudiante","Error",JOptionPane.WARNING_MESSAGE);
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
+            } catch (ArrayIndexOutOfBoundsException ex) {
             }
-
-            filtrarTablaId("");
-            filtrarTablaNombre("");
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(null, "Error:Los libros de autor no han sido devueltos");
         }
     }//GEN-LAST:event_jBborrarAutorActionPerformed
 private boolean FaltaLibros(int UnidadesDisponibles) {
