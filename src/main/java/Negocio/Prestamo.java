@@ -73,7 +73,7 @@ public class Prestamo {
             (currentDate.getAnio() == fechaDevolucion.getAnio() && currentDate.getMes() > fechaDevolucion.getMes()) ||
             (currentDate.getAnio() == fechaDevolucion.getAnio() && currentDate.getMes() == fechaDevolucion.getMes() && currentDate.getDia() > fechaDevolucion.getDia())) {
         } else {
-            break;
+            System.out.println("Devuleva el Libro");
         }
     }
 
