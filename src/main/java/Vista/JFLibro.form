@@ -718,15 +718,11 @@
                       </Group>
                       <EmptySpace min="59" pref="59" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jTFunidadesEditar" max="32767" attributes="0"/>
+                          <Component id="jTFunidadesEditar" pref="249" max="32767" attributes="0"/>
                           <Component id="jTFlibroEditarFiltrarNombre" max="32767" attributes="0"/>
                           <Component id="jTFtituloEditar" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="jCBgeneroEditar" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jTFgeneroEditar" min="-2" pref="123" max="-2" attributes="0"/>
-                          </Group>
                           <Component id="jTFidLibroEditar" max="32767" attributes="0"/>
+                          <Component id="jTFgeneroEditar" max="32767" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
@@ -774,7 +770,6 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jTFgeneroEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCBgeneroEditar" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -885,40 +880,6 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBlimpiarLibroEditarActionPerformed"/>
               </Events>
-            </Component>
-            <Component class="javax.swing.JComboBox" name="jCBgeneroEditar">
-              <Properties>
-                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="20">
-                    <StringItem index="0" value="Ficci&#xf3;n"/>
-                    <StringItem index="1" value="No ficci&#xf3;n"/>
-                    <StringItem index="2" value="Misterio"/>
-                    <StringItem index="3" value="Ciencia Ficci&#xf3;n"/>
-                    <StringItem index="4" value="Fantas&#xed;a"/>
-                    <StringItem index="5" value="Romance"/>
-                    <StringItem index="6" value="Aventura"/>
-                    <StringItem index="7" value="Drama"/>
-                    <StringItem index="8" value="Terror"/>
-                    <StringItem index="9" value="Poes&#xed;a"/>
-                    <StringItem index="10" value="Biograf&#xed;a"/>
-                    <StringItem index="11" value="Historia"/>
-                    <StringItem index="12" value="Ciencia"/>
-                    <StringItem index="13" value="Viajes"/>
-                    <StringItem index="14" value="Autoayuda"/>
-                    <StringItem index="15" value="Humor"/>
-                    <StringItem index="16" value="Suspenso"/>
-                    <StringItem index="17" value="Crimen"/>
-                    <StringItem index="18" value="Ensayo"/>
-                    <StringItem index="19" value=" "/>
-                  </StringArray>
-                </Property>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCBgeneroEditarActionPerformed"/>
-              </Events>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

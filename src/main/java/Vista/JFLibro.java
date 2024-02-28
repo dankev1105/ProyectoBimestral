@@ -253,7 +253,6 @@ public class JFLibro extends javax.swing.JFrame {
         jTFlibroEditarFiltrarID = new javax.swing.JTextField();
         jBactualizarLibro = new javax.swing.JButton();
         jBlimpiarLibroEditar = new javax.swing.JButton();
-        jCBgeneroEditar = new javax.swing.JComboBox<>();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTdatosLibro = new javax.swing.JTable();
@@ -734,13 +733,6 @@ public class JFLibro extends javax.swing.JFrame {
             }
         });
 
-        jCBgeneroEditar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ficción", "No ficción", "Misterio", "Ciencia Ficción", "Fantasía", "Romance", "Aventura", "Drama", "Terror", "Poesía", "Biografía", "Historia", "Ciencia", "Viajes", "Autoayuda", "Humor", "Suspenso", "Crimen", "Ensayo", " " }));
-        jCBgeneroEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCBgeneroEditarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -756,14 +748,11 @@ public class JFLibro extends javax.swing.JFrame {
                     .addComponent(jTFfiltrarPorNombre))
                 .addGap(59, 59, 59)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTFunidadesEditar)
+                    .addComponent(jTFunidadesEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                     .addComponent(jTFlibroEditarFiltrarNombre)
                     .addComponent(jTFtituloEditar, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jCBgeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFgeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTFidLibroEditar))
+                    .addComponent(jTFidLibroEditar)
+                    .addComponent(jTFgeneroEditar))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(68, 68, 68)
@@ -799,8 +788,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jTFgeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCBgeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFgeneroEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -958,11 +946,11 @@ public class JFLibro extends javax.swing.JFrame {
             "No existe ese ID","Error.",JOptionPane.WARNING_MESSAGE);
             }else{
             jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
-            String generoSeleccionado = (String) jCBgeneroEditar.getSelectedItem();
             jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
             jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
             jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 4).toString());
-                
+             
+              
             }    
         }else{
             for (int fila = 0; fila < model.getRowCount(); fila++) {
@@ -1379,70 +1367,6 @@ public class JFLibro extends javax.swing.JFrame {
     private void jCBgeneroLibrosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCBgeneroLibrosMousePressed
        
     }//GEN-LAST:event_jCBgeneroLibrosMousePressed
-
-    private void jCBgeneroEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBgeneroEditarActionPerformed
-        String generoSeleccionado = (String) jCBgeneroEditar.getSelectedItem();
-
-    switch (generoSeleccionado) {
-        case "Ficción":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "No ficción":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Misterio":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Ciencia Ficción":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Fantasía":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Romance":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Aventura":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Drama":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Terror":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Poesía":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Biografía":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Historia":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-          case "Ciencia":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Viajes":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Autoayuda":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Humor":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Suspenso":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-        case "Crimen":
-            jTFgeneroLibro.setText(generoSeleccionado);
-            break;
-     
-        default:
-            break;
-    }
-    }//GEN-LAST:event_jCBgeneroEditarActionPerformed
     
     
     public static void main(String args[]) {
@@ -1488,7 +1412,6 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JButton jBlimpiarInsertarLibro;
     private javax.swing.JButton jBlimpiarLibroEditar;
     private javax.swing.JButton jBlimpiarLibrosBorrar;
-    private javax.swing.JComboBox<String> jCBgeneroEditar;
     private javax.swing.JComboBox<String> jCBgeneroLibros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
