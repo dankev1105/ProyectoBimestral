@@ -743,7 +743,7 @@ public class JFEstudiante extends javax.swing.JFrame {
             PreparedStatement pps = cn.prepareStatement("INSERT INTO Estudiante(NombreEstudiante, FechaNacimiento, CorreoInstitucional, IdEstudiante) VALUES (?,?,?,?)");
             pps.setString(1, jTFnombreEstudiante.getText());
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = jDateChooser.getDate();
             String fechaNacimiento = dateFormat.format(date);
 
@@ -895,7 +895,7 @@ public class JFEstudiante extends javax.swing.JFrame {
         int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
         String nuevoNombre = jTFnombreEstudianteEditar.getText();
         String nuevoCorreoInstitucional = jTFcorreoEstudianteEditar.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date = jDateChooserEditar.getDate();
         String nuevaFechaNacimiento = dateFormat.format(date);
         // Aquí es donde actualizamos el autor en la base de datos
