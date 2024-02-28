@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +33,9 @@ public class JFEstudiante extends javax.swing.JFrame {
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
     private int estudianteSeleccionado;
-    
+    Calendar cal = Calendar.getInstance();
+    Date fechaActual = cal.getTime();
+        
     public JFEstudiante() {
         initComponents();
         this.setVisible(false);
@@ -41,6 +44,8 @@ public class JFEstudiante extends javax.swing.JFrame {
         File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
         setIconImage(icon.getImage());
+        jDateChooser.setMaxSelectableDate(fechaActual);
+        jDateChooserEditar.setMaxSelectableDate(fechaActual);
         this.setResizable(false);        
         this.jTFestudianteEditarNombre.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
@@ -321,10 +326,9 @@ public class JFEstudiante extends javax.swing.JFrame {
                             .addComponent(jTFcorreoInstitucionalEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTbVaciar)
-                    .addComponent(jBinsertarEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBinsertarEstudiante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTbVaciar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTabbedPane1.addTab("Insertar", jPanel2);
@@ -345,6 +349,7 @@ public class JFEstudiante extends javax.swing.JFrame {
 
         jLabel11.setText("Nombre:");
 
+        jTFnombreEstudianteEditar.setEditable(false);
         jTFnombreEstudianteEditar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTFnombreEstudianteEditarKeyTyped(evt);
@@ -359,6 +364,7 @@ public class JFEstudiante extends javax.swing.JFrame {
 
         jLabel14.setText("Correo Institucional:");
 
+        jTFcorreoEstudianteEditar.setEditable(false);
         jTFcorreoEstudianteEditar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTFcorreoEstudianteEditarKeyTyped(evt);
@@ -403,6 +409,8 @@ public class JFEstudiante extends javax.swing.JFrame {
         jLabel5.setText("Filtrar por nombre:");
 
         jLabel19.setText("Filtrar por ID:");
+
+        jDateChooserEditar.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -722,6 +730,9 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jBinsertarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarEstudianteActionPerformed
+        if(jTFnombreEstudiante.getText().length()==0 || jDateChooser.getDate()==null || jTFcorreoInstitucionalEstudiante.getText().length()==0 || jTFidEstudiante.getText().length()==0){
+        JOptionPane.showMessageDialog(null, "Alguno de los campos esta vacios, llenelos por favor");
+        }else{
         try {
             String correo = jTFcorreoInstitucionalEstudiante.getText();
             if (!correo.endsWith("@epn.edu.ec")) {
@@ -732,7 +743,7 @@ public class JFEstudiante extends javax.swing.JFrame {
             PreparedStatement pps = cn.prepareStatement("INSERT INTO Estudiante(NombreEstudiante, FechaNacimiento, CorreoInstitucional, IdEstudiante) VALUES (?,?,?,?)");
             pps.setString(1, jTFnombreEstudiante.getText());
 
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = jDateChooser.getDate();
             String fechaNacimiento = dateFormat.format(date);
 
@@ -750,30 +761,23 @@ public class JFEstudiante extends javax.swing.JFrame {
         }
         catch (SQLException ex){
             JOptionPane.showMessageDialog(null, "Estudiante ya registrado");
+        }    
         }
+        
     }//GEN-LAST:event_jBinsertarEstudianteActionPerformed
 
     private void jTFidEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidEstudianteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFidEstudianteActionPerformed
-    private void eliminarEstudianteEnBaseDeDatos(int idEstudiante) {
-        String query = "DELETE FROM Estudiante WHERE IdEstudiante = ?";
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(1, idEstudiante);
-            st.executeUpdate();                     
-            JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar estudiante de la base de datos: " + ex.toString());
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
-        }
-    }
+    
         
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
+        Fecha fecha1 = new Fecha(jTFfechaEstudianteBorrar.getText());
+        this.estudiante = new Estudiante(Integer.parseInt(this.jTFIDEstudianteBorrar.getText()),jTFcorreoEstudianteBorrar.getText(),jTFnombreEstudianteBorrar.getText(),fecha1);
         try {
             if(estudianteSeleccionado != -1){
                 // Verifica si el estudiante tiene préstamos pendientes
-                if (tienePrestamosPendientes(estudianteSeleccionado)) {
+                if (estudiante.tienePrestamosPendientes(estudianteSeleccionado)) {
                     JOptionPane.showMessageDialog(null, "El estudiante tiene préstamos pendientes y no puede ser eliminado");
                     return;
                 }
@@ -781,7 +785,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                 // Pregunta al usuario si está seguro de borrar
                 int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres borrar este estudiante?", "Confirmar borrado", JOptionPane.YES_NO_OPTION);
                 if (respuesta == JOptionPane.YES_OPTION) {
-                    eliminarEstudianteEnBaseDeDatos(estudianteSeleccionado);
+                    estudiante.eliminarEstudianteEnBaseDeDatos(estudianteSeleccionado);
                     estudianteSeleccionado = -1; // Restablece el ID después de la eliminación
                     mostrarTabla();
                 }
@@ -791,31 +795,20 @@ public class JFEstudiante extends javax.swing.JFrame {
 
             filtrarTablaId("");
             filtrarTablaNombre("");
+            jTFnombreEstudianteBorrar.setText("");
+            jTFfechaEstudianteBorrar.setText("");
+            jTFcorreoEstudianteBorrar.setText("");
+            jTFIDEstudianteBorrar.setText("");
         } catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
         }
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
 
-    private boolean tienePrestamosPendientes(int idEstudiante) {
-        String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdEstudiante = ?";
-        Conexion cn = new Conexion();
-        Connection conexion = cn.establecerConexion();
-        try {
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, idEstudiante);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error" + e.toString());
-        }
-        return false;
-    }
-
     private void jBmostrarEstudianteEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarEstudianteEditarActionPerformed
         TableModel model = jTdatosEstudiantes.getModel();
+        if(jTFestudianteEditarNombre.getText().length()==0 && jTFestudianteEditarID.getText().length()==0 && jTdatosEstudiantes.getSelectedRow() == -1){
+        JOptionPane.showMessageDialog(null, "Primero filtre o selecione un estudiante a modificar");
+        }else{
         int filaEncontrada = -1;
         if(jTdatosEstudiantes.getSelectedRow() != -1) {
             // Si se ha seleccionado una fila, usar esa fila
@@ -858,6 +851,9 @@ public class JFEstudiante extends javax.swing.JFrame {
         jDateChooserEditar.setDate(date);
 
         jTFcorreoEstudianteEditar.setText(model.getValueAt(filaEncontrada, 2).toString()); // Muestra el correo del estudiante
+        jTFnombreEstudianteEditar.setEnabled(true);
+        jDateChooserEditar.setEnabled(true);
+        jTFcorreoEstudianteEditar.setEditable(true);
         String idEstudiante = model.getValueAt(filaEncontrada, 3).toString(); // Obtiene el ID del estudiante de la tabla
         jTFIDEstudianteEditar.setText(idEstudiante); // Muestra el ID del estudiante
         try {
@@ -866,40 +862,17 @@ public class JFEstudiante extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El ID del estudiante no es válido");
             estudianteSeleccionado = -1;
         }
+        
     }
-
+    jTFnombreEstudianteEditar.setEditable(true);
+    jDateChooserEditar.setEnabled(true);
+    jTFcorreoEstudianteEditar.setEditable(true);
     filtrarTablaId("");
     filtrarTablaNombre("");
+    }
     }//GEN-LAST:event_jBmostrarEstudianteEditarActionPerformed
     
-    private void actualizarEstudianteEnBaseDeDatos(int idEstudiante, String nuevoNombre, String nuevaFechaNacimiento, String nuevoCorreoInstitucional) {
-        String queryNombre = "UPDATE Estudiante SET NombreEstudiante = ? WHERE IdEstudiante = ?";
-        String queryFecha = "UPDATE Estudiante SET FechaNacimiento = ? WHERE IdEstudiante = ?";
-        String queryCorreo = "UPDATE Estudiante SET CorreoInstitucional = ? WHERE IdEstudiante = ?";
-
-        try (PreparedStatement stNombre = cn.prepareStatement(queryNombre);
-            PreparedStatement stFecha = cn.prepareStatement(queryFecha);
-            PreparedStatement stCorreo = cn.prepareStatement(queryCorreo)) {
-
-            stNombre.setString(1, nuevoNombre);
-            stNombre.setInt(2, idEstudiante);
-            stNombre.executeUpdate();
-
-            stFecha.setString(1, nuevaFechaNacimiento);
-            stFecha.setInt(2, idEstudiante);
-            stFecha.executeUpdate();
-
-            stCorreo.setString(1, nuevoCorreoInstitucional);
-            stCorreo.setInt(2, idEstudiante);
-            stCorreo.executeUpdate();
-            
-            JOptionPane.showMessageDialog(null, "Estudiate actualizado con exito ");
-            mostrarTabla();
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar estudiante en la base de datos: " + ex.toString());
-        }
-    }
+    
     
     private void jTFidEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFidEstudianteKeyTyped
     char caracter= evt.getKeyChar();
@@ -914,7 +887,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFidEstudianteKeyReleased
 
     private void jBactualizarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarEstudianteActionPerformed
-        if(jTFIDEstudianteEditar.getText().length()==0){
+        if(jTFIDEstudianteEditar.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Primero seleccione un estudiante a modificar");
         }else{
         jTFestudianteEditarNombre.setText(null);
@@ -922,17 +895,31 @@ public class JFEstudiante extends javax.swing.JFrame {
         int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
         String nuevoNombre = jTFnombreEstudianteEditar.getText();
         String nuevoCorreoInstitucional = jTFcorreoEstudianteEditar.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         java.util.Date date = jDateChooserEditar.getDate();
         String nuevaFechaNacimiento = dateFormat.format(date);
         // Aquí es donde actualizamos el autor en la base de datos
-        actualizarEstudianteEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento, nuevoCorreoInstitucional);
+        Date date1 = jDateChooserEditar.getDate();
+        String fechaNacimiento = dateFormat.format(date1);
+        Fecha fecha = new Fecha(fechaNacimiento);
+        this.estudiante = new Estudiante(Integer.parseInt(this.jTFIDEstudianteEditar.getText()),jTFcorreoEstudianteEditar.getText(),jTFnombreEstudianteEditar.getText(),fecha);
+        estudiante.actualizarEstudianteEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento, nuevoCorreoInstitucional);
+        jTFnombreEstudianteEditar.setText("");
+        jDateChooserEditar.setCalendar(null);
+        jTFcorreoEstudianteEditar.setText("");
+        jTFIDEstudianteEditar.setText("");
+        jTFnombreEstudianteEditar.setEditable(false);
+        jDateChooserEditar.setEnabled(false);
+        jTFcorreoEstudianteEditar.setEditable(false);
         mostrarTabla();    
         }
     }//GEN-LAST:event_jBactualizarEstudianteActionPerformed
 
     private void jBMostrarEstudianteBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarEstudianteBorrarActionPerformed
         TableModel model = jTdatosEstudiantes.getModel();
+        if(jTFestudianteBorrarNombre.getText().length()==0 && jTFestudianteBorrarID.getText().length()==0 && jTdatosEstudiantes.getSelectedRow() == -1){
+        JOptionPane.showMessageDialog(null, "Primero filtre o selecione un estudiante a modificar");
+        }else{
         int filaEncontrada = -1;
         if(jTdatosEstudiantes.getSelectedRow() != -1) {
             // Si se ha seleccionado una fila, usar esa fila
@@ -962,14 +949,15 @@ public class JFEstudiante extends javax.swing.JFrame {
 
         if(filaEncontrada != -1){
             jTFnombreEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 0).toString());
-            jTFfechaEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 1).toString());
+            String fechaNacimiento = model.getValueAt(filaEncontrada, 1).toString();
+            jTFfechaEstudianteBorrar.setText(fechaNacimiento);
             jTFcorreoEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 2).toString());
             jTFIDEstudianteBorrar.setText(model.getValueAt(filaEncontrada, 3).toString());     
             estudianteSeleccionado = Integer.parseInt(jTFIDEstudianteBorrar.getText());
         }
-
         filtrarTablaId("");
         filtrarTablaNombre("");
+        }
     }//GEN-LAST:event_jBMostrarEstudianteBorrarActionPerformed
 
     private void jBvaciarBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBvaciarBorrarActionPerformed
@@ -1005,6 +993,9 @@ public class JFEstudiante extends javax.swing.JFrame {
         jTFIDEstudianteEditar.setText("");
         jTFestudianteEditarNombre.setText("");
         jTFestudianteEditarID.setText("");
+        jTFnombreEstudianteEditar.setEditable(false);
+        jDateChooserEditar.setEnabled(false);
+        jTFcorreoEstudianteEditar.setEditable(false);
     }//GEN-LAST:event_jBvaciarBorrar1ActionPerformed
 
     private void jTFestudianteEditarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFestudianteEditarIDActionPerformed

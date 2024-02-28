@@ -161,11 +161,10 @@
                           </Group>
                       </Group>
                       <EmptySpace pref="15" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="jTbVaciar" min="-2" max="-2" attributes="0"/>
-                          <Component id="jBinsertarEstudiante" min="-2" pref="20" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jBinsertarEstudiante" alignment="1" min="-2" pref="27" max="-2" attributes="0"/>
+                          <Component id="jTbVaciar" alignment="1" min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -379,6 +378,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFnombreEstudianteEditar">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreEstudianteEditarKeyTyped"/>
               </Events>
@@ -404,6 +406,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFcorreoEstudianteEditar">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
               <Events>
                 <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFcorreoEstudianteEditarKeyTyped"/>
               </Events>
@@ -441,6 +446,9 @@
               </Properties>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="jDateChooserEditar">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>
