@@ -68,14 +68,14 @@ public class Libro {
         String query = "SELECT * FROM Libro WHERE IdLibro = ?";
 
         try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(1, idLibro);
-            ResultSet rs = st.executeQuery();
+        st.setLong(1, idLibro);
+        ResultSet rs = st.executeQuery();
 
-            if (rs.next()) {
-                return true; 
-            } else {
-                return false;
-            }
+        if (rs.next()) {
+        return true; 
+        } else {
+        return false;
+        }
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al verificar la existencia del libro: " + ex.toString());
@@ -100,44 +100,44 @@ public class Libro {
             int filasActualizadas = st.executeUpdate();
 
             if (filasActualizadas > 0) {
-                JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
+            JOptionPane.showMessageDialog(null, "Libro actualizado correctamente");
             } else {
-                JOptionPane.showMessageDialog(null, 
-                "No se pudo actualizar el libro. Verifica la existencia del libro en la base de datos.");
+            JOptionPane.showMessageDialog(null, 
+            "No se pudo actualizar el libro. Verifica la existencia del libro en la base de datos.");
             }
             }
             } catch (SQLIntegrityConstraintViolationException ex) {
             JOptionPane.showMessageDialog(null, "Error de integridad: " + ex.getMessage());
             } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar el libro en la base de datos: " 
-                    + ex.toString());
+            + ex.toString());
             }
             }
         
             public void eliminarLibroEnBaseDeDatos(int idLibro) {
             String query = "DELETE FROM Libro WHERE IdLibro = ?";
             try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setLong(1, idLibro);
+            st.setInt(1, idLibro);
             st.executeUpdate();                     
             JOptionPane.showMessageDialog(null, "Libro eliminado correctamente.");
-            } catch (SQLException ex) {
+            }catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al eliminar estudiante de la base de datos: " + ex.toString());
-            } catch (ArrayIndexOutOfBoundsException ex) {
+            }catch (ArrayIndexOutOfBoundsException ex) {
             JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites.");
             }
             }
     
-            public boolean tienePrestamosPendientes(int idEstudiante) {
-            String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdEstudiante = ?";
+            public boolean tienePrestamosPendientes(int idLibro) {
+            String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdLibro = ?";
             Conexion cn = new Conexion();
-             Connection conexion = cn.establecerConexion();
+            Connection conexion = cn.establecerConexion();
             try {
             PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, idEstudiante);
+            preparedStatement.setInt(1, idLibro);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0;
+            int count = rs.getInt(1);
+            return count > 0;
             }
             } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.toString());
