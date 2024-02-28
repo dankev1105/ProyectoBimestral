@@ -808,7 +808,6 @@ public class JFPrestamo extends javax.swing.JFrame {
 
     private void jBdevolverPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdevolverPrestamoActionPerformed
         int selectedRow = jTprestamo.getSelectedRow();
-        System.out.println("NUMERO: "+selectedRow);
         if (selectedRow != -1) {
             int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
             try {
