@@ -217,7 +217,7 @@ public class JFLibro extends javax.swing.JFrame {
         jTFnombreAutor = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTFfechaNacimientoAutor = new javax.swing.JTextField();
-        jBinsertarLib = new javax.swing.JButton();
+        jBinsertarLibro = new javax.swing.JButton();
         jBlimpiarInsertarLibro = new javax.swing.JButton();
         jBMostrarDatosAutor = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
@@ -234,7 +234,7 @@ public class JFLibro extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jTFlibroBorrarFiltrarNombre = new javax.swing.JTextField();
         jTFlibroBorrarFiltrarID = new javax.swing.JTextField();
-        jBMostrar = new javax.swing.JButton();
+        jBmostrarLibro = new javax.swing.JButton();
         jBborrarEstudiante = new javax.swing.JButton();
         jBlimpiarLibrosBorrar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -442,10 +442,10 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGap(34, 34, 34))
         );
 
-        jBinsertarLib.setText("Insertar Libro");
-        jBinsertarLib.addActionListener(new java.awt.event.ActionListener() {
+        jBinsertarLibro.setText("Insertar Libro");
+        jBinsertarLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBinsertarLibActionPerformed(evt);
+                jBinsertarLibroActionPerformed(evt);
             }
         });
 
@@ -474,7 +474,7 @@ public class JFLibro extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jBinsertarLib, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                            .addComponent(jBinsertarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(jBlimpiarInsertarLibro, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                             .addComponent(jBMostrarDatosAutor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -493,7 +493,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jBinsertarLib)
+                        .addComponent(jBinsertarLibro)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jBMostrarDatosAutor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -543,10 +543,10 @@ public class JFLibro extends javax.swing.JFrame {
             }
         });
 
-        jBMostrar.setText("Mostrar Libro");
-        jBMostrar.addActionListener(new java.awt.event.ActionListener() {
+        jBmostrarLibro.setText("Mostrar Libro");
+        jBmostrarLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBMostrarActionPerformed(evt);
+                jBmostrarLibroActionPerformed(evt);
             }
         });
 
@@ -573,7 +573,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jBMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jBmostrarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
@@ -635,7 +635,7 @@ public class JFLibro extends javax.swing.JFrame {
                             .addComponent(jLabel20)
                             .addComponent(jTFidLibroBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                        .addComponent(jBMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBmostrarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jBborrarEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -930,45 +930,44 @@ public class JFLibro extends javax.swing.JFrame {
         TableModel model = jTdatosLibro.getModel();
         int filaEncontrada = -1;
         if(this.jTFlibroEditarFiltrarNombre.getText().length()==0 && this.jTFlibroEditarFiltrarID.getText().length()==0)
-            JOptionPane.showMessageDialog(null, 
+        JOptionPane.showMessageDialog(null, 
             "Primero llene alguno de los campos.","Error.",JOptionPane.WARNING_MESSAGE);    
         else{
         if(this.jTFlibroEditarFiltrarNombre.getText().length()==0){
-            for (int fila = 0; fila < model.getRowCount(); fila++) {
-                String idEnFila = model.getValueAt(fila, 2).toString(); 
-                if (idEnFila.equals(jTFlibroEditarFiltrarID.getText())) {
-                    filaEncontrada = fila;
-                    break;
+        for (int fila = 0; fila < model.getRowCount(); fila++) {
+        String idEnFila = model.getValueAt(fila, 2).toString(); 
+        if (idEnFila.equals(jTFlibroEditarFiltrarID.getText())) {
+        filaEncontrada = fila;
+        break;
                 }
             }
-            if(filaEncontrada==-1){
-            JOptionPane.showMessageDialog(null, 
-            "No existe ese ID","Error.",JOptionPane.WARNING_MESSAGE);
-            }else{
-            jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
-            jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
-            jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
-            jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 4).toString());
-             
+        if(filaEncontrada==-1){
+        JOptionPane.showMessageDialog(null, 
+        "No existe ese ID","Error.",JOptionPane.WARNING_MESSAGE);
+        }else{
+        jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
+        jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
+        jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
+        jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 4).toString());
               
             }    
         }else{
-            for (int fila = 0; fila < model.getRowCount(); fila++) {
-                String idEnFila = model.getValueAt(fila, 0).toString(); 
-                if (idEnFila.equals(jTFlibroEditarFiltrarNombre.getText())) {
-                    filaEncontrada = fila;
-                    break;
+        for (int fila = 0; fila < model.getRowCount(); fila++) {
+        String idEnFila = model.getValueAt(fila, 0).toString(); 
+        if (idEnFila.equals(jTFlibroEditarFiltrarNombre.getText())) {
+        filaEncontrada = fila;
+        break;
                 }
-            }if(filaEncontrada==-1){
-                JOptionPane.showMessageDialog(null, 
-                        "No existe ese nombre.","Error",JOptionPane.WARNING_MESSAGE);
+        }if(filaEncontrada==-1){
+        JOptionPane.showMessageDialog(null, 
+        "No existe ese nombre.","Error",JOptionPane.WARNING_MESSAGE);
             }
-            else{
-                jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
-                jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
-                jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
-                jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 4).toString());   
-                }    
+        else{
+        jTFtituloEditar.setText(model.getValueAt(filaEncontrada, 0).toString());
+        jTFgeneroEditar.setText(model.getValueAt(filaEncontrada, 1).toString());
+        jTFidLibroEditar.setText(model.getValueAt(filaEncontrada, 2).toString());
+        jTFunidadesEditar.setText(model.getValueAt(filaEncontrada, 4).toString());   
+  }    
   }
             
    }
@@ -987,28 +986,27 @@ public class JFLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFlibroEditarFiltrarNombreActionPerformed
 
     private void jTFlibroBorrarFiltrarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFlibroBorrarFiltrarNombreActionPerformed
-        // TODO add your handling code here:
+    
     }//GEN-LAST:event_jTFlibroBorrarFiltrarNombreActionPerformed
 
     private void jBactualizarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarLibroActionPerformed
         int idLibro = Integer.parseInt(this.jTFidLibroEditar.getText());
-                int nuevaCantidad = Integer.parseInt(jTFunidadesEditar.getText());
-                String nuevoTitulo = jTFtituloEditar.getText();
-                String nuevoGenero = jTFgeneroEditar.getText();
-                
+        int nuevaCantidad = Integer.parseInt(jTFunidadesEditar.getText());
+        String nuevoTitulo = jTFtituloEditar.getText();
+        String nuevoGenero = jTFgeneroEditar.getText();
                 // Aquí es donde actualizamos el autor en la base de datos
-                fecha = new Fecha(jTFfechaNacimientoAutor.getText());
+        fecha = new Fecha(jTFfechaNacimientoAutor.getText());
                 
-                autor = new Autor(Long.parseLong(jTFidAutor.getText()),jTFnombreAutor.getText(),fecha);
+        autor = new Autor(Long.parseLong(jTFidAutor.getText()),jTFnombreAutor.getText(),fecha);
                 
-                libro= new Libro(Integer.parseInt(jTFidLibroEditar.getText()),autor,
-                Integer.parseInt(jTFunidadesEditar.getText()),jTFtituloEditar.getText(),jTFgeneroEditar.getText());
+        libro= new Libro(Integer.parseInt(jTFidLibroEditar.getText()),autor,
+        Integer.parseInt(jTFunidadesEditar.getText()),jTFtituloEditar.getText(),jTFgeneroEditar.getText());
                 
-                libro.actualizarLibroEnBaseDeDatos(idLibro, nuevaCantidad, nuevoTitulo, nuevoGenero);
-                mostrarTabla();
+        libro.actualizarLibroEnBaseDeDatos(idLibro, nuevaCantidad, nuevoTitulo, nuevoGenero);
+        mostrarTabla();
     }//GEN-LAST:event_jBactualizarLibroActionPerformed
 
-    private void jBMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBMostrarActionPerformed
+    private void jBmostrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarLibroActionPerformed
         TableModel model = jTdatosLibro.getModel();
         int filaEncontrada = -1;
         if(this.jTFlibroBorrarFiltrarNombre.getText().length()==0 
@@ -1058,13 +1056,13 @@ public class JFLibro extends javax.swing.JFrame {
         filtrarTablaId("");
         filtrarTablaNombre("");
         mostrarTabla();
-    }//GEN-LAST:event_jBMostrarActionPerformed
+    }//GEN-LAST:event_jBmostrarLibroActionPerformed
 
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
     fecha = new Fecha(jTFfechaNacimientoAutor.getText());            
     autor = new Autor(Long.parseLong(jTFidAutor.getText()),jTFnombreAutor.getText(),fecha);         
-    libro= new Libro(Integer.parseInt(jTFidLibroEditar.getText()),autor,
-    Integer.parseInt(jTFunidadesEditar.getText()),jTFtituloEditar.getText(),jTFgeneroEditar.getText());
+    libro= new Libro(Integer.parseInt(jTFidLibroBorrar.getText()),autor,
+    Integer.parseInt(jTFunidadesBorrar.getText()),jTFtituloBorrar.getText(),jTFgeneroBorrar.getText());
                  
     try {
     if(idLibroSeleccionado != -1){
@@ -1078,6 +1076,7 @@ public class JFLibro extends javax.swing.JFrame {
     int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres borrar este estudiante?", "Confirmar borrado", JOptionPane.YES_NO_OPTION);
     if (respuesta == JOptionPane.YES_OPTION) {
     libro.eliminarLibroEnBaseDeDatos(idLibroSeleccionado);
+    
     idLibroSeleccionado = -1; // Restablece el ID después de la eliminación
     mostrarTabla();
     }
@@ -1092,7 +1091,7 @@ public class JFLibro extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
 
-    private void jBinsertarLibActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibActionPerformed
+    private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
         TableModel model = jTdatosAutor.getModel();
         if(jTFidAutor.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, 
@@ -1107,7 +1106,7 @@ public class JFLibro extends javax.swing.JFrame {
             int index = jCBgeneroLibros.getSelectedIndex();
             String genero = (String) jCBgeneroLibros.getItemAt(index);
             jTFgeneroLibro.setText(genero);
-            pps.setLong(3, Integer.parseInt(jTFidLibro.getText()));
+            pps.setInt(3, Integer.parseInt(jTFidLibro.getText()));
             pps.setInt(4, Integer.parseInt(jTFunidadesLibro.getText()));
             pps.setLong(5,Long.parseLong(jTFidAutor.getText()));
             
@@ -1115,21 +1114,21 @@ public class JFLibro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Datos guardados.");
 
             libro = new Libro( Integer.parseInt(jTFidLibro.getText()),autor,
-                Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(),
-                jTFgeneroLibro.getText());
+            Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(),
+            jTFgeneroLibro.getText());
 
             jTAlibroActual.setText(libro.toString());
 
-           mostrarTabla();
+            mostrarTabla();
            
            jTFidAutor.setEnabled(true);
         }
         catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Libro ya registrado.");
+        JOptionPane.showMessageDialog(null, "Libro ya registrado.");
         }    
         }
         
-    }//GEN-LAST:event_jBinsertarLibActionPerformed
+    }//GEN-LAST:event_jBinsertarLibroActionPerformed
 
     private void jBlimpiarInsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlimpiarInsertarLibroActionPerformed
         jTFidLibro.setText("");
@@ -1263,7 +1262,6 @@ public class JFLibro extends javax.swing.JFrame {
         TableModel model = jTdatosAutor.getModel();
         int filaEncontrada = -1;
           
-        
         for (int fila = 0; fila < model.getRowCount(); fila++) {
         String idEnFila = model.getValueAt(fila, 2).toString();
         if (idEnFila.equals(jTFidAutor.getText())) {
@@ -1403,15 +1401,15 @@ public class JFLibro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBMostrar;
     private javax.swing.JButton jBMostrarDatosAutor;
     private javax.swing.JButton jBactualizarLibro;
     private javax.swing.JButton jBborrarEstudiante;
     private javax.swing.JButton jBeditarLibro;
-    private javax.swing.JButton jBinsertarLib;
+    private javax.swing.JButton jBinsertarLibro;
     private javax.swing.JButton jBlimpiarInsertarLibro;
     private javax.swing.JButton jBlimpiarLibroEditar;
     private javax.swing.JButton jBlimpiarLibrosBorrar;
+    private javax.swing.JButton jBmostrarLibro;
     private javax.swing.JComboBox<String> jCBgeneroLibros;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

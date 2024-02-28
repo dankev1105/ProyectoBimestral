@@ -121,7 +121,7 @@
                               <Component id="jScrollPane2" min="-2" pref="623" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jBinsertarLib" pref="180" max="32767" attributes="0"/>
+                                  <Component id="jBinsertarLibro" pref="180" max="32767" attributes="0"/>
                                   <Component id="jBlimpiarInsertarLibro" pref="180" max="32767" attributes="0"/>
                                   <Component id="jBMostrarDatosAutor" alignment="0" max="32767" attributes="0"/>
                               </Group>
@@ -147,7 +147,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jBinsertarLib" min="-2" max="-2" attributes="0"/>
+                              <Component id="jBinsertarLibro" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="jBMostrarDatosAutor" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
@@ -428,12 +428,12 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="jBinsertarLib">
+            <Component class="javax.swing.JButton" name="jBinsertarLibro">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Insertar Libro"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBinsertarLibActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBinsertarLibroActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBlimpiarInsertarLibro">
@@ -500,7 +500,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jBMostrar" min="-2" pref="180" max="-2" attributes="0"/>
+                                  <Component id="jBmostrarLibro" min="-2" pref="180" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -584,7 +584,7 @@
                                   </Group>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <Component id="jBMostrar" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="jBmostrarLibro" min="-2" pref="35" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="jBborrarEstudiante" min="-2" pref="32" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -658,12 +658,12 @@
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFlibroBorrarFiltrarIDKeyTyped"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jBMostrar">
+                <Component class="javax.swing.JButton" name="jBmostrarLibro">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Mostrar Libro"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBMostrarActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBmostrarLibroActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jBborrarEstudiante">
