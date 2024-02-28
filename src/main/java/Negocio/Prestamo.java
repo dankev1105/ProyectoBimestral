@@ -72,9 +72,8 @@ public class Prestamo {
         if (currentDate.getAnio() > fechaDevolucion.getAnio() ||
             (currentDate.getAnio() == fechaDevolucion.getAnio() && currentDate.getMes() > fechaDevolucion.getMes()) ||
             (currentDate.getAnio() == fechaDevolucion.getAnio() && currentDate.getMes() == fechaDevolucion.getMes() && currentDate.getDia() > fechaDevolucion.getDia())) {
-            System.out.println("El préstamo ha excedido el tiempo límite.");
         } else {
-            System.out.println("El préstamo está dentro del tiempo límite.");
+            break;
         }
     }
 
