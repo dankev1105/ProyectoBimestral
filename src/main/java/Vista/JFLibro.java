@@ -133,9 +133,9 @@ public class JFLibro extends javax.swing.JFrame {
         TableModel model = jTdatosLibro.getModel();
             String tituloLibro = model.getValueAt(filaSeleccionadaModelo, 0).toString();
             String genero = model.getValueAt(filaSeleccionadaModelo, 1).toString();
-            String unidadesLibro = (model.getValueAt(filaSeleccionadaModelo, 2).toString());
-            String idLibro = model.getValueAt(filaSeleccionadaModelo, 3).toString();
-            String idAutor = model.getValueAt(filaSeleccionadaModelo,4).toString();
+            String idLibro = (model.getValueAt(filaSeleccionadaModelo, 2).toString());
+            String idAutor = model.getValueAt(filaSeleccionadaModelo, 3).toString();
+            String unidadesLibro = model.getValueAt(filaSeleccionadaModelo,4).toString();
             
             int indexSelect = jTabbedPane1.getSelectedIndex();
             switch (indexSelect)
@@ -145,18 +145,18 @@ public class JFLibro extends javax.swing.JFrame {
                 case 1:
                     jTFtituloBorrar.setText(tituloLibro);
                     jTFgeneroBorrar.setText(genero);
-                    jTFunidadesBorrar.setText(idLibro);  
-                    jTFidLibroBorrar.setText(idAutor);
-                    jTFidAutorBorrar.setText(unidadesLibro);
+                    jTFunidadesBorrar.setText(unidadesLibro);  
+                    jTFidLibroBorrar.setText(idLibro);
+                    jTFidAutorBorrar.setText(idAutor);
                     filtrarTablaId("");
                     filtrarTablaNombre("");
                     break;
                 case 2:
                     jTFtituloEditar.setText(tituloLibro);
                     jTFgeneroEditar.setText(genero);
-                    jTFunidadesEditar.setText(idLibro);  
-                    jTFidLibroEditar.setText(idAutor);
-                    jTFidAutorEditar.setText(unidadesLibro);
+                    jTFunidadesEditar.setText(unidadesLibro);  
+                    jTFidLibroEditar.setText(idLibro);
+                    jTFidAutorEditar.setText(idAutor);
                     filtrarTablaId("");
                     filtrarTablaNombre("");
 //                    jTFnombreEstudianteEditar.setEditable(true);
@@ -523,32 +523,44 @@ public class JFLibro extends javax.swing.JFrame {
                 jTFfiltradoAutorNombreActionPerformed(evt);
             }
         });
+        jTFfiltradoAutorNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFfiltradoAutorNombreKeyTyped(evt);
+            }
+        });
+
+        jTFfiltradoCodigoAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFfiltradoCodigoAutorKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel11)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
-                    .addComponent(jLabel23))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTFidAutor)
-                    .addComponent(jTFnombreAutor)
-                    .addComponent(jTFfiltradoCodigoAutor)
-                    .addComponent(jTFfechaNacimientoAutor))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTFfiltradoAutorNombre))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabel23))
+                        .addGap(31, 31, 31)
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTFidAutor, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                            .addComponent(jTFnombreAutor)
+                            .addComponent(jTFfiltradoCodigoAutor)
+                            .addComponent(jTFfechaNacimientoAutor))))
                 .addGap(27, 27, 27))
-            .addGroup(jPanel7Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jTFfiltradoAutorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 25, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -737,7 +749,7 @@ public class JFLibro extends javax.swing.JFrame {
                     .addComponent(jTFfiltrarPorNombre1)
                     .addComponent(jLabel22)
                     .addComponent(jTFlibroBorrarFiltrarID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTFtituloBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -750,10 +762,10 @@ public class JFLibro extends javax.swing.JFrame {
                             .addComponent(jTFgeneroBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBlimpiarLibrosBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBlimpiarLibrosBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19)
                             .addComponent(jTFunidadesBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
                     .addComponent(jTFidLibroBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -776,7 +788,7 @@ public class JFLibro extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Borrar", jPanel3);
@@ -1061,54 +1073,59 @@ public class JFLibro extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFlibroBorrarFiltrarNombreActionPerformed
 
     private void jBactualizarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarLibroActionPerformed
-        TableModel model = jTdatosLibro.getModel();
-        int idLibro = Integer.parseInt(this.jTFidLibroEditar.getText());
-        int nuevaCantidad = Integer.parseInt(jTFunidadesEditar.getText());
-        String nuevoTitulo = jTFtituloEditar.getText();
-        String nuevoGenero = jTFgeneroEditar.getText();     
-        int filaEncontrada=Integer.parseInt(jTFidAutorEditar.getText());
+        TableModel model = jTdatosAutor.getModel();  
+        int filaEncontrada=-1;
         for (int fila = 0; fila < model.getRowCount(); fila++) {
                     String idEnFila = model.getValueAt(fila, 2).toString();
-                    if (idEnFila.equals(jTFlibroEditarFiltrarID.getText())) {
+                    if (idEnFila.equals(jTFidAutorEditar.getText())) {
                         filaEncontrada = fila;
                         break;
                     }
                 }
-        Long idAutor =Long.parseLong(model.getValueAt(filaEncontrada, 2).toString());
-        String nombre = model.getValueAt(filaEncontrada, 0).toString();    
+        if(filaEncontrada!=-1){
+        String nombre = model.getValueAt(filaEncontrada, 0).toString();
         fecha = new Fecha(model.getValueAt(filaEncontrada, 1).toString());
+        int idAutor = Integer.parseInt(model.getValueAt(filaEncontrada, 2).toString());
+        
                 
         autor = new Autor(idAutor,nombre,fecha);
                         
-        libro= new Libro(Integer.parseInt(jTFidLibroEditar.getText()),autor,
-        Integer.parseInt(jTFunidadesEditar.getText()),jTFtituloEditar.getText(),jTFgeneroEditar.getText());
-                
+        libro= new Libro(Integer.parseInt(this.jTFidLibroEditar.getText()),autor, Integer.parseInt(jTFunidadesEditar.getText()),jTFtituloEditar.getText(),jTFgeneroEditar.getText());
+        
+
+        int idLibro = Integer.parseInt(this.jTFidLibroEditar.getText());
+        int nuevaCantidad = Integer.parseInt(jTFunidadesEditar.getText());
+        String nuevoTitulo = jTFtituloEditar.getText();
+        String nuevoGenero = jTFgeneroEditar.getText(); 
         libro.actualizarLibroEnBaseDeDatos(idLibro, nuevaCantidad, nuevoTitulo, nuevoGenero);
-        mostrarTabla();
+        mostrarTabla();    
+        }
+        limpiarCampos();
+        
     }//GEN-LAST:event_jBactualizarLibroActionPerformed
 
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
-    TableModel model = jTdatosAutor.getModel();
-        int filaEncontrada=Integer.parseInt(jTFidAutorBorrar.getText());
-        for (int fila = 0; fila < model.getRowCount(); fila++) {
+        TableModel model = jTdatosAutor.getModel();
+    int filaEncontrada=Integer.parseInt(jTFidAutorBorrar.getText());
+    for (int fila = 0; fila < model.getRowCount(); fila++) {
                     String idEnFila = model.getValueAt(fila, 2).toString();
-                    if (idEnFila.equals(jTFlibroEditarFiltrarID.getText())) {
+                    if (idEnFila.equals(jTFidAutorBorrar.getText())) {
                         filaEncontrada = fila;
                         break;
                     }
                 }
-    Long idAutor =Long.parseLong(model.getValueAt(filaEncontrada, 2).toString());
+    int idAutor =Integer.parseInt(model.getValueAt(filaEncontrada, 2).toString());
     String nombre = model.getValueAt(filaEncontrada, 0).toString();    
     fecha = new Fecha(model.getValueAt(filaEncontrada, 1).toString());           
     autor = new Autor(idAutor,nombre,fecha);         
     libro= new Libro(Integer.parseInt(jTFidLibroBorrar.getText()),autor,
     Integer.parseInt(jTFunidadesBorrar.getText()),jTFtituloBorrar.getText(),jTFgeneroBorrar.getText());
-    int idLibroSeleccionado = Integer.parseInt(jTFidAutorBorrar.getText());
+    int idLibroSeleccionado = Integer.parseInt(jTFidLibroBorrar.getText());
     try {
     if(idLibroSeleccionado != -1){
     // Verifica si el estudiante tiene préstamos pendientes
     if (libro.tienePrestamosPendientes(idLibroSeleccionado)) {
-    JOptionPane.showMessageDialog(null, "El libro se encuentra en un préstamo pendientes y no puede ser eliminado");
+    JOptionPane.showMessageDialog(null, "El libro se encuentra en un préstamo pendientes y no puede ser eliminado.");
     return;
     }
 
@@ -1310,6 +1327,24 @@ public class JFLibro extends javax.swing.JFrame {
     private void jTFfiltradoAutorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFfiltradoAutorNombreActionPerformed
         
     }//GEN-LAST:event_jTFfiltradoAutorNombreActionPerformed
+
+    private void jTFfiltradoAutorNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFfiltradoAutorNombreKeyTyped
+         char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&& caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un autor de manera correcta.");
+        }
+    }//GEN-LAST:event_jTFfiltradoAutorNombreKeyTyped
+
+    private void jTFfiltradoCodigoAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFfiltradoCodigoAutorKeyTyped
+        char caracter = evt.getKeyChar();
+        if (Character.isLetter(caracter)) {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingrese un codigo de autor de manera correcta.");
+        }
+    }//GEN-LAST:event_jTFfiltradoCodigoAutorKeyTyped
     
     
     public static void main(String args[]) {
