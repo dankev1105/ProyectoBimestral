@@ -803,6 +803,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
         Fecha fecha1 = new Fecha(jTFfechaEstudianteBorrar.getText());
         this.estudiante = new Estudiante(Integer.parseInt(this.jTFIDEstudianteBorrar.getText()),jTFcorreoEstudianteBorrar.getText(),jTFnombreEstudianteBorrar.getText(),fecha1);
+        int estudianteSeleccionado = Integer.parseInt(jTFIDEstudianteBorrar.getText());
         try {
             if(estudianteSeleccionado != -1){
                 // Verifica si el estudiante tiene préstamos pendientes
@@ -848,8 +849,6 @@ public class JFEstudiante extends javax.swing.JFrame {
         if(jTFIDEstudianteEditar.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Primero seleccione un estudiante a modificar");
         }else{
-        jTFestudianteEditarNombre.setText(null);
-        jTFestudianteEditarID.setText(null);
         int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
         String nuevoNombre = jTFnombreEstudianteEditar.getText();
         String nuevoCorreoInstitucional = jTFcorreoEstudianteEditar.getText();
