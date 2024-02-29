@@ -624,7 +624,7 @@ public class JFAutor extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBborrarAutorActionPerformed
 private boolean FaltaLibros(int UnidadesDisponibles) {
-        String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdEstudiante = ?";
+        String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdLibro = ?";
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
         try {
