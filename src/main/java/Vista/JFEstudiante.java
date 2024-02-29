@@ -7,6 +7,8 @@ import Vista.JFMenuPrincipal;
 import java.util.List;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -76,6 +78,62 @@ public class JFEstudiante extends javax.swing.JFrame {
             filtrarTablaId(text);
             vaciarCamposIdB();
         }});
+        jTdatosEstudiantes.addMouseListener(new MouseAdapter() {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+        super.mouseClicked(e);
+        int filaSeleccionada = jTdatosEstudiantes.getSelectedRow();
+        TableModel model = jTdatosEstudiantes.getModel();
+
+        // Verifica si se ha seleccionado una fila válida
+        if (filaSeleccionada != -1) {
+            String nombre = model.getValueAt(filaSeleccionada, 0).toString();
+            String fechaNacimiento = model.getValueAt(filaSeleccionada, 1).toString();
+            String correo = model.getValueAt(filaSeleccionada, 2).toString();
+            String idEstudiante = model.getValueAt(filaSeleccionada, 3).toString();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            // Actualiza los campos de texto con los datos de la fila seleccionada
+            
+            int indexSelect = jTpEstudiante.getSelectedIndex();
+            switch (indexSelect)
+            {
+                case 0:
+                case 1:
+                    jTFnombreEstudianteEditar.setText(nombre);
+                    jTFcorreoEstudianteEditar.setText(correo);
+                    jTFIDEstudianteEditar.setText(idEstudiante);                  
+                    try {
+                        Date fecha = sdf.parse(fechaNacimiento);
+                        jDateChooserEditar.setDate(fecha);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(JFEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    jTFnombreEstudianteEditar.setEnabled(true);
+                    jDateChooserEditar.setEnabled(true);
+                    jTFcorreoEstudianteEditar.setEditable(true);
+                    jTFnombreEstudianteBorrar.setText("");
+                    jTFcorreoEstudianteBorrar.setText("");
+                    jTFIDEstudianteBorrar.setText("");
+                    jTFfechaEstudianteBorrar.setText("");
+                    break;
+                case 2:
+                    jTFnombreEstudianteBorrar.setText(nombre);
+                    jTFcorreoEstudianteBorrar.setText(correo);
+                    jTFIDEstudianteBorrar.setText(idEstudiante);
+                    jTFfechaEstudianteBorrar.setText(fechaNacimiento);
+                    jTFnombreEstudianteEditar.setText("");
+                    jTFcorreoEstudianteEditar.setText("");
+                    jTFIDEstudianteEditar.setText("");  
+                    jDateChooserEditar.setDate(null);
+                    break;
+            }            
+
+            
+        }
+    }
+        
+});
+
         }
         
     public void vaciarCamposNombreE(){
@@ -155,7 +213,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTpEstudiante = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTAestudianteActual = new javax.swing.JTextArea();
@@ -211,9 +269,9 @@ public class JFEstudiante extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.addKeyListener(new java.awt.event.KeyAdapter() {
+        jTpEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTabbedPane1KeyTyped(evt);
+                jTpEstudianteKeyTyped(evt);
             }
         });
 
@@ -331,7 +389,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                     .addComponent(jTbVaciar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jTabbedPane1.addTab("Insertar", jPanel2);
+        jTpEstudiante.addTab("Insertar", jPanel2);
 
         jBmostrarEstudianteEditar.setText("Mostrar");
         jBmostrarEstudianteEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -491,7 +549,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                         .addGap(25, 25, 25))))
         );
 
-        jTabbedPane1.addTab("Editar", jPanel1);
+        jTpEstudiante.addTab("Editar", jPanel1);
 
         jBborrarEstudiante.setText("Borrar");
         jBborrarEstudiante.addActionListener(new java.awt.event.ActionListener() {
@@ -639,7 +697,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                 .addGap(19, 19, 19))
         );
 
-        jTabbedPane1.addTab("Borrar", jPanel3);
+        jTpEstudiante.addTab("Borrar", jPanel3);
 
         jTdatosEstudiantes = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
@@ -657,6 +715,11 @@ public class JFEstudiante extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTdatosEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTdatosEstudiantesMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTdatosEstudiantes);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -700,7 +763,7 @@ public class JFEstudiante extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
+                    .addComponent(jTpEstudiante)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
@@ -714,7 +777,7 @@ public class JFEstudiante extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
+                .addComponent(jTpEstudiante)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -730,7 +793,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jBinsertarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarEstudianteActionPerformed
-        if(jTFnombreEstudiante.getText().length()==0 || jDateChooser.getDate()==null || jTFcorreoInstitucionalEstudiante.getText().length()==0 || jTFidEstudiante.getText().length()==0){
+         if(jTFnombreEstudiante.getText().length()==0 || jDateChooser.getDate()==null || jTFcorreoInstitucionalEstudiante.getText().length()==0 || jTFidEstudiante.getText().length()==0){
         JOptionPane.showMessageDialog(null, "Alguno de los campos esta vacios, llenelos por favor");
         }else{
         try {
@@ -1015,9 +1078,9 @@ public class JFEstudiante extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTFestudianteEditarIDKeyTyped
 
-    private void jTabbedPane1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTabbedPane1KeyTyped
+    private void jTpEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTpEstudianteKeyTyped
 
-    }//GEN-LAST:event_jTabbedPane1KeyTyped
+    }//GEN-LAST:event_jTpEstudianteKeyTyped
 
     private void jTFnombreEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreEstudianteKeyTyped
         char caracter = evt.getKeyChar();
@@ -1079,6 +1142,32 @@ public class JFEstudiante extends javax.swing.JFrame {
     private void jTFcorreoEstudianteBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFcorreoEstudianteBorrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFcorreoEstudianteBorrarActionPerformed
+
+    private void jTdatosEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTdatosEstudiantesMouseClicked
+//        TableModel model = jTdatosEstudiantes.getModel();
+////        int index = jTpEstudiante.getSelectedIndex();
+////        switch(index){
+////            case 0:
+////            case 1:
+//        String fechaNacimiento = model.getValueAt(model.getRowCount(), 1).toString();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date date = null;
+//        try {
+//            date = sdf.parse(fechaNacimiento);
+//        } catch (ParseException ex) {
+//            Logger.getLogger(JFEstudiante.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        jDateChooserEditar.setDate(date);
+//
+//        jTFcorreoEstudianteEditar.setText(model.getValueAt(model.getRowCount() , 2).toString()); // Muestra el correo del estudiante
+//        jTFnombreEstudianteEditar.setEnabled(true);
+//        jDateChooserEditar.setEnabled(true);
+//        jTFcorreoEstudianteEditar.setEditable(true);
+//        String idEstudiante = model.getValueAt(model.getRowCount(), 3).toString(); // Obtiene el ID del estudiante de la tabla
+//        jTFIDEstudianteEditar.setText(idEstudiante); // Muestra el ID del estudiante
+////            case 2:
+////        }
+    }//GEN-LAST:event_jTdatosEstudiantesMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -1178,8 +1267,8 @@ public class JFEstudiante extends javax.swing.JFrame {
     private javax.swing.JTextField jTFnombreEstudiante;
     private javax.swing.JTextField jTFnombreEstudianteBorrar;
     private javax.swing.JTextField jTFnombreEstudianteEditar;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton jTbVaciar;
     private javax.swing.JTable jTdatosEstudiantes;
+    private javax.swing.JTabbedPane jTpEstudiante;
     // End of variables declaration//GEN-END:variables
 }
