@@ -88,7 +88,7 @@ public class JFLibro extends javax.swing.JFrame {
             
         }}); 
         
-        jTabbedPane1.addChangeListener(new ChangeListener() {
+        jTBlibroGeneral.addChangeListener(new ChangeListener() {
         @Override
         public void stateChanged(ChangeEvent e) {
             limpiarCampos();
@@ -137,7 +137,7 @@ public class JFLibro extends javax.swing.JFrame {
             String idAutor = model.getValueAt(filaSeleccionadaModelo, 3).toString();
             String unidadesLibro = model.getValueAt(filaSeleccionadaModelo,4).toString();
             
-            int indexSelect = jTabbedPane1.getSelectedIndex();
+            int indexSelect = jTBlibroGeneral.getSelectedIndex();
             switch (indexSelect)
             {
                 case 0:
@@ -302,7 +302,7 @@ public class JFLibro extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jTBlibroGeneral = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTAlibroActual = new javax.swing.JTextArea();
@@ -343,7 +343,7 @@ public class JFLibro extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jTFlibroBorrarFiltrarNombre = new javax.swing.JTextField();
         jTFlibroBorrarFiltrarID = new javax.swing.JTextField();
-        jBborrarEstudiante = new javax.swing.JButton();
+        jBborrarLibro = new javax.swing.JButton();
         jBlimpiarLibrosBorrar = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
         jTFidAutorBorrar = new javax.swing.JTextField();
@@ -378,7 +378,7 @@ public class JFLibro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTabbedPane1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        jTBlibroGeneral.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -639,7 +639,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addContainerGap(91, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Insertar", jPanel2);
+        jTBlibroGeneral.addTab("Insertar", jPanel2);
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -680,10 +680,10 @@ public class JFLibro extends javax.swing.JFrame {
             }
         });
 
-        jBborrarEstudiante.setText("Borrar");
-        jBborrarEstudiante.addActionListener(new java.awt.event.ActionListener() {
+        jBborrarLibro.setText("Borrar");
+        jBborrarLibro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBborrarEstudianteActionPerformed(evt);
+                jBborrarLibroActionPerformed(evt);
             }
         });
 
@@ -736,7 +736,7 @@ public class JFLibro extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBborrarEstudiante, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBborrarLibro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBlimpiarLibrosBorrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(105, 105, 105))
         );
@@ -757,7 +757,7 @@ public class JFLibro extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBborrarEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBborrarLibro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel18)
                             .addComponent(jTFgeneroBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
@@ -791,7 +791,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addGap(0, 13, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Borrar", jPanel3);
+        jTBlibroGeneral.addTab("Borrar", jPanel3);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -932,7 +932,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addContainerGap(74, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Editar", jPanel1);
+        jTBlibroGeneral.addTab("Editar", jPanel1);
 
         jTdatosLibro = new javax.swing.JTable(){
             public boolean isCellEditable(int rowIndex, int colIndex){
@@ -1032,7 +1032,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 982, Short.MAX_VALUE)
+                .addComponent(jTBlibroGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 982, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -1041,7 +1041,7 @@ public class JFLibro extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTBlibroGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
@@ -1104,7 +1104,7 @@ public class JFLibro extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jBactualizarLibroActionPerformed
 
-    private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
+    private void jBborrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarLibroActionPerformed
         TableModel model = jTdatosAutor.getModel();
     int filaEncontrada=Integer.parseInt(jTFidAutorBorrar.getText());
     for (int fila = 0; fila < model.getRowCount(); fila++) {
@@ -1146,7 +1146,7 @@ public class JFLibro extends javax.swing.JFrame {
     }
     
         
-    }//GEN-LAST:event_jBborrarEstudianteActionPerformed
+    }//GEN-LAST:event_jBborrarLibroActionPerformed
 
     private void jBinsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarLibroActionPerformed
         TableModel model = jTdatosAutor.getModel();
@@ -1382,7 +1382,7 @@ public class JFLibro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBactualizarLibro;
-    private javax.swing.JButton jBborrarEstudiante;
+    private javax.swing.JButton jBborrarLibro;
     private javax.swing.JButton jBinsertarLibro;
     private javax.swing.JButton jBlimpiarInsertarLibro;
     private javax.swing.JButton jBlimpiarLibroEditar;
@@ -1427,6 +1427,7 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTAlibroActual;
+    private javax.swing.JTabbedPane jTBlibroGeneral;
     private javax.swing.JTextField jTFfechaNacimientoAutor;
     private javax.swing.JTextField jTFfiltradoAutorNombre;
     private javax.swing.JTextField jTFfiltradoCodigoAutor;
@@ -1451,7 +1452,6 @@ public class JFLibro extends javax.swing.JFrame {
     private javax.swing.JTextField jTFunidadesBorrar;
     private javax.swing.JTextField jTFunidadesEditar;
     private javax.swing.JTextField jTFunidadesLibro;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTdatosAutor;
     private javax.swing.JTable jTdatosLibro;
     // End of variables declaration//GEN-END:variables
