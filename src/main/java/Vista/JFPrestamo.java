@@ -744,7 +744,7 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBlimpiarEstudianteActionPerformed
 
     private void jBaceptarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBaceptarEstudianteActionPerformed
-    if (jTestudiante.getRowCount() == 1) { 
+    if (jTestudiante.getRowCount() == 1 || jTestudiante.getSelectedRow()!=-1) { 
             int idEstudiante = Integer.parseInt(jTestudiante.getValueAt(0, 3).toString()); 
             JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + idEstudiante);
             this.idEstudianteSeleccionado = idEstudiante;
