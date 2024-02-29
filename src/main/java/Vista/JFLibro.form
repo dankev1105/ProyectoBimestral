@@ -64,7 +64,7 @@
           </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jTabbedPane1" pref="982" max="32767" attributes="0"/>
+              <Component id="jTBlibroGeneral" pref="982" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -75,7 +75,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
               <EmptySpace pref="12" max="32767" attributes="0"/>
-              <Component id="jTabbedPane1" min="-2" pref="446" max="-2" attributes="0"/>
+              <Component id="jTBlibroGeneral" min="-2" pref="446" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -88,7 +88,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+    <Container class="javax.swing.JTabbedPane" name="jTBlibroGeneral">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
@@ -568,7 +568,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jBborrarEstudiante" alignment="1" min="-2" pref="180" max="-2" attributes="0"/>
+                                      <Component id="jBborrarLibro" alignment="1" min="-2" pref="180" max="-2" attributes="0"/>
                                       <Component id="jBlimpiarLibrosBorrar" alignment="1" min="-2" pref="180" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
@@ -596,7 +596,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jBborrarEstudiante" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="jBborrarLibro" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                       <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="jTFgeneroBorrar" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -685,12 +685,12 @@
                     <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFlibroBorrarFiltrarIDKeyTyped"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="jBborrarEstudiante">
+                <Component class="javax.swing.JButton" name="jBborrarLibro">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Borrar"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBborrarEstudianteActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBborrarLibroActionPerformed"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jBlimpiarLibrosBorrar">
