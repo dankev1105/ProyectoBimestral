@@ -554,8 +554,7 @@ public class JFAutor extends javax.swing.JFrame {
         try{
         if(autorSeleccionado != -1){
             //verifica si todos los libros han sido devueltos
-            if(verificaPrestamoLibro(autorSeleccionado))
-            {
+            if(autor.verificaPrestamoLibro(autorSeleccionado)){
                 JOptionPane.showMessageDialog(null,"No se puede borrar Autor, hay libros prestados");
                 return;
             }
@@ -565,7 +564,7 @@ public class JFAutor extends javax.swing.JFrame {
                     "Confirmar Borrado",JOptionPane.YES_NO_OPTION);
             if(respuesta ==JOptionPane.YES_OPTION)//si selecciono que si borrara el autor junto con  sus libros
             {
-                eliminarAutorEnBaseDeDatos(autorSeleccionado);//uso el metodo para borrar el autor guardado en el MySQL
+                autor.eliminarAutorEnBaseDeDatos(autorSeleccionado);//uso el metodo para borrar el autor guardado en el MySQL
                 autorSeleccionado=-1;//restablece el idAutor luego de borrar
                 mostrarTabla();//refresca la tabla
             }
@@ -579,45 +578,6 @@ public class JFAutor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
         }
     }//GEN-LAST:event_jBborrarAutorActionPerformed
-    private boolean verificaPrestamoLibro(int UnidadesDisponibles) {
-        String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdLibro = ?";
-        Conexion cn = new Conexion();
-        Connection conexion = cn.establecerConexion();
-        try {
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, UnidadesDisponibles);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-                int count = rs.getInt(1);
-                return count > 0;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "El Libro que contiene el autor está prestado." );
-        } catch (ArrayIndexOutOfBoundsException e) {
-            JOptionPane.showMessageDialog(null, "Error de índice de array: " + e.toString());
-        }
-        return false;
-    }
-
-    private void eliminarAutorEnBaseDeDatos(int idAutor) {
-        try {
-            String queryLibros = "DELETE FROM Libro WHERE IdAutor = ?";
-            try (PreparedStatement st = cn.prepareStatement(queryLibros)) {
-                st.setInt(1, idAutor);
-                st.executeUpdate();
-            }
-            String queryAutor = "DELETE FROM Autor WHERE IdAutor = ?";
-            try (PreparedStatement st = cn.prepareStatement(queryAutor)) {
-                st.setInt(1, idAutor);
-                st.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Autor y Libros eliminados correctamente.");
-            }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "El Libro que contiene el autor está prestado.");
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(null, "El Libro que contiene el autor está prestado.");
-        }
-    }
 
     private void jBmostrarAutorEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarAutorEditarActionPerformed
         TableModel model = jTdatosAutor.getModel();
