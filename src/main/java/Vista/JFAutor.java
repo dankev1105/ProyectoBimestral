@@ -29,7 +29,6 @@ public class JFAutor extends javax.swing.JFrame {
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
     private int autorSeleccionado;
-    private int tieneLibrosAsociados;
     public JFAutor() {
         initComponents();
         File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
@@ -39,6 +38,7 @@ public class JFAutor extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
         mostrarTabla();
         this.setResizable(false);
+        this.autorSeleccionado = -1;
         
         this.jTFautorBorrarPorID.addKeyListener(new KeyAdapter() {
         public void keyReleased(KeyEvent e) {
@@ -529,7 +529,7 @@ public class JFAutor extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel4)
-                .addGap(241, 241, 241))
+                .addGap(303, 303, 303))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -550,38 +550,75 @@ public class JFAutor extends javax.swing.JFrame {
         JFMenuPrincipal menu = new JFMenuPrincipal();
         menu.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-    
-    private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
-        if(jTFnombreAutorBorrar.getText().length()==0){
-            JOptionPane.showMessageDialog(null, "Primero seleccione al autor a eliminar","Error",JOptionPane.WARNING_MESSAGE);
-        }else{
-            try {
-                int idAutor = Integer.parseInt(this.jTFcodigoAutorBorrar.getText());
+    public void eliminarAutor(Connection cn, String idAutor){
+        try{
+            PreparedStatement psVerificarPrestamos = cn.prepareStatement("SELECT COUNT(*) AS numPrestamos FROM prestamo " +"INNER JOIN libro ON prestamo.idLibro = libro.idLibro " +"WHERE libro.idAutor = ?");
+            psVerificarPrestamos.setInt(1, Integer.parseInt(idAutor));
+            ResultSet rs = psVerificarPrestamos.executeQuery();
 
-                if (existeAutor(idAutor)) {
-                    int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea borrar? Se eliminarán los libros que el autor tenga asociados", "Confirmación", JOptionPane.YES_NO_OPTION);
-                    if (confirm == JOptionPane.YES_OPTION) {
-                        eliminarAutorEnBaseDeDatos(idAutor);
-                        mostrarTabla();
-                        this.jTFautorBorrarPorNombre.setText("");
-                        this.jTFautorBorrarPorID.setText("");
-
-                        JOptionPane.showMessageDialog(null, "Autor y sus libros asociados eliminados correctamente");
-
-                        jTFfechaAutorBorrar.setText("");
-                        jTFcodigoAutorBorrar.setText("");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "El autor con el id ingresado no existe");
+            if (rs.next()) {
+                int numPrestamos = rs.getInt("numPrestamos");
+                if (numPrestamos > 0) {
+                    JOptionPane.showMessageDialog(null, "El autor tiene libros asociados en préstamos activos y no se puede eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return; 
                 }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "Ingrese un ID válido");
-            } catch (ArrayIndexOutOfBoundsException ex) {
             }
+            
+            PreparedStatement psEliminarAutor = cn.prepareStatement("DELETE FROM autor WHERE idAutor = " + idAutor);
+            psEliminarAutor.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Autor eliminado correctamente.", "Eliminar autor", JOptionPane.INFORMATION_MESSAGE);
         }
+        catch (SQLException ex){
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al eliminar el autor.\n" + ex, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }  
+    private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
+        try{    
+            int selectedRow = jTdatosAutor.getSelectedRow();
+            if (selectedRow != -1) {
+                String idAutorString = (String) jTdatosAutor.getValueAt(selectedRow, 2);
+                this.autorSeleccionado = Integer.parseInt(idAutorString);
+
+                // Aquí es donde verificamos si el autor tiene libros asociados en préstamos activos
+                Conexion cn = new Conexion();
+                Connection conexion = cn.establecerConexion();
+                PreparedStatement psVerificarPrestamos = conexion.prepareStatement("SELECT COUNT(*) AS numPrestamos FROM Prestamo " +"INNER JOIN Libro ON Prestamo.IdLibro = Libro.IdLibro " +"WHERE Libro.IdAutor = ?");
+                psVerificarPrestamos.setInt(1, this.autorSeleccionado);
+                ResultSet rs = psVerificarPrestamos.executeQuery();
+
+                if (rs.next()) {
+                    int numPrestamos = rs.getInt("numPrestamos");
+                    if (numPrestamos > 0) {
+                        JOptionPane.showMessageDialog(null, "El autor tiene libros asociados en préstamos activos y no se puede eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+                        return; 
+                    }
+                }
+
+                //confirma el borrado
+                int respuesta= JOptionPane.showConfirmDialog(null, 
+                        "¿Estas seguro que quieres borrar este Autor y sus libros asociados?",
+                        "Confirmar Borrado",JOptionPane.YES_NO_OPTION);
+                if(respuesta ==JOptionPane.YES_OPTION) //si selecciono que si borrara el autor junto con  sus libros
+                {
+                    // Aquí es donde eliminamos el autor en la base de datos
+                    PreparedStatement psEliminarAutor = conexion.prepareStatement("DELETE FROM Autor WHERE IdAutor = ?");
+                    psEliminarAutor.setInt(1, this.autorSeleccionado);
+                    psEliminarAutor.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Autor eliminado correctamente.", "Eliminar autor", JOptionPane.INFORMATION_MESSAGE);
+
+                    mostrarTabla(); //refresca la tabla
+                }
+            }else{
+                JOptionPane.showMessageDialog(null,"El autor no existe","Error",JOptionPane.WARNING_MESSAGE);
+            }
+        }catch(ArrayIndexOutOfBoundsException ex){
+            JOptionPane.showMessageDialog(null, "INDEXBOUNDS");
+        } catch (SQLException ex) {
+            Logger.getLogger(JFAutor.class.getName()).log(Level.SEVERE, null, ex);
+        }       
     }//GEN-LAST:event_jBborrarAutorActionPerformed
-private boolean FaltaLibros(int UnidadesDisponibles) {
-        String sql = "SELECT COUNT(*) FROM Libro WHERE UnidadesDisponibles = ?";
+    private boolean verificaPrestamoLibro(int UnidadesDisponibles) {
+        String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdLibro = ?";
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
         try {
@@ -594,9 +631,32 @@ private boolean FaltaLibros(int UnidadesDisponibles) {
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.toString());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(null, "Error de índice de array: " + e.toString());
         }
         return false;
     }
+
+    private void eliminarAutorEnBaseDeDatos(int idAutor) {
+        try {
+            String queryLibros = "DELETE FROM Libro WHERE IdAutor = ?";
+            try (PreparedStatement st = cn.prepareStatement(queryLibros)) {
+                st.setInt(1, idAutor);
+                st.executeUpdate();
+            }
+            String queryAutor = "DELETE FROM Autor WHERE IdAutor = ?";
+            try (PreparedStatement st = cn.prepareStatement(queryAutor)) {
+                st.setInt(1, idAutor);
+                st.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Autor y Libros eliminados correctamente.");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error SQL: " + ex.toString());
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, "Error de índice de array: " + ex.toString());
+        }
+    }
+
     private void jBmostrarAutorEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBmostrarAutorEditarActionPerformed
         TableModel model = jTdatosAutor.getModel();
         int filaEncontrada = -1;
@@ -690,7 +750,6 @@ private boolean FaltaLibros(int UnidadesDisponibles) {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Error: el ID del autor no es un número válido");
         } catch (ArrayIndexOutOfBoundsException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.toString());
         }
         jTFnombreAutorEditar.setText("");
         jTFIDAutorEditar.setText("");
@@ -698,24 +757,7 @@ private boolean FaltaLibros(int UnidadesDisponibles) {
         jTFnombreAutorFiltrarEditar.setText("");
         jDfechaNacimientoEditar.setDate(null);
     }//GEN-LAST:event_jBactualizarAutorActionPerformed
-    private boolean existeAutor(int idAutor) {
-        String query = "SELECT*FROM Autor WHERE IdAutor = ?";
 
-        try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setInt(1, idAutor);
-            ResultSet rs = st.executeQuery();
-
-            if (rs.next()) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al verificar la existencia del autor: " + ex.toString());
-        }
-    return false;
-    }
     private void actualizarAutorEnBaseDeDatos(int idAutor, String nuevoNombre, String nuevaFechaNacimiento) {
         String queryNombre = "UPDATE Autor SET NombreAutor = ? WHERE IdAutor = ?";
         String queryFecha = "UPDATE Autor SET FechaNacimiento = ? WHERE IdAutor = ?";
@@ -783,26 +825,6 @@ private boolean FaltaLibros(int UnidadesDisponibles) {
     private void jTFautorBorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFautorBorrarPorNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFautorBorrarPorNombreActionPerformed
-    
-    private void eliminarAutorEnBaseDeDatos(long idAutor) {
-    try {
-        // Primero, eliminar los libros asociados al autor
-        String queryLibros = "DELETE FROM Libro WHERE IdAutor = ?";
-        try (PreparedStatement st = cn.prepareStatement(queryLibros)) {
-            st.setLong(1, idAutor);
-            st.executeUpdate();
-        }
-
-        // Luego, eliminar al autor
-        String queryAutor = "DELETE FROM Autor WHERE IdAutor = ?";
-        try (PreparedStatement st = cn.prepareStatement(queryAutor)) {
-            st.setLong(1, idAutor);
-            st.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Autor y Libros eliminados correctamente.");
-        }
-    } catch (SQLException ex) {
-    }
-}
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
