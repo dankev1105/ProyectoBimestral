@@ -31,7 +31,7 @@ public class JFAutor extends javax.swing.JFrame {
     private int autorSeleccionado;
     public JFAutor() {
         initComponents();
-        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        File file = new File("C:\\Users\\DELL\\OneDrive - Escuela Politécnica Nacional\\DANIEL\\EPN\\SEGUNDO SEMESTRE\\P\\WORKSPACE 2023B\\PROYECTO-MASTER\\ProyectoBimestral\\src\\main\\java\\Imagenes\\Autor.png");
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());//
         setIconImage(icon.getImage());
         this.setVisible(false);

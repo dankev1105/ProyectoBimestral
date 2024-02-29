@@ -40,7 +40,7 @@ public class JFLibro extends javax.swing.JFrame {
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         this.setResizable(false);
-        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        File file = new File("C:\\Users\\DELL\\OneDrive - Escuela Politécnica Nacional\\DANIEL\\EPN\\SEGUNDO SEMESTRE\\P\\WORKSPACE 2023B\\PROYECTO-MASTER\\ProyectoBimestral\\src\\main\\java\\Imagenes\\Libro.png");
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
         setIconImage(icon.getImage());
         
@@ -1101,7 +1101,10 @@ public class JFLibro extends javax.swing.JFrame {
         mostrarTabla();    
         }
         limpiarCampos();
-        
+        filtrarTablaId("");
+        filtrarTablaIdAutor("");
+        filtrarTablaNombre("");
+        filtrarTablaNombreAutor("");
     }//GEN-LAST:event_jBactualizarLibroActionPerformed
 
     private void jBborrarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarLibroActionPerformed
@@ -1144,7 +1147,10 @@ public class JFLibro extends javax.swing.JFrame {
     } catch (ArrayIndexOutOfBoundsException ex) {
     JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
     }
-    
+        filtrarTablaId("");
+        filtrarTablaIdAutor("");
+        filtrarTablaNombre("");
+        filtrarTablaNombreAutor("");
         
     }//GEN-LAST:event_jBborrarLibroActionPerformed
 
@@ -1180,7 +1186,10 @@ public class JFLibro extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Libro ya registrado.");
         }    
         }
-        
+        filtrarTablaId("");
+        filtrarTablaIdAutor("");
+        filtrarTablaNombre("");
+        filtrarTablaNombreAutor("");
     }//GEN-LAST:event_jBinsertarLibroActionPerformed
 
     private void jBlimpiarInsertarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlimpiarInsertarLibroActionPerformed
