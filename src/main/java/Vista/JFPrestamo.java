@@ -800,6 +800,9 @@ public class JFPrestamo extends javax.swing.JFrame {
             nuevoPrestamo.añadirRegistro();
             nuevoPrestamo.reducirUnidadesLibro(this.idLibroSeleccionado);
             mostrarTablaPrestamo(); 
+            quitarFiltrado(jTlibro);
+            mostrarTablaLibro();
+            quitarFiltrado(jTestudiante);
             JOptionPane.showMessageDialog(null, "El préstamo se ha realizado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -817,6 +820,8 @@ public class JFPrestamo extends javax.swing.JFrame {
                 prestamo.eliminarRegistro(idPrestamo);
                 mostrarTablaPrestamo(); 
                 JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
+                quitarFiltrado(jTlibro);
+                mostrarTablaLibro();
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }      
