@@ -46,7 +46,7 @@ public class JFEstudiante extends javax.swing.JFrame {
         this.setVisible(false);
         this.setLocationRelativeTo(this);
         mostrarTabla();
-        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        File file = new File("C:\\Users\\DELL\\OneDrive - Escuela Politécnica Nacional\\DANIEL\\EPN\\SEGUNDO SEMESTRE\\P\\WORKSPACE 2023B\\PROYECTO-MASTER\\ProyectoBimestral\\src\\main\\java\\Imagenes\\Estudiante.png");
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
         setIconImage(icon.getImage());
         jDateChooser.setMaxSelectableDate(fechaActual);
@@ -798,8 +798,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     private void jTFidEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidEstudianteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFidEstudianteActionPerformed
-    
-        
+           
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
         Fecha fecha1 = new Fecha(jTFfechaEstudianteBorrar.getText());
         this.estudiante = new Estudiante(Integer.parseInt(this.jTFIDEstudianteBorrar.getText()),jTFcorreoEstudianteBorrar.getText(),jTFnombreEstudianteBorrar.getText(),fecha1);

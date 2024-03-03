@@ -1,7 +1,6 @@
 package Negocio;
 
 import java.util.StringTokenizer;
-import javax.swing.JOptionPane;
 
 public class Fecha {
     private int dia, mes, anio;
@@ -13,7 +12,6 @@ public class Fecha {
             this.mes = Integer.parseInt(tokens.nextToken());
             this.dia = Integer.parseInt(tokens.nextToken());    
         }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Formato Incorrecto");
         }  
     }
 
