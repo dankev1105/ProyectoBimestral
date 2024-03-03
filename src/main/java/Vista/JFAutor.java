@@ -320,6 +320,11 @@ public class JFAutor extends javax.swing.JFrame {
         jLabel12.setText("Código Autor:");
 
         jTFIDAutorEditar.setEditable(false);
+        jTFIDAutorEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFIDAutorEditarActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Buscar el Nombre del Autor a Editar:");
 
@@ -705,6 +710,10 @@ public class JFAutor extends javax.swing.JFrame {
     private void jTdatosAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTdatosAutorMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jTdatosAutorMouseClicked
+
+    private void jTFIDAutorEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFIDAutorEditarActionPerformed
+        this.jTFIDAutorEditar.setEditable(false);
+    }//GEN-LAST:event_jTFIDAutorEditarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
