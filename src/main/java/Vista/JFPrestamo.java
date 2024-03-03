@@ -267,17 +267,6 @@ public class JFPrestamo extends javax.swing.JFrame {
             tr.setRowFilter(RowFilter.regexFilter(query, 1));
         }
     }
-    public void filtrarTablaPrestamoPorIDPrestamo(String query) {
-        DefaultTableModel model = (DefaultTableModel) jTprestamo.getModel();
-        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        jTprestamo.setRowSorter(tr);
-
-        if (query.trim().length() == 0) {
-            tr.setRowFilter(null);
-        } else {
-            tr.setRowFilter(RowFilter.regexFilter(query, 0));
-        }
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -733,8 +722,12 @@ public class JFPrestamo extends javax.swing.JFrame {
             int idLibro = Integer.parseInt(jTlibro.getValueAt(0, 2).toString());
             JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente ");
             this.idLibroSeleccionado = idLibro;
+        } else if(jTlibro.getSelectedRow() != -1){
+            int idLibro = Integer.parseInt(jTlibro.getValueAt(jTlibro.getSelectedRow(), 2).toString());
+            JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente ");
+            this.idLibroSeleccionado = idLibro;            
         } else {
-            JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo libro."); 
+            JOptionPane.showMessageDialog(null, "Seleccione un Libro.");   
         }
     }//GEN-LAST:event_jBseleccionarLibroActionPerformed
 
@@ -745,12 +738,17 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBlimpiarEstudianteActionPerformed
 
     private void jBaceptarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBaceptarEstudianteActionPerformed
-    if (jTestudiante.getRowCount() == 1 || jTestudiante.getSelectedRow()!=-1) { 
+    if (jTestudiante.getRowCount() == 1  ) { 
             int idEstudiante = Integer.parseInt(jTestudiante.getValueAt(0, 3).toString()); 
             JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente ");
             this.idEstudianteSeleccionado = idEstudiante;
+        } else if(jTestudiante.getSelectedRow()!=-1) {
+            int idEstudiante = Integer.parseInt(jTestudiante.getValueAt(jTestudiante.getSelectedRow(), 3).toString()); 
+            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente ");
+            this.idEstudianteSeleccionado = idEstudiante;            
+            
         } else {
-            JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo estudiante."); 
+            JOptionPane.showMessageDialog(null, "Seleccione un Estudiante");     
         }
     }//GEN-LAST:event_jBaceptarEstudianteActionPerformed
 
@@ -821,13 +819,16 @@ public class JFPrestamo extends javax.swing.JFrame {
         int selectedRow = jTprestamo.getSelectedRow();
         try{
             if (selectedRow != -1) {       
-                try {
-                    int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
+                try {        
+                    int modelRow = jTprestamo.convertRowIndexToModel(selectedRow);                 
+                    int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(modelRow, 0).toString());
                     Prestamo prestamo = new Prestamo();
                     int idLibro = prestamo.obtenerIdLibro(idPrestamo);
                     prestamo.aumentarUnidadesLibro(idLibro);
                     prestamo.eliminarRegistro(idPrestamo);
                     JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
+                    quitarFiltrado(jTprestamo);
+                    mostrarTablaPrestamo(); 
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }      
@@ -836,11 +837,8 @@ public class JFPrestamo extends javax.swing.JFrame {
             }
             quitarFiltrado(jTlibro);
             quitarFiltrado(jTestudiante);
-            quitarFiltrado(jTprestamo);
             this.jTFnombreEstudianteDevolver.setText(null);
-            this.jTFnombreLibroDevolver.setText(null);
-            mostrarTablaPrestamo();            
-            filtrarTablaPrestamoPorIDPrestamo("");
+            this.jTFnombreLibroDevolver.setText(null);           
             filtrarTablaPrestamoPorNombreEstudiante("");
             filtrarTablaPrestamoPorNombreLibro("");
         }catch(ArrayIndexOutOfBoundsException | HeadlessException | NumberFormatException ex){
