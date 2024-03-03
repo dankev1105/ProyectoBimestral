@@ -13,7 +13,7 @@ public class Prestamo {
     Fecha fechaPrestamo, fechaDevolucion;
 
     public Prestamo() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         this.fechaPrestamo = new Fecha(formatter.format(date));
     }
@@ -67,14 +67,13 @@ public class Prestamo {
     }
     
     public void verificarTiempoPrestamo() {
-        Fecha currentDate = new Fecha(new SimpleDateFormat("yyyy/MM/dd").format(new Date()));
+        Fecha currentDate = new Fecha(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 
         if (currentDate.getAnio() > fechaDevolucion.getAnio() ||
             (currentDate.getAnio() == fechaDevolucion.getAnio() && currentDate.getMes() > fechaDevolucion.getMes()) ||
             (currentDate.getAnio() == fechaDevolucion.getAnio() && currentDate.getMes() == fechaDevolucion.getMes() && currentDate.getDia() > fechaDevolucion.getDia())) {
-            System.out.println("El préstamo ha excedido el tiempo límite.");
         } else {
-            System.out.println("El préstamo está dentro del tiempo límite.");
+            System.out.println("Devuleva el Libro");
         }
     }
 

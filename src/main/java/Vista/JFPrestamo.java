@@ -3,6 +3,7 @@ package Vista;
 import Negocio.Fecha;
 import Negocio.Prestamo;
 import PConexion.Conexion;
+import java.awt.HeadlessException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -24,20 +25,20 @@ import javax.swing.table.TableRowSorter;
 public class JFPrestamo extends javax.swing.JFrame {
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
-    SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
     Date date = new Date();
     Fecha fechaPrestamo;
-    private int idEstudianteSeleccionado;
-    private int idLibroSeleccionado;
+    private int idEstudianteSeleccionado = 0;
+    private int idLibroSeleccionado = 0;
     
     public JFPrestamo() {
         initComponents();
         this.setVisible(false);
         this.setLocationRelativeTo(this);
-        File file = new File("C:/Users/DELL/OneDrive - Escuela Politécnica Nacional/DANIEL/EPN/SEGUNDO SEMESTRE/P/WORKSPACE 2023B/New Folder/ProyectoBimestral/src/main/java/Imagenes/BibliotecaImagen.png");
+        File file = new File("C:\\Users\\DELL\\OneDrive - Escuela Politécnica Nacional\\DANIEL\\EPN\\SEGUNDO SEMESTRE\\P\\WORKSPACE 2023B\\PROYECTO-MASTER\\ProyectoBimestral\\src\\main\\java\\Imagenes\\Prestamo.png");
         ImageIcon icon = new ImageIcon(file.getAbsolutePath());
         setIconImage(icon.getImage());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         this.fechaPrestamo = new Fecha(formatter.format(date));   
         
@@ -240,8 +241,8 @@ public class JFPrestamo extends javax.swing.JFrame {
                 model.addRow(datos);
             }
         }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error"+e.toString());
+        catch(SQLException | ArrayIndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(null, "Error "+e.toString());
         }
     }
     public void filtrarTablaPrestamoPorNombreEstudiante(String query) {
@@ -278,7 +279,6 @@ public class JFPrestamo extends javax.swing.JFrame {
         }
     }
 
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -309,7 +309,7 @@ public class JFPrestamo extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         jBsolicitarPrestamo = new javax.swing.JButton();
-        jBnuevoPrestamo = new javax.swing.JButton();
+        jBlimpiarFecha = new javax.swing.JButton();
         jPanel21 = new javax.swing.JPanel();
         jDfechaDevolucion = new com.toedter.calendar.JDateChooser();
         jPanel18 = new javax.swing.JPanel();
@@ -349,7 +349,7 @@ public class JFPrestamo extends javax.swing.JFrame {
             }
         });
 
-        jBaceptarEstudiante.setText("Aceptar");
+        jBaceptarEstudiante.setText("Seleccionar");
         jBaceptarEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBaceptarEstudianteActionPerformed(evt);
@@ -398,7 +398,7 @@ public class JFPrestamo extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBaceptarEstudiante)
-                        .addGap(213, 213, 213)
+                        .addGap(234, 234, 234)
                         .addComponent(jBlimpiarEstudiante)
                         .addGap(283, 283, 283))))
         );
@@ -547,10 +547,10 @@ public class JFPrestamo extends javax.swing.JFrame {
             }
         });
 
-        jBnuevoPrestamo.setText("Nuevo Préstamo");
-        jBnuevoPrestamo.addActionListener(new java.awt.event.ActionListener() {
+        jBlimpiarFecha.setText("Limpiar Fecha");
+        jBlimpiarFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBnuevoPrestamoActionPerformed(evt);
+                jBlimpiarFechaActionPerformed(evt);
             }
         });
 
@@ -579,10 +579,10 @@ public class JFPrestamo extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(89, 89, 89)
+                .addComponent(jBlimpiarFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65)
                 .addComponent(jBsolicitarPrestamo)
-                .addGap(80, 80, 80)
-                .addComponent(jBnuevoPrestamo, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel14Layout.setVerticalGroup(
@@ -594,7 +594,7 @@ public class JFPrestamo extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBsolicitarPrestamo)
-                            .addComponent(jBnuevoPrestamo))))
+                            .addComponent(jBlimpiarFecha))))
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
@@ -725,12 +725,13 @@ public class JFPrestamo extends javax.swing.JFrame {
         this.jTFnombreLibro.setText("");
         this.jTFcodigoLibro.setText("");
         this.jTFcodigoAutor.setText("");
+        quitarFiltrado(jTlibro);
     }//GEN-LAST:event_jBlimpiarLibroActionPerformed
 
     private void jBseleccionarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBseleccionarLibroActionPerformed
        if (jTlibro.getRowCount() == 1) {
             int idLibro = Integer.parseInt(jTlibro.getValueAt(0, 2).toString());
-            JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente. ID: " + idLibro);
+            JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente ");
             this.idLibroSeleccionado = idLibro;
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo libro."); 
@@ -738,14 +739,15 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBseleccionarLibroActionPerformed
 
     private void jBlimpiarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlimpiarEstudianteActionPerformed
-        this.jTFnombreEstudiante.setText("");
-        this.jTFcodigoEstudiante.setText("");
+        this.jTFnombreEstudiante.setText(null);
+        this.jTFcodigoEstudiante.setText(null);
+        quitarFiltrado(jTestudiante);
     }//GEN-LAST:event_jBlimpiarEstudianteActionPerformed
 
     private void jBaceptarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBaceptarEstudianteActionPerformed
-    if (jTestudiante.getRowCount() == 1) { 
+    if (jTestudiante.getRowCount() == 1 || jTestudiante.getSelectedRow()!=-1) { 
             int idEstudiante = Integer.parseInt(jTestudiante.getValueAt(0, 3).toString()); 
-            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + idEstudiante);
+            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente ");
             this.idEstudianteSeleccionado = idEstudiante;
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo estudiante."); 
@@ -764,23 +766,9 @@ public class JFPrestamo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFcodigoEstudianteActionPerformed
 
-    private void jBnuevoPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBnuevoPrestamoActionPerformed
-        this.jTFnombreEstudiante.setText("");
-        this.jTFcodigoEstudiante.setText("");
-        this.jTFnombreLibro.setText("");
-        this.jTFcodigoLibro.setText("");
-        this.jTFcodigoAutor.setText("");
-        if (this.jDfechaDevolucion.getDate() != null) {
-            this.jDfechaDevolucion.setDate(null);
-        }
-        quitarFiltrado(jTlibro);
-        quitarFiltrado(jTprestamo);
-        quitarFiltrado(jTestudiante);
+    private void jBlimpiarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBlimpiarFechaActionPerformed
         this.jDfechaDevolucion.setDate(null);
-        this.idEstudianteSeleccionado = 0;
-        this.idLibroSeleccionado = 0;
-        
-    }//GEN-LAST:event_jBnuevoPrestamoActionPerformed
+    }//GEN-LAST:event_jBlimpiarFechaActionPerformed
 
     private void jBsolicitarPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsolicitarPrestamoActionPerformed
         Date fechaActual = new Date();
@@ -813,6 +801,16 @@ public class JFPrestamo extends javax.swing.JFrame {
             nuevoPrestamo.añadirRegistro();
             nuevoPrestamo.reducirUnidadesLibro(this.idLibroSeleccionado);
             mostrarTablaPrestamo(); 
+            quitarFiltrado(jTlibro);
+            mostrarTablaLibro();
+            quitarFiltrado(jTestudiante);
+            this.jTFcodigoAutor.setText(null);
+            this.jTFcodigoEstudiante.setText(null);
+            this.jTFcodigoLibro.setText(null);
+            this.jTFnombreEstudiante.setText(null);
+            this.jTFnombreLibro.setText(null);
+            this.idEstudianteSeleccionado=-1;
+            this.idLibroSeleccionado=-1;
             JOptionPane.showMessageDialog(null, "El préstamo se ha realizado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -821,20 +819,32 @@ public class JFPrestamo extends javax.swing.JFrame {
 
     private void jBdevolverPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdevolverPrestamoActionPerformed
         int selectedRow = jTprestamo.getSelectedRow();
-        if (selectedRow != -1) {
-            int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
-            try {
-                Prestamo prestamo = new Prestamo();
-                int idLibro = prestamo.obtenerIdLibro(idPrestamo);
-                prestamo.aumentarUnidadesLibro(idLibro);
-                prestamo.eliminarRegistro(idPrestamo);
-                mostrarTablaPrestamo(); 
-                JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }      
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, selecciona un préstamo para devolver.");
+        try{
+            if (selectedRow != -1) {       
+                try {
+                    int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
+                    Prestamo prestamo = new Prestamo();
+                    int idLibro = prestamo.obtenerIdLibro(idPrestamo);
+                    prestamo.aumentarUnidadesLibro(idLibro);
+                    prestamo.eliminarRegistro(idPrestamo);
+                    JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }      
+            }else{
+                JOptionPane.showMessageDialog(null, "Por favor, selecciona un préstamo para devolver.");
+            }
+            quitarFiltrado(jTlibro);
+            quitarFiltrado(jTestudiante);
+            quitarFiltrado(jTprestamo);
+            this.jTFnombreEstudianteDevolver.setText(null);
+            this.jTFnombreLibroDevolver.setText(null);
+            mostrarTablaPrestamo();            
+            filtrarTablaPrestamoPorIDPrestamo("");
+            filtrarTablaPrestamoPorNombreEstudiante("");
+            filtrarTablaPrestamoPorNombreLibro("");
+        }catch(ArrayIndexOutOfBoundsException | HeadlessException | NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_jBdevolverPrestamoActionPerformed
    
@@ -883,8 +893,8 @@ public class JFPrestamo extends javax.swing.JFrame {
     private javax.swing.JButton jBaceptarEstudiante;
     private javax.swing.JButton jBdevolverPrestamo;
     private javax.swing.JButton jBlimpiarEstudiante;
+    private javax.swing.JButton jBlimpiarFecha;
     private javax.swing.JButton jBlimpiarLibro;
-    private javax.swing.JButton jBnuevoPrestamo;
     private javax.swing.JButton jBseleccionarLibro;
     private javax.swing.JButton jBsolicitarPrestamo;
     private com.toedter.calendar.JDateChooser jDfechaDevolucion;

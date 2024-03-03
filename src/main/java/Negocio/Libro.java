@@ -114,10 +114,10 @@ public class Libro {
             }
             }
         
-            public void eliminarLibroEnBaseDeDatos(int idLibro) {
+            public void eliminarLibroEnBaseDeDatos(long idLibro) {
             String query = "DELETE FROM Libro WHERE IdLibro = ?";
             try (PreparedStatement st = cn.prepareStatement(query)) {
-            st.setInt(1, idLibro);
+            st.setLong(1, idLibro);
             st.executeUpdate();                     
             JOptionPane.showMessageDialog(null, "Libro eliminado correctamente.");
             }catch (SQLException ex) {
@@ -127,32 +127,32 @@ public class Libro {
             }
             }
     
-            public boolean tienePrestamosPendientes(int idLibro) {
+        public boolean tienePrestamosPendientes(long idEstudiante) {
             String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdLibro = ?";
             Conexion cn = new Conexion();
             Connection conexion = cn.establecerConexion();
             try {
-            PreparedStatement preparedStatement = conexion.prepareStatement(sql);
-            preparedStatement.setInt(1, idLibro);
-            ResultSet rs = preparedStatement.executeQuery();
-            if (rs.next()) {
-            int count = rs.getInt(1);
-            return count > 0;
-            }
+                PreparedStatement preparedStatement = conexion.prepareStatement(sql);
+                preparedStatement.setLong(1, idEstudiante);
+                ResultSet rs = preparedStatement.executeQuery();
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
             } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error" + e.toString());
+                JOptionPane.showMessageDialog(null, "Error" + e.toString());
             }
             return false;
-            }
+        }
             
-            
+        
    @Override
     public String toString() {
         return "Libro:\n" + 
                 "id del Libro:" + idLibro + 
                 "\nUnidades del Libro: " + unidadesLibro +
                 "\nTitulo del Libro: " + tituloLibro + 
-                "\nGenero:" + genero 
+                "\nGénero:" + genero 
                ;
 }
 }
