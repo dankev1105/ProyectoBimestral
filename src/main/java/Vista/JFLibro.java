@@ -153,7 +153,7 @@ public class JFLibro extends javax.swing.JFrame {
                     break;
                 case 2:
                     jTFtituloEditar.setText(tituloLibro);
-                    jCBgeneroLibrosEditar.setSelectedItem(jCBgeneroLibros.getSelectedItem());
+                    jCBgeneroLibrosEditar.setSelectedItem(jTdatosLibro.getModel().getValueAt(filaSeleccionadaVista, 1));
                     jTFunidadesEditar.setText(unidadesLibro);  
                     jTFidLibroEditar.setText(idLibro);
                     jTFidAutorEditar.setText(idAutor);
