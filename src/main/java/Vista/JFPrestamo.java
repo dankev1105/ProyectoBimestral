@@ -3,6 +3,7 @@ package Vista;
 import Negocio.Fecha;
 import Negocio.Prestamo;
 import PConexion.Conexion;
+import java.awt.HeadlessException;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -240,8 +241,8 @@ public class JFPrestamo extends javax.swing.JFrame {
                 model.addRow(datos);
             }
         }
-        catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Error"+e.toString());
+        catch(SQLException | ArrayIndexOutOfBoundsException e){
+            JOptionPane.showMessageDialog(null, "Error "+e.toString());
         }
     }
     public void filtrarTablaPrestamoPorNombreEstudiante(String query) {
@@ -348,7 +349,7 @@ public class JFPrestamo extends javax.swing.JFrame {
             }
         });
 
-        jBaceptarEstudiante.setText("Aceptar");
+        jBaceptarEstudiante.setText("Seleccionar");
         jBaceptarEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBaceptarEstudianteActionPerformed(evt);
@@ -397,7 +398,7 @@ public class JFPrestamo extends javax.swing.JFrame {
                     .addGroup(jPanel12Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jBaceptarEstudiante)
-                        .addGap(213, 213, 213)
+                        .addGap(234, 234, 234)
                         .addComponent(jBlimpiarEstudiante)
                         .addGap(283, 283, 283))))
         );
@@ -730,7 +731,7 @@ public class JFPrestamo extends javax.swing.JFrame {
     private void jBseleccionarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBseleccionarLibroActionPerformed
        if (jTlibro.getRowCount() == 1) {
             int idLibro = Integer.parseInt(jTlibro.getValueAt(0, 2).toString());
-            JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente. ID: " + idLibro);
+            JOptionPane.showMessageDialog(null, "Libro seleccionado correctamente ");
             this.idLibroSeleccionado = idLibro;
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo libro."); 
@@ -746,7 +747,7 @@ public class JFPrestamo extends javax.swing.JFrame {
     private void jBaceptarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBaceptarEstudianteActionPerformed
     if (jTestudiante.getRowCount() == 1 || jTestudiante.getSelectedRow()!=-1) { 
             int idEstudiante = Integer.parseInt(jTestudiante.getValueAt(0, 3).toString()); 
-            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente. ID: " + idEstudiante);
+            JOptionPane.showMessageDialog(null, "Estudiante seleccionado correctamente ");
             this.idEstudianteSeleccionado = idEstudiante;
         } else {
             JOptionPane.showMessageDialog(null, "Por favor, filtra la tabla hasta que quede un solo estudiante."); 
@@ -803,6 +804,13 @@ public class JFPrestamo extends javax.swing.JFrame {
             quitarFiltrado(jTlibro);
             mostrarTablaLibro();
             quitarFiltrado(jTestudiante);
+            this.jTFcodigoAutor.setText(null);
+            this.jTFcodigoEstudiante.setText(null);
+            this.jTFcodigoLibro.setText(null);
+            this.jTFnombreEstudiante.setText(null);
+            this.jTFnombreLibro.setText(null);
+            this.idEstudianteSeleccionado=-1;
+            this.idLibroSeleccionado=-1;
             JOptionPane.showMessageDialog(null, "El préstamo se ha realizado correctamente.");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -811,22 +819,32 @@ public class JFPrestamo extends javax.swing.JFrame {
 
     private void jBdevolverPrestamoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBdevolverPrestamoActionPerformed
         int selectedRow = jTprestamo.getSelectedRow();
-        if (selectedRow != -1) {
-            int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
-            try {
-                Prestamo prestamo = new Prestamo();
-                int idLibro = prestamo.obtenerIdLibro(idPrestamo);
-                prestamo.aumentarUnidadesLibro(idLibro);
-                prestamo.eliminarRegistro(idPrestamo);
-                mostrarTablaPrestamo(); 
-                JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
-                quitarFiltrado(jTlibro);
-                mostrarTablaLibro();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
-            }      
-        } else {
-            JOptionPane.showMessageDialog(null, "Por favor, selecciona un préstamo para devolver.");
+        try{
+            if (selectedRow != -1) {       
+                try {
+                    int idPrestamo = Integer.parseInt(jTprestamo.getModel().getValueAt(selectedRow, 0).toString());
+                    Prestamo prestamo = new Prestamo();
+                    int idLibro = prestamo.obtenerIdLibro(idPrestamo);
+                    prestamo.aumentarUnidadesLibro(idLibro);
+                    prestamo.eliminarRegistro(idPrestamo);
+                    JOptionPane.showMessageDialog(null, "El préstamo se ha devuelto correctamente.");
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
+                }      
+            }else{
+                JOptionPane.showMessageDialog(null, "Por favor, selecciona un préstamo para devolver.");
+            }
+            quitarFiltrado(jTlibro);
+            quitarFiltrado(jTestudiante);
+            quitarFiltrado(jTprestamo);
+            this.jTFnombreEstudianteDevolver.setText(null);
+            this.jTFnombreLibroDevolver.setText(null);
+            mostrarTablaPrestamo();            
+            filtrarTablaPrestamoPorIDPrestamo("");
+            filtrarTablaPrestamoPorNombreEstudiante("");
+            filtrarTablaPrestamoPorNombreLibro("");
+        }catch(ArrayIndexOutOfBoundsException | HeadlessException | NumberFormatException ex){
+            JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_jBdevolverPrestamoActionPerformed
    

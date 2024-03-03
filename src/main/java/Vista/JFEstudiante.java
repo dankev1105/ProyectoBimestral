@@ -798,8 +798,7 @@ public class JFEstudiante extends javax.swing.JFrame {
     private void jTFidEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidEstudianteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFidEstudianteActionPerformed
-    
-        
+           
     private void jBborrarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarEstudianteActionPerformed
         Fecha fecha1 = new Fecha(jTFfechaEstudianteBorrar.getText());
         this.estudiante = new Estudiante(Integer.parseInt(this.jTFIDEstudianteBorrar.getText()),jTFcorreoEstudianteBorrar.getText(),jTFnombreEstudianteBorrar.getText(),fecha1);

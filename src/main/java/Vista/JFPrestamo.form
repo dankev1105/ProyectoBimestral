@@ -152,7 +152,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="jBaceptarEstudiante" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="234" max="-2" attributes="0"/>
                                   <Component id="jBlimpiarEstudiante" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="283" max="-2" attributes="0"/>
                               </Group>
@@ -204,7 +204,7 @@
                 </Component>
                 <Component class="javax.swing.JButton" name="jBaceptarEstudiante">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Aceptar"/>
+                    <Property name="text" type="java.lang.String" value="Seleccionar"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBaceptarEstudianteActionPerformed"/>
