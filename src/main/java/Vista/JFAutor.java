@@ -1,4 +1,5 @@
 package Vista;
+
 import Negocio.Autor;
 import Negocio.Fecha;
 import PConexion.Conexion;
@@ -15,7 +16,9 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -26,8 +29,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+
 public class JFAutor extends javax.swing.JFrame {
-    Autor autor;
+    Autor autor;//objeto de la clase autor
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
     private int autorSeleccionado;
@@ -128,24 +132,32 @@ public class JFAutor extends javax.swing.JFrame {
         if (query.trim().length() == 0) {
             tr.setRowFilter(null);
         } else {
+            List<RowFilter<Object, Object>> filters = new ArrayList<>();
+            for(int columIndex=0;columIndex<model.getColumnCount();columIndex++){
+              filters.add(RowFilter.regexFilter("(?i)" + query, 0)); // Ignore case  
+            }
             tr.setRowFilter(RowFilter.regexFilter(query, 0)); // Cambia el índice a la columna del nombre
         }
     }
 
     public void filtrarTablaId(String query) {
+        this.jTFnombreAutorEditar.setText("");
+        this.jTFautorBorrarPorNombre.setText("");
         DefaultTableModel model = (DefaultTableModel) jTdatosAutor.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
         jTdatosAutor.setRowSorter(tr);
 
         if (query.trim().length() == 0) {
+            //en caso que este vacio el campo muestra toda la lista de datos
             tr.setRowFilter(null);
         } else {
+            //uso de Filtrado en caso que este lleno el campo 
             tr.setRowFilter(RowFilter.regexFilter(query, 2));
         }
     }
 
     public void mostrarTabla(){
-        String sql = "SELECT * FROM Autor";
+        String sql = "SELECT * FROM Autor";//usamos la tabla autor de la base de datos
         Statement st;
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
@@ -155,14 +167,14 @@ public class JFAutor extends javax.swing.JFrame {
         model.addColumn("Id Autor");
 
         jTdatosAutor.setModel(model);
-        String [] datos = new String [3];
+        String [] datos = new String [3];//numero de columnas de la tabla instanciadas
         try{
             st = conexion.createStatement();
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()){
                 datos[0]=rs.getString(1);
                 datos[1]=rs.getString(2);
-                datos[2]=String.valueOf(rs.getInt(3));
+                datos[2]=String.valueOf(rs.getInt(3));//conversion de los datos de id autor
                 model.addRow(datos);
             }
         }
@@ -555,11 +567,12 @@ public class JFAutor extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         this.setVisible(false);
-        JFMenuPrincipal menu = new JFMenuPrincipal();
+        JFMenuPrincipal menu = new JFMenuPrincipal();//cuando se seleccione la opcion menu esta se hara visible 
         menu.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
+
         try{
             this.autorSeleccionado=Integer.parseInt(this.jTFcodigoAutorBorrar.getText());
             if(this.autorSeleccionado != -1){
@@ -608,6 +621,7 @@ public class JFAutor extends javax.swing.JFrame {
     }
     
     public boolean verificaPrestamoLibro(int UnidadesDisponibles) {
+
         String sql = "SELECT COUNT(*) FROM Prestamo WHERE IdLibro = ?";
         Conexion cn = new Conexion();
         Connection conexion = cn.establecerConexion();
@@ -626,26 +640,32 @@ public class JFAutor extends javax.swing.JFrame {
         }
         return false;
     }
+
+
     private void jBinsertarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarAutorActionPerformed
         try {
-            PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");
-            pps.setString(1,jTFnombreAutor.getText());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");//se inserta los datos de la tabla en el msql
+            pps.setString(1,jTFnombreAutor.getText());//obtenemos los datos ingresados 
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");//fort fech.
             java.util.Date date = jDateChooser.getDate();
+            //uso del objeto calendario desplegable
             String fechaNacimiento = dateFormat.format(date);
+            //String fechaNacimiento= new SimpleDateFormat("yyyy/MM/dd").format(date); forma equivalente
             pps.setString(2, fechaNacimiento);
-            pps.setInt(3,Integer.parseInt(jTfIdAutor.getText()));
+            pps.setInt(3,Integer.parseInt(jTfIdAutor.getText()));//conversion de string
+            //actualiz tabla
             pps.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Datos guardados");
+            JOptionPane.showMessageDialog(null,"Datos guardados");//mensaje de confirmacion
             
-            Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);
+            Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);//objeto de Fecha
                     autor = new Autor(Long.parseLong(jTfIdAutor.getText()),jTFnombreAutor.getText(),fechaNacimientoAutor);
                     jTAautorActual.setText(autor.toString());
                     mostrarTabla();
+                    //muestra la tabla actualizada
             //jTAlistaAutor.setText(listaAutor.toString());
         }
         catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Autor ya registrado");
+            JOptionPane.showMessageDialog(null, "Autor ya registrado");//mensaje informativo
         }
     }//GEN-LAST:event_jBinsertarAutorActionPerformed
 
@@ -653,10 +673,10 @@ public class JFAutor extends javax.swing.JFrame {
         try {
             String nuevoNombre = jTFnombreAutorEditar.getText();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            java.util.Date date = jDfechaNacimientoEditar.getDate();
+            java.util.Date date = jDfechaNacimientoEditar.getDate();//obtrngo la nueva fehca
             String nuevaFechaNacimiento = null;
             if (date != null) {
-                nuevaFechaNacimiento = dateFormat.format(date);
+                nuevaFechaNacimiento = dateFormat.format(date);//fijo la fecha
             }
 
             // Aquí es donde actualizamos el autor en la base de datos
@@ -676,27 +696,29 @@ public class JFAutor extends javax.swing.JFrame {
     }//GEN-LAST:event_jBactualizarAutorActionPerformed
 
     private void actualizarAutorEnBaseDeDatos(int idAutor, String nuevoNombre, String nuevaFechaNacimiento) {
+
         String queryNombre = "UPDATE Autor SET NombreAutor = ? WHERE IdAutor = ?";
         String queryFecha = "UPDATE Autor SET FechaNacimiento = ? WHERE IdAutor = ?";
-
+        //uso de las tablas en el mySQL
         try (PreparedStatement stNombre = cn.prepareStatement(queryNombre);
-             PreparedStatement stFecha = cn.prepareStatement(queryFecha)) {
+             PreparedStatement stFecha = cn.prepareStatement(queryFecha)) {//parametros actulizar
 
             stNombre.setString(1, nuevoNombre);
             stNombre.setInt(2, idAutor);
-            stNombre.executeUpdate();
+            stNombre.executeUpdate();//actualizacion de nombre
 
             stFecha.setString(1, nuevaFechaNacimiento);
             stFecha.setInt(2, idAutor);
-            stFecha.executeUpdate();
+            stFecha.executeUpdate();//actualizacion de fecha
 
             JOptionPane.showMessageDialog(null, "Autor actualizado con éxito");
-            mostrarTabla();
+            mostrarTabla();//modificada
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al actualizar autor en la base de datos: " + ex.toString());
         }
     }
+
 
     private void jTFautorBorrarPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFautorBorrarPorNombreActionPerformed
         // TODO add your handling code here:
