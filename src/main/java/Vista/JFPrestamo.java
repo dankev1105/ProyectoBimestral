@@ -789,7 +789,12 @@ public class JFPrestamo extends javax.swing.JFrame {
     }//GEN-LAST:event_jBaceptarEstudianteActionPerformed
 
     private void jTFcodigoEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcodigoEstudianteKeyTyped
-        // TODO add your handling code here:
+    char caracter= evt.getKeyChar();
+        if(Character.isLetter(caracter)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa números");
+            }
     }//GEN-LAST:event_jTFcodigoEstudianteKeyTyped
 
     private void jTFcodigoEstudianteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcodigoEstudianteKeyReleased
