@@ -324,6 +324,12 @@ public class JFPrestamo extends javax.swing.JFrame {
 
         jLabel13.setText("Búsqueda por Código Único:");
 
+        jTFnombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFnombreEstudianteKeyTyped(evt);
+            }
+        });
+
         jTFcodigoEstudiante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFcodigoEstudianteActionPerformed(evt);
@@ -416,6 +422,24 @@ public class JFPrestamo extends javax.swing.JFrame {
         jLabel15.setText("Búsqueda por Codigo Libro:");
 
         jLabel16.setText("Búsqueda por Código del Autor:");
+
+        jTFnombreLibro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFnombreLibroKeyTyped(evt);
+            }
+        });
+
+        jTFcodigoLibro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFcodigoLibroKeyTyped(evt);
+            }
+        });
+
+        jTFcodigoAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFcodigoAutorKeyTyped(evt);
+            }
+        });
 
         jBseleccionarLibro.setText("Seleccionar");
         jBseleccionarLibro.addActionListener(new java.awt.event.ActionListener() {
@@ -590,6 +614,18 @@ public class JFPrestamo extends javax.swing.JFrame {
         jPanel18.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Devolver Préstamo", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 24))); // NOI18N
 
         jLabel21.setText("Búsqueda por Nombre del Libro:");
+
+        jTFnombreEstudianteDevolver.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFnombreEstudianteDevolverKeyTyped(evt);
+            }
+        });
+
+        jTFnombreLibroDevolver.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFnombreLibroDevolverKeyTyped(evt);
+            }
+        });
 
         jBdevolverPrestamo.setText("Devolver");
         jBdevolverPrestamo.addActionListener(new java.awt.event.ActionListener() {
@@ -845,6 +881,60 @@ public class JFPrestamo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage());
         }
     }//GEN-LAST:event_jBdevolverPrestamoActionPerformed
+
+    private void jTFnombreEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreEstudianteKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFnombreEstudianteKeyTyped
+
+    private void jTFnombreLibroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreLibroKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFnombreLibroKeyTyped
+
+    private void jTFcodigoLibroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcodigoLibroKeyTyped
+    char caracter= evt.getKeyChar();
+        if(Character.isLetter(caracter)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa números");
+            }
+    }//GEN-LAST:event_jTFcodigoLibroKeyTyped
+
+    private void jTFcodigoAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcodigoAutorKeyTyped
+    char caracter= evt.getKeyChar();
+        if(Character.isLetter(caracter)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa números");
+            }
+    }//GEN-LAST:event_jTFcodigoAutorKeyTyped
+
+    private void jTFnombreEstudianteDevolverKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreEstudianteDevolverKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFnombreEstudianteDevolverKeyTyped
+
+    private void jTFnombreLibroDevolverKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreLibroDevolverKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFnombreLibroDevolverKeyTyped
    
     public void quitarFiltrado(JTable tabla) {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();

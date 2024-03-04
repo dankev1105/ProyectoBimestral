@@ -194,6 +194,9 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFnombreEstudiante">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreEstudianteKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFcodigoEstudiante">
                   <Events>
@@ -333,10 +336,19 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFnombreLibro">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreLibroKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFcodigoLibro">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFcodigoLibroKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFcodigoAutor">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFcodigoAutorKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jBseleccionarLibro">
                   <Properties>
@@ -566,8 +578,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFnombreEstudianteDevolver">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreEstudianteDevolverKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTFnombreLibroDevolver">
+                  <Events>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreLibroDevolverKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="jBdevolverPrestamo">
                   <Properties>
