@@ -10,26 +10,26 @@ import javax.swing.JOptionPane;
 
 public class Libro {
     private int idLibro;
-    Autor idAutor;
+    Autor autor;
     Conexion con=new Conexion();
     Connection cn=con.establecerConexion();
     private int unidadesLibro;
     private String tituloLibro,genero;
 
-    public Libro(int idLibro, Autor idAutor, int unidadesLibro, String tituloLibro, String genero) {
+    public Libro(int idLibro, Autor autor, int unidadesLibro, String tituloLibro, String genero) {
         this.idLibro = idLibro;
-        this.idAutor = idAutor;
+        this.autor = autor;
         this.unidadesLibro = unidadesLibro;
         this.tituloLibro = tituloLibro;
         this.genero = genero;
     }
 
     public Autor getIdAutor() {
-        return idAutor;
+        return autor;
     }
 
     public void setIdAutor(Autor idAutor) {
-        this.idAutor = idAutor;
+        this.autor = idAutor;
     }
 
     public long getIdLibro() {
@@ -151,6 +151,7 @@ public class Libro {
         return "Libro:\n" + 
                 "id del Libro:" + idLibro + 
                 "\nUnidades del Libro: " + unidadesLibro +
+                "\nAutor: " + autor.getNombre() +
                 "\nTitulo del Libro: " + tituloLibro + 
                 "\nGénero:" + genero 
                ;

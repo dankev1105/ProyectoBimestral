@@ -759,40 +759,39 @@ public class JFEstudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jBinsertarEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarEstudianteActionPerformed
-         if(jTFnombreEstudiante.getText().length()==0 || jDateChooser.getDate()==null || jTFcorreoInstitucionalEstudiante.getText().length()==0 || jTFidEstudiante.getText().length()==0){
-        JOptionPane.showMessageDialog(null, "Alguno de los campos esta vacios, llenelos por favor");
+        if(jTFnombreEstudiante.getText().length()==0 || jDateChooser.getDate()==null || jTFcorreoInstitucionalEstudiante.getText().length()==0 || jTFidEstudiante.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Alguno de los campos esta vacios, llenelos por favor");
         }else{
-        try {
-            String correo = jTFcorreoInstitucionalEstudiante.getText();
-            if (!correo.endsWith("@epn.edu.ec")) {
-                JOptionPane.showMessageDialog(null, "El correo debe terminar en @epn.edu.ec");
-                return;
+            try {
+                String correo = jTFcorreoInstitucionalEstudiante.getText();
+                if (!correo.endsWith("@epn.edu.ec")) {
+                    JOptionPane.showMessageDialog(null, "El correo debe terminar en @epn.edu.ec");
+                    return;
+                }
+
+                PreparedStatement pps = cn.prepareStatement("INSERT INTO Estudiante(NombreEstudiante, FechaNacimiento, CorreoInstitucional, IdEstudiante) VALUES (?,?,?,?)");
+                pps.setString(1, jTFnombreEstudiante.getText());
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date date = jDateChooser.getDate();
+                String fechaNacimiento = dateFormat.format(date);
+
+                pps.setDate(2, new java.sql.Date(date.getTime()));
+                pps.setString(3, correo);
+                pps.setInt(4, Integer.parseInt(jTFidEstudiante.getText()));
+
+                pps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Datos guardados");
+
+                Fecha fechaNacimientoEstudiante = new Fecha(fechaNacimiento);
+                estudiante = new Estudiante(Integer.parseInt(jTFidEstudiante.getText()),correo, jTFnombreEstudiante.getText(), fechaNacimientoEstudiante);
+                jTAestudianteActual.setText(estudiante.toString());
+                mostrarTabla();
             }
-
-            PreparedStatement pps = cn.prepareStatement("INSERT INTO Estudiante(NombreEstudiante, FechaNacimiento, CorreoInstitucional, IdEstudiante) VALUES (?,?,?,?)");
-            pps.setString(1, jTFnombreEstudiante.getText());
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            java.util.Date date = jDateChooser.getDate();
-            String fechaNacimiento = dateFormat.format(date);
-
-            pps.setDate(2, new java.sql.Date(date.getTime()));
-            pps.setString(3, correo);
-            pps.setInt(4, Integer.parseInt(jTFidEstudiante.getText()));
-
-            pps.executeUpdate();
-            JOptionPane.showMessageDialog(null, "Datos guardados");
-
-            Fecha fechaNacimientoEstudiante = new Fecha(fechaNacimiento);
-            estudiante = new Estudiante(Integer.parseInt(jTFidEstudiante.getText()),correo, jTFnombreEstudiante.getText(), fechaNacimientoEstudiante);
-            jTAestudianteActual.setText(estudiante.toString());
-            mostrarTabla();
-        }
-        catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Estudiante ya registrado");
-        }    
-        }
-        
+            catch (SQLException ex){
+                JOptionPane.showMessageDialog(null, "Estudiante ya registrado");
+            }    
+        }        
     }//GEN-LAST:event_jBinsertarEstudianteActionPerformed
 
     private void jTFidEstudianteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFidEstudianteActionPerformed
@@ -829,9 +828,7 @@ public class JFEstudiante extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
         }
     }//GEN-LAST:event_jBborrarEstudianteActionPerformed
-    
-    
-    
+
     private void jTFidEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFidEstudianteKeyTyped
     char caracter= evt.getKeyChar();
         if(Character.isLetter(caracter)){
@@ -848,23 +845,23 @@ public class JFEstudiante extends javax.swing.JFrame {
         if(jTFIDEstudianteEditar.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Primero seleccione un estudiante a modificar");
         }else{
-        int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
-        String nuevoNombre = jTFnombreEstudianteEditar.getText();
-        String nuevoCorreoInstitucional = jTFcorreoEstudianteEditar.getText();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        java.util.Date date = jDateChooserEditar.getDate();
-        String nuevaFechaNacimiento = dateFormat.format(date);
-        // Aquí es donde actualizamos el autor en la base de datos
-        Date date1 = jDateChooserEditar.getDate();
-        String fechaNacimiento = dateFormat.format(date1);
-        Fecha fecha = new Fecha(fechaNacimiento);
-        this.estudiante = new Estudiante(Integer.parseInt(this.jTFIDEstudianteEditar.getText()),jTFcorreoEstudianteEditar.getText(),jTFnombreEstudianteEditar.getText(),fecha);
-        estudiante.actualizarEstudianteEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento, nuevoCorreoInstitucional);
-        limpiarCampos();
-        jTFnombreEstudianteEditar.setEditable(false);
-        jDateChooserEditar.setEnabled(false);
-        jTFcorreoEstudianteEditar.setEditable(false);
-        mostrarTabla();    
+            int idEstudiante = Integer.parseInt(this.jTFIDEstudianteEditar.getText());
+            String nuevoNombre = jTFnombreEstudianteEditar.getText();
+            String nuevoCorreoInstitucional = jTFcorreoEstudianteEditar.getText();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            java.util.Date date = jDateChooserEditar.getDate();
+            String nuevaFechaNacimiento = dateFormat.format(date);
+            // Aquí es donde actualizamos el autor en la base de datos
+            Date date1 = jDateChooserEditar.getDate();
+            String fechaNacimiento = dateFormat.format(date1);
+            Fecha fecha = new Fecha(fechaNacimiento);
+            this.estudiante = new Estudiante(Integer.parseInt(this.jTFIDEstudianteEditar.getText()),jTFcorreoEstudianteEditar.getText(),jTFnombreEstudianteEditar.getText(),fecha);
+            estudiante.actualizarEstudianteEnBaseDeDatos(idEstudiante, nuevoNombre, nuevaFechaNacimiento, nuevoCorreoInstitucional);
+            limpiarCampos();
+            jTFnombreEstudianteEditar.setEditable(false);
+            jDateChooserEditar.setEnabled(false);
+            jTFcorreoEstudianteEditar.setEditable(false);
+            mostrarTabla();    
         }
     }//GEN-LAST:event_jBactualizarEstudianteActionPerformed
 

@@ -1,5 +1,6 @@
 package Vista;
 import Negocio.Autor;
+import Negocio.Estudiante;
 import Negocio.Fecha;
 import PConexion.Conexion;
 import java.awt.event.KeyAdapter;
@@ -108,7 +109,7 @@ public class JFAutor extends javax.swing.JFrame {
                     filtrarTablaNombre("");
                     jTFnombreAutorEditar.setEditable(true);
                     jDfechaNacimientoEditar.setEnabled(true);
-                    jTFIDAutorEditar.setEditable(true);
+                    jTFIDAutorEditar.setEditable(false);
                     break;
                 case 2:
                     jTFnombreAutorBorrar.setText(nombre);
@@ -200,6 +201,7 @@ public class JFAutor extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jTFcodigoAutorFiltrarEditar = new javax.swing.JTextField();
         jDfechaNacimientoEditar = new com.toedter.calendar.JDateChooser();
+        jBvaciarBorrar1 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jBborrarAutor = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
@@ -212,6 +214,7 @@ public class JFAutor extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jTFautorBorrarPorNombre = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
+        jBvaciarBorrar2 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTdatosAutor = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -260,6 +263,10 @@ public class JFAutor extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBinsertarAutor)
+                        .addGap(146, 146, 146))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3)
@@ -267,14 +274,10 @@ public class JFAutor extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTfIdAutor)
-                            .addComponent(jDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                            .addComponent(jTFnombreAutor))
-                        .addGap(58, 58, 58))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBinsertarAutor)
-                        .addGap(146, 146, 146)))
+                            .addComponent(jDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
+                            .addComponent(jTFnombreAutor)
+                            .addComponent(jTfIdAutor))
+                        .addGap(58, 58, 58)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -291,12 +294,12 @@ public class JFAutor extends javax.swing.JFrame {
                         .addGap(21, 21, 21)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jTfIdAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
                             .addComponent(jDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTfIdAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
                         .addComponent(jBinsertarAutor)
                         .addGap(17, 17, 17)))
                 .addGap(0, 12, Short.MAX_VALUE))
@@ -328,6 +331,13 @@ public class JFAutor extends javax.swing.JFrame {
 
         jLabel8.setText("Buscar el Nombre del Autor a Editar:");
 
+        jBvaciarBorrar1.setText("Vaciar");
+        jBvaciarBorrar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBvaciarBorrar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -349,16 +359,17 @@ public class JFAutor extends javax.swing.JFrame {
                     .addComponent(jDfechaNacimientoEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                     .addComponent(jTFnombreAutorFiltrarEditar)
                     .addComponent(jTFnombreAutorEditar, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5)
                         .addGap(13, 13, 13)
                         .addComponent(jTFcodigoAutorFiltrarEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(97, 97, 97)
                         .addComponent(jBactualizarAutor)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jBvaciarBorrar1)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -374,17 +385,14 @@ public class JFAutor extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
                     .addComponent(jTFnombreAutorEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDfechaNacimientoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jBactualizarAutor)
-                        .addGap(32, 32, 32))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jDfechaNacimientoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11))
-                        .addGap(28, 28, 28)))
+                        .addComponent(jBvaciarBorrar1)))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(jTFIDAutorEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -422,6 +430,13 @@ public class JFAutor extends javax.swing.JFrame {
 
         jLabel7.setText("Buscar por Nombre:");
 
+        jBvaciarBorrar2.setText("Vaciar");
+        jBvaciarBorrar2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBvaciarBorrar2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -437,23 +452,26 @@ public class JFAutor extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTFnombreAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTFfechaAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTFcodigoAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jTFcodigoAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jTFfechaAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(101, 101, 101)
+                                .addComponent(jBborrarAutor))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(96, 96, 96)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTFautorBorrarPorNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                        .addComponent(jTFautorBorrarPorNombre)
                         .addGap(49, 49, 49)
                         .addComponent(jLabel6)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
-                        .addComponent(jBborrarAutor))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFautorBorrarPorID, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(89, 89, 89))
+                        .addComponent(jTFautorBorrarPorID, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(62, 62, 62)
+                        .addComponent(jBvaciarBorrar2)))
+                .addGap(127, 127, 127))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,22 +483,24 @@ public class JFAutor extends javax.swing.JFrame {
                     .addComponent(jLabel7)
                     .addComponent(jTFautorBorrarPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 38, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFnombreAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTFnombreAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jTFfechaAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel14))
-                        .addGap(18, 18, 18)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(jTFcodigoAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jBborrarAutor)))
+                            .addComponent(jBborrarAutor)
+                            .addComponent(jBvaciarBorrar2))
+                        .addGap(16, 16, 16)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jTFcodigoAutorBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43))
         );
 
@@ -565,32 +585,29 @@ public class JFAutor extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jBborrarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBborrarAutorActionPerformed
-        try{
-            this.autorSeleccionado=Integer.parseInt(this.jTFcodigoAutorBorrar.getText());
-            if(this.autorSeleccionado != -1){
-                //verifica si todos los libros han sido devueltos
-                if(verificaPrestamoLibro(this.autorSeleccionado)){
-                    JOptionPane.showMessageDialog(null,"No se puede borrar Autor, hay libros prestados");
-                    return;
+        Fecha fecha1 = new Fecha(jTFfechaAutorBorrar.getText());
+        this.autor = new Autor(Integer.parseInt(this.jTFcodigoAutorBorrar.getText()),jTFnombreAutorBorrar.getText(),fecha1);
+        int autorSeleccionado = Integer.parseInt(jTFcodigoAutorBorrar.getText());
+        try {
+            if(autorSeleccionado != -1){
+                // Pregunta al usuario si está seguro de borrar
+                int respuesta = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres borrar este estudiante?", "Confirmar borrado", JOptionPane.YES_NO_OPTION);
+                if (respuesta == JOptionPane.YES_OPTION) {
+                    eliminarAutorEnBaseDeDatos(autorSeleccionado);
+                    autorSeleccionado = -1;
+                    mostrarTabla();
                 }
-                //confirma el borrado
-                int respuesta= JOptionPane.showConfirmDialog(null, 
-                        "¿Estas seguro que quieres borrar este Autor y sus libros asociados?",
-                        "Confirmar Borrado",JOptionPane.YES_NO_OPTION);
-                if(respuesta ==JOptionPane.YES_OPTION)//si selecciono que si borrara el autor junto con  sus libros
-                {
-                    eliminarAutorEnBaseDeDatos(autorSeleccionado);//uso el metodo para borrar el autor guardado en el MySQL
-                    autorSeleccionado=-1;//restablece el idAutor luego de borrar
-                    mostrarTabla();//refresca la tabla
-                }
-            }else {
-                    JOptionPane.showMessageDialog(null,"El autor no existe","Error",JOptionPane.WARNING_MESSAGE);
-            }
-        } catch (ArrayIndexOutOfBoundsException ex) {
-                JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontró el autor","Error",JOptionPane.WARNING_MESSAGE);
             }
             filtrarTablaId("");
             filtrarTablaNombre("");
+            limpiarCampos();
+            jTFautorBorrarPorNombre.setText("");
+            jTFautorBorrarPorID.setText("");
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            JOptionPane.showMessageDialog(null, "Error: intento de acceder a un índice fuera de los límites");
+        }
     }//GEN-LAST:event_jBborrarAutorActionPerformed
     public void eliminarAutorEnBaseDeDatos(int idAutor) {
         try {
@@ -632,54 +649,69 @@ public class JFAutor extends javax.swing.JFrame {
         return false;
     }
     private void jBinsertarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBinsertarAutorActionPerformed
-        try {
-            PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento ,IdAutor) VALUES (?,?,?)");
-            pps.setString(1,jTFnombreAutor.getText());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-            java.util.Date date = jDateChooser.getDate();
-            String fechaNacimiento = dateFormat.format(date);
-            pps.setString(2, fechaNacimiento);
-            pps.setInt(3,Integer.parseInt(jTfIdAutor.getText()));
-            pps.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Datos guardados");
-            
-            Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);
-                    autor = new Autor(Long.parseLong(jTfIdAutor.getText()),jTFnombreAutor.getText(),fechaNacimientoAutor);
-                    jTAautorActual.setText(autor.toString());
-                    mostrarTabla();
-            //jTAlistaAutor.setText(listaAutor.toString());
-        }
-        catch (SQLException ex){
-            JOptionPane.showMessageDialog(null, "Autor ya registrado");
+        if(jTFnombreAutor.getText().length()==0 || jDateChooser.getDate()==null || jTfIdAutor.getText().length()==0){
+            JOptionPane.showMessageDialog(null, "Alguno de los campos esta vacios, llenelos por favor");
+        }else{
+            try {
+                PreparedStatement pps = cn.prepareStatement("INSERT INTO Autor(NombreAutor, FechaNacimiento, IdAutor) VALUES (?,?,?)");
+                pps.setString(1, jTFnombreAutor.getText());
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date date = jDateChooser.getDate();
+                String fechaNacimiento = dateFormat.format(date);
+
+                pps.setDate(2, new java.sql.Date(date.getTime()));
+                pps.setInt(3, Integer.parseInt(jTfIdAutor.getText()));
+
+                pps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Datos guardados");
+
+                Fecha fechaNacimientoAutor = new Fecha(fechaNacimiento);
+                autor = new Autor(Integer.parseInt(jTfIdAutor.getText()), jTFnombreAutor.getText(), fechaNacimientoAutor);
+                jTAautorActual.setText(autor.toString());
+                mostrarTabla();
+            }
+            catch (SQLException ex){
+                JOptionPane.showMessageDialog(null, "Autor ya registrado");
+            }    
         }
     }//GEN-LAST:event_jBinsertarAutorActionPerformed
 
     private void jBactualizarAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBactualizarAutorActionPerformed
-        try {
+        if(this.jTFIDAutorEditar.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null, "Primero seleccione un autor a modificar");
+        }else{
+            int idAutor = Integer.parseInt(this.jTFIDAutorEditar.getText());
             String nuevoNombre = jTFnombreAutorEditar.getText();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             java.util.Date date = jDfechaNacimientoEditar.getDate();
-            String nuevaFechaNacimiento = null;
-            if (date != null) {
-                nuevaFechaNacimiento = dateFormat.format(date);
-            }
-
-            // Aquí es donde actualizamos el autor en la base de datos
-            actualizarAutorEnBaseDeDatos(autorSeleccionado, nuevoNombre, nuevaFechaNacimiento);
-            filtrarTablaId("");
-            filtrarTablaNombre("");
-            mostrarTabla();
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(null, "Error: el ID del autor no es un número válido");
-        } catch (ArrayIndexOutOfBoundsException ex) {
-        }
-        jTFnombreAutorEditar.setText("");
-        jTFIDAutorEditar.setText("");
-        jTFcodigoAutorFiltrarEditar.setText("");
-        jTFnombreAutorFiltrarEditar.setText("");
-        jDfechaNacimientoEditar.setDate(null);
+            String nuevaFechaNacimiento = dateFormat.format(date);
+            Date date1 = jDfechaNacimientoEditar.getDate();
+            String fechaNacimiento = dateFormat.format(date1);
+            Fecha fecha = new Fecha(fechaNacimiento);
+            this.autor = new Autor(Integer.parseInt(this.jTFIDAutorEditar.getText()),jTFnombreAutorEditar.getText(),fecha);
+            actualizarAutorEnBaseDeDatos(idAutor, nuevoNombre, nuevaFechaNacimiento);
+            limpiarCampos();
+            jTFnombreAutorEditar.setEditable(false);
+            jDfechaNacimientoEditar.setEnabled(false);
+            mostrarTabla(); 
+            this.jTFnombreAutorFiltrarEditar.setText("");
+            this.jTFcodigoAutorFiltrarEditar.setText("");
+        }    
     }//GEN-LAST:event_jBactualizarAutorActionPerformed
-
+    
+    public void limpiarCampos() {
+        jTFnombreAutorEditar.setText("");
+        jTFIDAutorEditar.setText("");  
+        jDfechaNacimientoEditar.setDate(null);
+        
+        jTFnombreAutorBorrar.setText("");
+        jTFcodigoAutorBorrar.setText("");
+        jTFfechaAutorBorrar.setText("");
+        
+        filtrarTablaId("");
+        filtrarTablaNombre("");
+    }
     private void actualizarAutorEnBaseDeDatos(int idAutor, String nuevoNombre, String nuevaFechaNacimiento) {
         String queryNombre = "UPDATE Autor SET NombreAutor = ? WHERE IdAutor = ?";
         String queryFecha = "UPDATE Autor SET FechaNacimiento = ? WHERE IdAutor = ?";
@@ -714,6 +746,14 @@ public class JFAutor extends javax.swing.JFrame {
     private void jTFIDAutorEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFIDAutorEditarActionPerformed
         this.jTFIDAutorEditar.setEditable(false);
     }//GEN-LAST:event_jTFIDAutorEditarActionPerformed
+
+    private void jBvaciarBorrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBvaciarBorrar1ActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_jBvaciarBorrar1ActionPerformed
+
+    private void jBvaciarBorrar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBvaciarBorrar2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBvaciarBorrar2ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -754,6 +794,8 @@ public class JFAutor extends javax.swing.JFrame {
     private javax.swing.JButton jBactualizarAutor;
     private javax.swing.JButton jBborrarAutor;
     private javax.swing.JButton jBinsertarAutor;
+    private javax.swing.JButton jBvaciarBorrar1;
+    private javax.swing.JButton jBvaciarBorrar2;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private com.toedter.calendar.JDateChooser jDfechaNacimientoEditar;
     private javax.swing.JLabel jLabel1;

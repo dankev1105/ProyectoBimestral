@@ -8,11 +8,11 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Autor extends Persona {
-    private long idAutor;
+    private int idAutor;
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
 
-    public Autor(long idAutor, String nombre, Fecha fechaNacimiento) {
+    public Autor(int idAutor, String nombre, Fecha fechaNacimiento) {
         super(nombre, fechaNacimiento);
         this.idAutor = idAutor;
     }    
@@ -21,7 +21,7 @@ public class Autor extends Persona {
         return idAutor;
     }
 
-    public void setIdAutor(long idAutor) {
+    public void setIdAutor(int idAutor) {
         this.idAutor = idAutor;
     }
     

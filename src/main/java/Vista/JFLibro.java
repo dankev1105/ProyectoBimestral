@@ -1183,16 +1183,16 @@ public class JFLibro extends javax.swing.JFrame {
         else{
         try {
             PreparedStatement pps = cn.prepareStatement(
-         "INSERT INTO Libro(NombreLibro, Genero , IdLibro, UnidadesDisponibles,IdAutor) VALUES (?,?,?,?,?)");
+         "INSERT INTO Libro(NombreLibro, Genero , IdLibro, UnidadesDisponibles, IdAutor) VALUES (?,?,?,?,?)");
             pps.setString(1, jTFtituloLibro.getText());
             pps.setString(2,  (String)jCBgeneroLibros.getSelectedItem());
             pps.setInt(3, Integer.parseInt(jTFidLibro.getText()));
             pps.setInt(4, Integer.parseInt(jTFunidadesLibro.getText()));
-            pps.setLong(5,Long.parseLong(jTFidAutor.getText()));
+            pps.setLong(5,Integer.parseInt(jTFidAutor.getText()));
             
             pps.executeUpdate();
             JOptionPane.showMessageDialog(null, "Datos guardados.");
-
+            autor = new Autor(Integer.parseInt(jTFidAutor.getText()), jTFnombreAutor.getText(), new Fecha(jTFfechaNacimientoAutor.getText()));
             libro = new Libro( Integer.parseInt(jTFidLibro.getText()),autor,
             Integer.parseInt(jTFunidadesLibro.getText()), jTFtituloLibro.getText(),
             (String) jCBgeneroLibros.getSelectedItem());
