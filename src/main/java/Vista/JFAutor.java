@@ -247,6 +247,15 @@ public class JFAutor extends javax.swing.JFrame {
 
         jLabel2.setText("Fecha de Nacimiento:");
 
+        jTFnombreAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFnombreAutorKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFnombreAutorKeyTyped(evt);
+            }
+        });
+
         jBinsertarAutor.setText("Insertar");
         jBinsertarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -255,6 +264,12 @@ public class JFAutor extends javax.swing.JFrame {
         });
 
         jLabel3.setText("Código Autor:");
+
+        jTfIdAutor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTfIdAutorKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -309,6 +324,12 @@ public class JFAutor extends javax.swing.JFrame {
 
         jLabel5.setText("Buscar el Código del Autor a Editar:");
 
+        jTFnombreAutorFiltrarEditar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFnombreAutorFiltrarEditarKeyTyped(evt);
+            }
+        });
+
         jBactualizarAutor.setText("Actualizar");
         jBactualizarAutor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -322,6 +343,12 @@ public class JFAutor extends javax.swing.JFrame {
 
         jLabel12.setText("Código Autor:");
 
+        jTFnombreAutorEditar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFnombreAutorEditarKeyTyped(evt);
+            }
+        });
+
         jTFIDAutorEditar.setEditable(false);
         jTFIDAutorEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,6 +357,12 @@ public class JFAutor extends javax.swing.JFrame {
         });
 
         jLabel8.setText("Buscar el Nombre del Autor a Editar:");
+
+        jTFcodigoAutorFiltrarEditar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFcodigoAutorFiltrarEditarKeyTyped(evt);
+            }
+        });
 
         jBvaciarBorrar1.setText("Vaciar");
         jBvaciarBorrar1.addActionListener(new java.awt.event.ActionListener() {
@@ -410,6 +443,12 @@ public class JFAutor extends javax.swing.JFrame {
 
         jLabel6.setText("Buscar por ID:");
 
+        jTFautorBorrarPorID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFautorBorrarPorIDKeyTyped(evt);
+            }
+        });
+
         jTFnombreAutorBorrar.setEditable(false);
 
         jTFfechaAutorBorrar.setEditable(false);
@@ -425,6 +464,11 @@ public class JFAutor extends javax.swing.JFrame {
         jTFautorBorrarPorNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTFautorBorrarPorNombreActionPerformed(evt);
+            }
+        });
+        jTFautorBorrarPorNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTFautorBorrarPorNombreKeyTyped(evt);
             }
         });
 
@@ -754,6 +798,73 @@ public class JFAutor extends javax.swing.JFrame {
     private void jBvaciarBorrar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBvaciarBorrar2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jBvaciarBorrar2ActionPerformed
+
+    private void jTfIdAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTfIdAutorKeyTyped
+    char caracter= evt.getKeyChar();
+        if(Character.isLetter(caracter)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa números");
+            }
+    }//GEN-LAST:event_jTfIdAutorKeyTyped
+
+    private void jTFcodigoAutorFiltrarEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFcodigoAutorFiltrarEditarKeyTyped
+    char caracter= evt.getKeyChar();
+        if(Character.isLetter(caracter)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa números");
+            }
+    }//GEN-LAST:event_jTFcodigoAutorFiltrarEditarKeyTyped
+
+    private void jTFautorBorrarPorIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFautorBorrarPorIDKeyTyped
+    char caracter= evt.getKeyChar();
+        if(Character.isLetter(caracter)){
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa números");
+            }
+    }//GEN-LAST:event_jTFautorBorrarPorIDKeyTyped
+
+    private void jTFnombreAutorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreAutorKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFnombreAutorKeyPressed
+
+    private void jTFnombreAutorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreAutorKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFnombreAutorKeyTyped
+
+    private void jTFnombreAutorFiltrarEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreAutorFiltrarEditarKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFnombreAutorFiltrarEditarKeyTyped
+
+    private void jTFnombreAutorEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombreAutorEditarKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFnombreAutorEditarKeyTyped
+
+    private void jTFautorBorrarPorNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFautorBorrarPorNombreKeyTyped
+        char caracter = evt.getKeyChar();
+        if (!Character.isLetter(caracter)&&caracter!=' '&&caracter!='\b') {
+            getToolkit().beep();
+            evt.consume();
+            JOptionPane.showMessageDialog(null, "Por favor ingresa el nombre de manera correcta");
+        }
+    }//GEN-LAST:event_jTFautorBorrarPorNombreKeyTyped
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

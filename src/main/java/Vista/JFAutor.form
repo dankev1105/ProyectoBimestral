@@ -208,6 +208,10 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFnombreAutor">
+              <Events>
+                <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreAutorKeyPressed"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreAutorKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBinsertarAutor">
               <Properties>
@@ -223,6 +227,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTfIdAutor">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTfIdAutorKeyTyped"/>
+              </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="jDateChooser">
             </Component>
@@ -321,6 +328,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFnombreAutorFiltrarEditar">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreAutorFiltrarEditarKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jBactualizarAutor">
               <Properties>
@@ -346,6 +356,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFnombreAutorEditar">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFnombreAutorEditarKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFIDAutorEditar">
               <Properties>
@@ -361,6 +374,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFcodigoAutorFiltrarEditar">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFcodigoAutorFiltrarEditarKeyTyped"/>
+              </Events>
             </Component>
             <Component class="com.toedter.calendar.JDateChooser" name="jDfechaNacimientoEditar">
             </Component>
@@ -485,6 +501,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFautorBorrarPorID">
+              <Events>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFautorBorrarPorIDKeyTyped"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="jTFnombreAutorBorrar">
               <Properties>
@@ -519,6 +538,7 @@
             <Component class="javax.swing.JTextField" name="jTFautorBorrarPorNombre">
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTFautorBorrarPorNombreActionPerformed"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTFautorBorrarPorNombreKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
