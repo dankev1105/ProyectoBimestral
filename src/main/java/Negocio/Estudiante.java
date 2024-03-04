@@ -96,6 +96,6 @@ public class Estudiante extends Persona{
 
     @Override
     public String toString() {
-        return super.toString()+"\nID Estudiante = " + idEstudiante;
+        return super.toString()+"\nCódigo de Estudiante: " + idEstudiante;
     }  
 }

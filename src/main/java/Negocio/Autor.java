@@ -12,6 +12,10 @@ public class Autor extends Persona {
     Conexion con = new Conexion();
     Connection cn = con.establecerConexion();
 
+    public Autor(String nombre, Fecha fechaNacimiento) {
+        super(nombre, fechaNacimiento);
+    }
+
     public Autor(long idAutor, String nombre, Fecha fechaNacimiento) {
         super(nombre, fechaNacimiento);
         this.idAutor = idAutor;
@@ -27,6 +31,6 @@ public class Autor extends Persona {
     
     @Override
     public String toString() {
-        return super.toString()+"\nidAutor = " + this.idAutor;
+        return super.toString()+"\nCódigo de Autor: " + this.idAutor;
     }
 }

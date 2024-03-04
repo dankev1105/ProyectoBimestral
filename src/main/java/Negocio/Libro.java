@@ -148,11 +148,11 @@ public class Libro {
         
    @Override
     public String toString() {
-        return "Libro:\n" + 
-                "id del Libro:" + idLibro + 
+        return "Libro:" + 
+                "\nCódigo del Libro: " + idLibro + 
                 "\nUnidades del Libro: " + unidadesLibro +
                 "\nTitulo del Libro: " + tituloLibro + 
-                "\nGénero:" + genero 
-               ;
+                "\nGénero: " + genero;
+               
 }
 }
